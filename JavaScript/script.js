@@ -3,16 +3,66 @@ const mesDoAno = document.getElementById('mes-do-ano');
 let hoje = new Date();
 let mesAtual = hoje.getMonth(); 
 let anoAtual = hoje.getFullYear();
+let temporizadorSegundos = 0;
+let temporizadorInterval = null;
+let temporizadorAtivo = false;
 
-function atualizarRelogio() {
-    const horas = hoje.getHours().toString().padStart(2, '0');
-    const minutos = hoje.getMinutes().toString().padStart(2, '0');
-    const relogio = document.getElementById('relogio');
-    relogio.textContent = `${horas}:${minutos}`;
+function atualizarTemporizador() {
+    if (temporizadorSegundos > 0) {
+        temporizadorSegundos--;
+        mostrarTemporizador();
+        if (temporizadorSegundos === 0) {
+            clearInterval(temporizadorInterval);
+            temporizadorAtivo = false;
+            alert('Tempo finalizado!');
+        }
+    }
 }
 
-setInterval(atualizarRelogio, 1000);
-atualizarRelogio();
+function mostrarTemporizador() {
+    const horas = Math.floor(temporizadorSegundos / 3600).toString().padStart(2, '0');
+    const minutos = Math.floor((temporizadorSegundos % 3600) / 60).toString().padStart(2, '0');
+    const segundos = (temporizadorSegundos % 60).toString().padStart(2, '0');
+    document.getElementById('relogio').textContent = `${horas}:${minutos}:${segundos}`;
+}
+
+function iniciarTemporizador() {
+    if (temporizadorSegundos > 0 && !temporizadorAtivo) {
+        temporizadorInterval = setInterval(atualizarTemporizador, 1000);
+        temporizadorAtivo = true;
+    }
+}
+
+function pausarTemporizador() {
+    clearInterval(temporizadorInterval);
+    temporizadorAtivo = false;
+}
+
+function alternarTemporizador() {
+    const btn = document.getElementById('btn-iniciar-pausar');
+    if (!temporizadorAtivo) {
+        iniciarTemporizador();
+        btn.textContent = 'Pausar';
+    } else {
+        pausarTemporizador();
+        btn.textContent = 'Iniciar';
+    }
+}
+
+function resetarTemporizador() {
+    pausarTemporizador();
+    temporizadorSegundos = 0;
+    mostrarTemporizador();
+    document.getElementById('btn-iniciar-pausar').textContent = 'Iniciar';
+}
+
+function definirTemporizador() {
+    const minutos = parseInt(prompt('Quantos minutos para o foco?', '25'));
+    if (!isNaN(minutos) && minutos > 0) {
+        temporizadorSegundos = minutos * 60;
+        mostrarTemporizador();
+    }
+}
 
 function isToday(dia, mes, ano) {
     return dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear();
@@ -23,82 +73,34 @@ function pegarNomeMes(mes) {
     return meses[mes];
 }
 
-function carregarCalendario(mes, ano) {
-    const primeiroDia = new Date(ano, mes, 1).getDay();
-    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
-    const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    let html = '<tr>' + diasDaSemana.map(d => `<th>${d}</th>`).join('') + '</tr>';
-
-    let dia = 1;
-    // 6 semanas (linhas) garantidas
-    for (let semana = 0; semana < 6; semana++) {
-        html += '<tr>';
-        for (let i = 0; i < 7; i++) {
-            const cellIndex = semana * 7 + i;
-            if (semana === 0 && i < primeiroDia) {
-                html += '<td></td>';
-            } else if (dia > diasNoMes) {
-                html += '<td></td>';
-            } else {
-                // Formato da data igual ao do banco (YYYY-MM-DD)
-                const dataStr = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-                const isHoje = isToday(dia, mes, ano);
-                // Filtra projetos para o dia
-                let projetosDia = [];
-                if (typeof projetos !== "undefined") {
-                    projetosDia = projetos.filter(p => p.data_inicio === dataStr);
-                }
-                let projetosHtml = '';
-                if (projetosDia.length > 3) {
-                    projetosHtml += projetosDia.slice(0,2).map(p =>
-                        `<div class="projeto-calendario">${p.nome}</div>`
-                    ).join('');
-                    projetosHtml += `<div class="projeto-mais">Mais...</div>`;
-                } else {
-                    projetosHtml += projetosDia.map(p =>
-                        `<div class="projeto-calendario">${p.nome}</div>`
-                    ).join('');
-                }
-                let cellClasses = [];
-                if (isHoje) {
-                    cellClasses.push('today');
-                }
-                if (projetosDia.length > 0) {
-                    cellClasses.push('dia-com-projeto');
-                }
-                html += `<td style="position:relative;" class="${cellClasses.join(' ')}" onclick="abrirPopupProjetosDoDia('${dataStr}', event)">
-                            <span class="numero-dia">${dia}</span>
-                            ${projetosHtml}
-                            <button class="add-btn" onclick="adicionarPojetos(event); event.stopPropagation();" title="Adicionar evento"><span>+</span></button>
-                        </td>`;
-                dia++;
-            }
-        }
-        html += '</tr>';
-    }
-    calendario.innerHTML = html;
-    mesDoAno.textContent = `${pegarNomeMes(mes)} ${ano}`;
+function carregarCalendarioAjax(mes, ano) {
+    fetch(`./PHP/Calendario/Calendario.php?mes=${mes}&ano=${ano}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('tabela-calendario').innerHTML = html;
+            document.getElementById('mes-do-ano').textContent = pegarNomeMes(mes) + ' ' + ano;
+        });
 }
 
 function prevMes() {
     mesAtual--;
-    if (mesAtual < 0) {
-        mesAtual = 11;
+    if (mesAtual < 1) {
+        mesAtual = 12;
         anoAtual--;
     }
-    carregarCalendario(mesAtual, anoAtual);
+    carregarCalendarioAjax(mesAtual, anoAtual);
 }
 
 function nextMes() {
     mesAtual++;
-    if (mesAtual > 11) {
-        mesAtual = 0;
+    if (mesAtual > 12) {
+        mesAtual = 1;
         anoAtual++;
     }
-    carregarCalendario(mesAtual, anoAtual);
+    carregarCalendarioAjax(mesAtual, anoAtual);
 }
 
-carregarCalendario(mesAtual, anoAtual);
+carregarCalendarioAjax(mesAtual, anoAtual);
 
 function fecharPopupAddProjeto() {
     document.getElementById('adicionarProjeto').style.display = 'none';

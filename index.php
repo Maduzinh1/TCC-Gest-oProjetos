@@ -1,38 +1,14 @@
-<?php
-  require_once (__DIR__."/PHP/Classes/Projeto.class.php");
-  setlocale(LC_TIME, 'portuguese'); 
-  date_default_timezone_set('America/Sao_Paulo');
-  $busca = isset($_GET['busca'])?$_GET['busca']:0;
-  $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
- 
-  $projetos = Projeto::listar($tipo, $busca);
-
-  $projetos_array = [];
-  foreach ($projetos as $projeto) {
-      $projetos_array[] = [
-          'id' => $projeto->getId() ?? '',
-          'nome' => $projeto->getNome() ?? '',
-          'descricao' => $projeto->getDescricao() ?? '',
-          'tag' => $projeto->getTag() ?? '',
-          'data_inicio' => $projeto->getDataInicio() ?? '',
-          'data_fim' => $projeto->getDataFim() ?? '',
-          'status' => $projeto->getStatus() ?? '',
-          'urgencia' => $projeto->getUrgencia() ?? ''
-      ];
-  }
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Grid Layout</title>
   <link rel="stylesheet" href="./CSS/estilo.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/325fb60df1.js" crossorigin="anonymous"></script>
   <script src="./JavaScript/script.js" defer></script>
-  <script defer> const projetos = <?php echo json_encode($projetos_array); ?>; </script>
 </head>
 <body class="body">
 
@@ -51,7 +27,10 @@
 
       <div class="Bloco-1">
         <div class="Bloco-relogio">
-          <div id="relogio" class="relogio">--:--</div>
+          <div id="relogio" class="relogio">00:00:00</div>
+          <button onclick="definirTemporizador()">Definir</button>
+          <button id="btn-iniciar-pausar" onclick="alternarTemporizador()">Iniciar</button>
+          <button onclick="resetarTemporizador()">Resetar</button>
         </div>
         <div class="naosei1">naosei1</div>
       </div>
@@ -66,7 +45,9 @@
               <button type="button" onclick="nextMes()">Próximo</button>
             </div>
           </div>
-          <table id="tabela-calendario" class="calendario"></table>
+          <table id="tabela-calendario" class="calendario">
+
+          </table>
         </div>
       </div>
       

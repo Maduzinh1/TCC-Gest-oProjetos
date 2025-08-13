@@ -35,6 +35,7 @@
 
 .Bloco-1, .Bloco-2, .Bloco-3 {
   flex-direction: column;
+
   &>div {
     text-align: center;
     align-content: center;
@@ -43,19 +44,22 @@
 
 .Bloco-1 {
   flex: 0 0 15%;
+
   .Bloco-relogio {
     min-height: 144px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.18); 
+
     .relogio {
-      height: 100%;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.18); 
+      height: 60%;
       color: #000;
-      font-size: 5rem;
+      font-size: 2.5rem;
       letter-spacing: 2px;
       text-align: center;
       align-content: center;
     }
   }
+
   .naosei1 {
     height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.18); 
@@ -66,15 +70,18 @@
 
 .Bloco-2 {
   flex: 1 0 67%;  
+
   .naosei2 {
     min-height: 144px;
     border: 1px solid rgba(0, 0, 0, 0.18); 
 
   }
+
   .Bloco-calendario {
     display: flex;
     flex-direction: column;
     gap: 19px;
+
     .titulo-calendario {
       display: flex;
       flex-direction: column;
@@ -83,12 +90,15 @@
       gap: 19px;
       margin-bottom: auto;
     }
+
     .calendario {
       border-collapse: collapse;
       width: 100%;
+
       tr {
         height: 80px;
       }
+
       th, td {
         border: 1px solid #ccc;
         text-align: center;
@@ -100,11 +110,86 @@
         height: 10.4vh;
         max-height: 10.4vh;
       }
+
       th {
         background: #f0f0f0;
       }
+
       td {
         position: relative;
+      }
+
+      .projeto-calendario, .projeto-mais {
+        min-width: 6.5vw;
+        width: 6.5vw;
+        max-width: 6.5vw;
+        border-radius: 4px;
+        margin-top: 2px;
+        padding: 1px 6px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &.projeto-calendario {
+          background: #e3f2fd;
+          color: #1565c0;
+        }
+
+        &.projeto-mais {
+          background: #ffc107;
+          color: #333;
+          
+          &:hover {
+            background: #ffb300;
+          }
+        }
+      }
+
+      .today { 
+        background: #ffe30036; 
+      }
+
+      .numero-dia {
+        position: absolute;
+        top: 4px;
+        right: 8px;
+        font-size: 1rem;
+        color: #888;
+        z-index: 2;
+      }
+
+      .add-btn {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        border: none;
+        background: #2196f3;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          background: #1769aa;
+        }
+
+        &::before {
+          font-family: "Font Awesome";
+          content: "\2b";
+          display: block;
+          width: 13px;
+          height: 16px;
+        }
       }
     }
   }
@@ -112,18 +197,21 @@
 
 .Bloco-3 {
   flex: 0 0 15%;
+
   .Bloco-infousuario {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 19px;
+
     .foto-usuario {
-      width: 200px;
-      height: 200px;
+      width: 144px;
+      height: 144px;
       align-content: center;
       border-radius: 50%;
       background-color: rgb(240, 214, 250);
+      
       img {
         width: 100%;
         border-radius: 50%;
@@ -132,32 +220,7 @@
   }
 }
 
-.projeto-calendario, .projeto-mais {
-  min-width: 6.5vw;
-  width: 6.5vw;
-  max-width: 6.5vw;
-  border-radius: 4px;
-  margin-top: 2px;
-  padding: 1px 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  &.projeto-calendario {
-    background: #e3f2fd;
-    color: #1565c0;
-  }
-  &.projeto-mais {
-    background: #ffc107;
-    color: #333;
-    &:hover {
-      background: #ffb300;
-    }
-  }
-}
+
 
 .projet-calendario-nome, .projet-calendario-descricao {
   text-overflow: ellipsis;
@@ -302,37 +365,5 @@
 }
 
 .formulario-btn:hover {
-  background: #1769aa;
-}
-
-.today { 
-  background: #ffe30036; 
-}
-
-.numero-dia {
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  font-size: 1rem;
-  color: #888;
-  z-index: 2;
-}
-
-.add-btn {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  border: none;
-  background: #2196f3;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-  z-index: 1;
-}
-
-.add-btn:hover {
   background: #1769aa;
 }
