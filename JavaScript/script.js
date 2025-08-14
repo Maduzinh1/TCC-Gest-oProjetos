@@ -7,6 +7,8 @@ let temporizadorSegundos = 0;
 let temporizadorInterval = null;
 let temporizadorAtivo = false;
 
+
+//Temporizador
 function atualizarTemporizador() {
     if (temporizadorSegundos > 0) {
         temporizadorSegundos--;
@@ -23,7 +25,7 @@ function mostrarTemporizador() {
     const horas = Math.floor(temporizadorSegundos / 3600).toString().padStart(2, '0');
     const minutos = Math.floor((temporizadorSegundos % 3600) / 60).toString().padStart(2, '0');
     const segundos = (temporizadorSegundos % 60).toString().padStart(2, '0');
-    document.getElementById('relogio').textContent = `${horas}:${minutos}:${segundos}`;
+    document.getElementById('temporizador').textContent = `${horas}:${minutos}:${segundos}`;
 }
 
 function iniciarTemporizador() {
@@ -42,10 +44,10 @@ function alternarTemporizador() {
     const btn = document.getElementById('btn-iniciar-pausar');
     if (!temporizadorAtivo) {
         iniciarTemporizador();
-        btn.textContent = 'Pausar';
+        btn.className = 'pausar-tempo';
     } else {
         pausarTemporizador();
-        btn.textContent = 'Iniciar';
+        btn.className = 'iniciar-tempo';
     }
 }
 
@@ -53,7 +55,7 @@ function resetarTemporizador() {
     pausarTemporizador();
     temporizadorSegundos = 0;
     mostrarTemporizador();
-    document.getElementById('btn-iniciar-pausar').textContent = 'Iniciar';
+    document.getElementById('btn-iniciar-pausar').className = 'iniciar-tempo';
 }
 
 function definirTemporizador() {
@@ -63,7 +65,9 @@ function definirTemporizador() {
         mostrarTemporizador();
     }
 }
+//Fim temporizador
 
+//Calendário
 function isToday(dia, mes, ano) {
     return dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear();
 }
@@ -101,6 +105,8 @@ function nextMes() {
 }
 
 carregarCalendarioAjax(mesAtual, anoAtual);
+//Fim calendário
+
 
 function fecharPopupAddProjeto() {
     document.getElementById('adicionarProjeto').style.display = 'none';

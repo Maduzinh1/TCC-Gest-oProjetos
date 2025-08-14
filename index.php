@@ -18,7 +18,7 @@
 
   <div class="banner">
     <figure>
-      <img src="img/ceu.jpg"  width="100%" height="300">
+      <img src="img/ceu.jpg">
     </figure>
   </div>
 
@@ -26,11 +26,13 @@
     <div class="content">
 
       <div class="Bloco-1">
-        <div class="Bloco-relogio">
-          <div id="relogio" class="relogio">00:00:00</div>
-          <button onclick="definirTemporizador()">Definir</button>
-          <button id="btn-iniciar-pausar" onclick="alternarTemporizador()">Iniciar</button>
-          <button onclick="resetarTemporizador()">Resetar</button>
+        <div class="Bloco-temporizador">
+          <div id="temporizador" class="temporizador">00:00:00</div>
+          <div class="temporizador-btn">
+            <button class="definir-tempo" onclick="definirTemporizador()"></button>
+            <button id="btn-iniciar-pausar" class="iniciar-tempo" onclick="alternarTemporizador()"></button>
+            <button class="resetar-tempo" onclick="resetarTemporizador()"></button>
+          </div>
         </div>
         <div class="naosei1">naosei1</div>
       </div>
@@ -40,13 +42,13 @@
         <div class="Bloco-calendario">
           <div class="titulo-calendario">
             <h2 id="mes-do-ano"></h2>
-            <div>
-              <button type="button" onclick="prevMes()">Anterior</button>
-              <button type="button" onclick="nextMes()">Próximo</button>
+            <div class="titulo-calendario-btn">
+              <button type="button" class="prevMes" onclick="prevMes()"></button>
+              <button type="button" class="nextMes" onclick="nextMes()"></button>
             </div>
           </div>
           <table id="tabela-calendario" class="calendario">
-
+            <!-- Conteúdo preenchido via JS e PHP -->
           </table>
         </div>
       </div>
@@ -73,7 +75,7 @@
     <h1>footer</h1>
   </div>
 
-  <!-- conteudo invisivel alterado com js -->
+  <!-- Conteúdo invisível alterado com JS -->
   <div id="adicionarProjeto" class="popup">
     <div class="popup-content">
       <div class="popup-header">

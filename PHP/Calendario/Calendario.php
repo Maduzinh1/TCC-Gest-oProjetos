@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\map;
+
 require_once (__DIR__."/../Classes/Projeto.class.php");
 setlocale(LC_TIME, 'portuguese'); 
 date_default_timezone_set('America/Sao_Paulo');
@@ -40,12 +43,19 @@ function gerarCalendario($mes, $ano, $projetos_array) {
                 $isHoje = ($dataStr == $hoje);
                 $projetosDia = array_filter($projetos_array, fn($p) => $p['data_inicio'] == $dataStr);
                 $cellClasses = [];
-                if ($isHoje) $cellClasses[] = 'today';
-                if (count($projetosDia) > 0) $cellClasses[] = 'dia-com-projeto';
-                $html .= '<td class="'.implode(' ', $cellClasses).'">';
+                if ($isHoje) {
+                    $cellClasses[] = 'today';
+                }
+                if (count($projetosDia) > 0) {
+                    $cellClasses[] = 'dia-com-projeto';
+                }
+                $html .= '<td class="'.implode(' ', $cellClasses).'" onclick="abrirPopupProjetosDoDia(\''.$dataStr.'\', event)">';
                 $html .= "<span class='numero-dia'>$dia</span>";
-                foreach ($projetosDia as $p) {
-                    $html .= "<div class='projeto-calendario'>{$p['nome']}</div>";
+                if (count($projetosDia) > 3) {
+                    $html .= implode('', array_map(fn($p) => "<div class='projeto-calendario'>{$p['nome']}</div>", array_slice($projetosDia, 0, 2)));
+                    $html .= "<div class='projeto-mais'>Mais....</div>";
+                } else {
+                    $html .= implode('', array_map(fn($p) => "<div class='projeto-calendario'>{$p['nome']}</div>", $projetosDia));
                 }
                 $html .= '<button class="add-btn" onclick="adicionarPojetos(event); event.stopPropagation();" title="Adicionar evento"></button>';
                 $html .= '</td>';
