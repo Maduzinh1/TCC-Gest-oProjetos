@@ -5,190 +5,67 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema gerenciadorprojetos
+-- Schema leaves
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema gerenciadorprojetos
+-- Schema leaves
 -- -----------------------------------------------------
-CREATE SCHEMA `gerenciadorprojetos` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
-USE `gerenciadorprojetos` ;
+CREATE SCHEMA `leaves` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+USE `leaves` ;
 
 -- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Usuarios`
+-- Table `leaves`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Usuarios` (
+CREATE TABLE IF NOT EXISTS `leaves`.`Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255),
-  `genero` CHAR(1),
-  `data_nascimento` DATE,
-  `cidade` VARCHAR(255),
-  `estado` VARCHAR(255),
-  `pais` VARCHAR(255),
-  `numero` INT,
   `email` VARCHAR(255),
   `senha` VARCHAR(255),
-  `cargo` VARCHAR(255),
-  `tipo` ENUM('usuario', 'administrador'),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Evento`
+-- Table `leaves`.`Calendario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Evento` (
+CREATE TABLE IF NOT EXISTS `leaves`.`Calendario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255),
-  `data` DATE,
   `descricao` VARCHAR(255),
-  `urgencia` ENUM('1', '2', '3'),
-  `status` ENUM('fazer', 'andamento', 'concluido'),
+  `data_inicio` DATE,
+  `data_fim` DATE,
+  `status` ENUM('A fazer', 'Fazendo', 'Concluído'),
+  `urgencia` ENUM('Baixa', 'Média', 'Alta'),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Equipe`
+-- Table `leaves`.`Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Equipe` (
+CREATE TABLE IF NOT EXISTS `leaves`.`Tag` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255),
-  `descricao` VARCHAR(255),
-  `data_inicio` DATE,
-  `objetivo` VARCHAR(255),
-  `idUsu` INT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_equipe_usuarios`
-    FOREIGN KEY (`idUsu`)
-    REFERENCES `gerenciadorprojetos`.`Usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Projeto`
+-- Table `leaves`.`Calendario_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Projeto` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255),
-  `descricao` VARCHAR(255),
-  `tag` VARCHAR(255),
-  `data_inicio` DATE,
-  `data_fim` DATE,
-  `status` ENUM('A fazer', 'Fazendo', 'Concluído'),
-  `urgencia` ENUM('Baixa', 'Média', 'Alta'),
-  `idEquipe` INT,
-  `idEvento` INT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_projeto_equipe`
-    FOREIGN KEY (`idEquipe`)
-    REFERENCES `gerenciadorprojetos`.`Equipe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_projeto_evento`
-    FOREIGN KEY (`idEvento`)
-    REFERENCES `gerenciadorprojetos`.`Evento` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE IF NOT EXISTS `leaves`.`Calendario_Tag` (
+  `idCalendario` INT NOT NULL,
+  `idTag` INT NOT NULL,
+  PRIMARY KEY (`idCalendario`, `idTag`),
+  CONSTRAINT `fk_Calendario_Tag_Calendario`
+    FOREIGN KEY (`idCalendario`)
+    REFERENCES `leaves`.`Calendario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_Calendario_Tag_Tag`
+    FOREIGN KEY (`idTag`)
+    REFERENCES `leaves`.`Tag` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Tarefa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Tarefa` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255),
-  `descricao` VARCHAR(255),
-  `tag` VARCHAR(255),
-  `data_fim` DATE,
-  `status` ENUM('A fazer', 'Fazendo', 'Concluído'),
-  `urgencia` ENUM('Baixa', 'Média', 'Alta'),
-  `idEquipe` INT,
-  `idProjeto` INT,
-  `idEvento` INT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_tarefa_equipe`
-    FOREIGN KEY (`idEquipe`)
-    REFERENCES `gerenciadorprojetos`.`Equipe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tarefa_projeto`
-    FOREIGN KEY (`idProjeto`)
-    REFERENCES `gerenciadorprojetos`.`Projeto` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tarefa_evento`
-    FOREIGN KEY (`idEvento`)
-    REFERENCES `gerenciadorprojetos`.`Evento` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Sub_Tarefa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Sub_Tarefa` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255),
-  `descricao` VARCHAR(255),
-  `status` ENUM('fazer', 'andamento', 'concluido'),
-  `urgencia` ENUM('1', '2', '3'),
-  `prazo` DATE,
-  `idEquipe` INT,
-  `idTarefa` INT,
-  `idEvento` INT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_sub_tarefa_equipe`
-    FOREIGN KEY (`idEquipe`)
-    REFERENCES `gerenciadorprojetos`.`Equipe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sub_tarefa_tarefa`
-    FOREIGN KEY (`idTarefa`)
-    REFERENCES `gerenciadorprojetos`.`Tarefa` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sub_tarefa_evento`
-    FOREIGN KEY (`idEvento`)
-    REFERENCES `gerenciadorprojetos`.`Evento` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `gerenciadorprojetos`.`Mensagens`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gerenciadorprojetos`.`Mensagens` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `mensagem` TEXT,
-  `tipo` ENUM('geral', 'equipe', 'privado'),
-  `data_envio` DATE,
-  `idRemetente` INT,
-  `idDestinatario` INT,
-  `idEquipe` INT,
-  `idProjeto` INT,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_mensagens_remetente`
-    FOREIGN KEY (`idRemetente`)
-    REFERENCES `gerenciadorprojetos`.`Usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mensagens_destinatario`
-    FOREIGN KEY (`idDestinatario`)
-    REFERENCES `gerenciadorprojetos`.`Usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mensagens_equipe`
-    FOREIGN KEY (`idEquipe`)
-    REFERENCES `gerenciadorprojetos`.`Equipe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_mensagens_projeto`
-    FOREIGN KEY (`idProjeto`)
-    REFERENCES `gerenciadorprojetos`.`Projeto` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

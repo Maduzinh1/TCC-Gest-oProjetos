@@ -78,7 +78,7 @@ function pegarNomeMes(mes) {
 }
 
 function carregarCalendarioAjax(mes, ano) {
-    fetch(`./PHP/Calendario/Calendario.php?mes=${mes}&ano=${ano}`)
+    fetch(`./PHP/Calendario/GerarCalendario.php?mes=${mes}&ano=${ano}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-calendario').innerHTML = html;
@@ -108,35 +108,35 @@ carregarCalendarioAjax(mesAtual, anoAtual);
 //Fim calendário
 
 
-function fecharPopupAddProjeto() {
-    document.getElementById('adicionarProjeto').style.display = 'none';
+function fecharPopupAddItem() {
+    document.getElementById('adicionarItem').style.display = 'none';
 }
 
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
-    const popupAdicionarProjeto = document.getElementById('adicionarProjeto');
-    const popupProjetosDoDia = document.getElementById('popupProjetosDoDia');
-    if (event.target == popupAdicionarProjeto || event.target == popupProjetosDoDia) {
-        popupAdicionarProjeto.style.display = "none";
-        popupProjetosDoDia.style.display = "none";
+    const popupAdicionarItem = document.getElementById('adicionarItem');
+    const popupItemsDoDia = document.getElementById('popupItemsDoDia');
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia) {
+        popupAdicionarItem.style.display = "none";
+        popupItemsDoDia.style.display = "none";
     }
 }
 
-function abrirPopupProjetosDoDia(dataStr, event) {
+function abrirPopupItemsDoDia(dataStr, event) {
     event.stopPropagation();
-    let projetosDia = [];
-    if (typeof projetos !== "undefined") {
-        projetosDia = projetos.filter(p => p.data_inicio === dataStr);
+    let itemsDia = [];
+    if (typeof items !== "undefined") {
+        itemsDia = items.filter(i => i.data_inicio === dataStr);
     }
     const [ano, mes, dia] = dataStr.split('-');
     let html = `
         <div class="popup-header">
             <span class="popup-dia">${dia}/${mes}/${ano}</span>
-            <span class="close" onclick="fecharPopupProjetosDoDia()">&times;</span>
+            <span class="close" onclick="fecharPopupItemsDoDia()">&times;</span>
         </div>
     `;
-    if (projetosDia.length === 0) {
-        html += "<p>Nenhum projeto neste dia.</p>";
+    if (itemsDia.length === 0) {
+        html += "<p>Nenhum item neste dia.</p>";
     } else {
          html += `
             <table style="width:100%; border-collapse:collapse;">
@@ -150,16 +150,16 @@ function abrirPopupProjetosDoDia(dataStr, event) {
                 </thead>
                 <tbody>
         `;
-        projetosDia.forEach(p => {
+        itemsDia.forEach(i => {
             html += `
                 <tr>
-                    <td class="projet-calendario-nome">${p.nome}</td>
-                    <td class="projet-calendario-descricao">${p.descricao || ''}</td>
+                    <td class="item-calendario-nome">${i.nome}</td>
+                    <td class="item-calendario-descricao">${i.descricao || ''}</td>
                     <td style="text-align:center;">
-                        <button class="btn-editar" onclick="alterarProjeto(${p.id}, event)" title="Alterar">✏️</button>
+                        <button class="btn-editar" onclick="alterarItem(${i.id}, event)" title="Alterar">✏️</button>
                     </td>
                     <td style="text-align:center;">
-                        <button class="btn-excluir" onclick="excluirProjeto(${p.id})" title="Excluir">🗑️</button>
+                        <button class="btn-excluir" onclick="excluirItem(${i.id})" title="Excluir">🗑️</button>
                     </td>
                 </tr>
             `;
@@ -169,44 +169,44 @@ function abrirPopupProjetosDoDia(dataStr, event) {
             </table>
         `;
     }
-    document.getElementById('popupProjetosDoDiaContent').innerHTML = html;
-    document.getElementById('popupProjetosDoDia').style.display = 'flex';
+    document.getElementById('popupItemsDoDiaContent').innerHTML = html;
+    document.getElementById('popupItemsDoDia').style.display = 'flex';
 }
 
-function fecharPopupProjetosDoDia() {
-    document.getElementById('popupProjetosDoDia').style.display = 'none';
+function fecharPopupItemsDoDia() {
+    document.getElementById('popupItemsDoDia').style.display = 'none';
 }
 
-function adicionarPojetos(event) {
+function adicionarItem(event) {
     event.stopPropagation();
     // Limpa campos
     document.getElementById('eventForm').reset();
-    document.getElementById('form-legend').textContent = 'Adicionar Projeto';
-    const btn = document.getElementById('form-btn-projeto');
-    btn.textContent = 'Adicionar Projeto';
+    document.getElementById('form-legend').textContent = 'Adicionar Item';
+    const btn = document.getElementById('form-btn-item');
+    btn.textContent = 'Adicionar Item';
     btn.value = 'salvar';
-    document.getElementById('adicionarProjeto').style.display = 'flex';
+    document.getElementById('adicionarItem').style.display = 'flex';
 }
 
-function alterarProjeto(id, event) {
+function alterarItem(id, event) {
     event.stopPropagation();
-    const projeto = projetos.find(p => p.id == id);
-    if (!projeto) return;
+    const item = items.find(i => i.id == id);
+    if (!item) return;
 
-    const form = document.querySelector('#adicionarProjeto form');
+    const form = document.querySelector('#adicionarItem form');
     if (!form) return;
 
-    form.querySelector('input[name="id"]').value = projeto.id || '';
-    form.querySelector('input[name="nome"]').value = projeto.nome || '';
-    form.querySelector('textarea[name="descricao"]').value = projeto.descricao || '';
-    form.querySelector('input[name="data_inicio"]').value = projeto.data_inicio || '';
-    form.querySelector('input[name="data_fim"]').value = projeto.data_fim || '';
-    form.querySelector('select[name="tag"]').value = projeto.tag || '';
-    form.querySelector('select[name="status"]').value = projeto.status || '';
-    form.querySelector('select[name="urgencia"]').value = projeto.urgencia || '';
+    form.querySelector('input[name="id"]').value = item.id || '';
+    form.querySelector('input[name="nome"]').value = item.nome || '';
+    form.querySelector('textarea[name="descricao"]').value = item.descricao || '';
+    form.querySelector('input[name="data_inicio"]').value = item.data_inicio || '';
+    form.querySelector('input[name="data_fim"]').value = item.data_fim || '';
+    form.querySelector('select[name="tag"]').value = item.tag || '';
+    form.querySelector('select[name="status"]').value = item.status || '';
+    form.querySelector('select[name="urgencia"]').value = item.urgencia || '';
 
     // Troca legend e botão
-    document.querySelector('#adicionarProjeto legend').textContent = 'Alterar Projeto';
+    document.querySelector('#adicionarItem legend').textContent = 'Alterar Item';
     const btn = form.querySelector('button[type="submit"]');
     if (btn) {
         btn.textContent = 'Salvar Alterações';
@@ -214,28 +214,28 @@ function alterarProjeto(id, event) {
     }
 
     // Exibe o popup do formulário
-    document.getElementById('adicionarProjeto').style.display = 'flex';
-    document.getElementById('popupProjetosDoDia').style.display = 'none';
+    document.getElementById('adicionarItem').style.display = 'flex';
+    document.getElementById('popupItemsDoDia').style.display = 'none';
 }
 
-function excluirProjeto(id) {
-    if (confirm('Tem certeza que deseja excluir este projeto?')) {
-        // Busca o projeto pelo id
-        const projeto = projetos.find(p => p.id == id);
-        if (!projeto) return;
+function excluirItem(id) {
+    if (confirm('Tem certeza que deseja excluir este item?')) {
+        // Busca o item pelo id
+        const item = items.find(p => p.id == id);
+        if (!item) return;
 
         // Cria um formulário temporário para enviar via POST
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = 'PHP/Projeto/Projeto.php';
+        form.action = 'PHP/Calendario/Calendario.php';
 
-        // Adiciona todos os campos do projeto como inputs hidden
-        for (const campo in projeto) {
-            if (projeto.hasOwnProperty(campo)) {
+        // Adiciona todos os campos do item como inputs hidden
+        for (const campo in item) {
+            if (item.hasOwnProperty(campo)) {
                 const input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = campo;
-                input.value = projeto[campo];
+                input.value = item[campo];
                 form.appendChild(input);
             }
         }

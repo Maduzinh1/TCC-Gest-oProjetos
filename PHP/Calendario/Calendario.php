@@ -1,71 +1,52 @@
 <?php
+    require_once("../Classes/Calendario.class.php");
 
-use function PHPSTORM_META\map;
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $id = isset($_POST['id'])?$_POST['id']:0;
+        $nome = isset($_POST['nome'])?$_POST['nome']:"";
+        $descricao = isset($_POST['descricao'])?$_POST['descricao']:"";
+        $data_inicio = isset($_POST['data_inicio'])?$_POST['data_inicio']:"";
+        $data_fim = isset($_POST['data_fim'])?$_POST['data_fim']:"";
+        $status = isset($_POST['status'])?$_POST['status']:"";
+        $urgencia = isset($_POST['urgencia'])?$_POST['urgencia']:"";
+        $acao = isset($_POST['acao'])?$_POST['acao']:"";
 
-require_once (__DIR__."/../Classes/Projeto.class.php");
-setlocale(LC_TIME, 'portuguese'); 
-date_default_timezone_set('America/Sao_Paulo');
-$mes = isset($_GET['mes']) ? intval($_GET['mes']) : date('m');
-$ano = isset($_GET['ano']) ? intval($_GET['ano']) : date('Y');
-$busca = isset($_GET['busca'])?$_GET['busca']:0;
-$tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
-$projetos = Projeto::listar($tipo, $busca);
-$projetos_array = [];
-foreach ($projetos as $projeto) {
-    $projetos_array[] = [
-        'id' => $projeto->getId(),
-        'nome' => $projeto->getNome(),
-        'descricao' => $projeto->getDescricao(),
-        'tag' => $projeto->getTag(),
-        'data_inicio' => $projeto->getDataInicio(),
-        'data_fim' => $projeto->getDataFim(),
-        'status' => $projeto->getStatus(),
-        'urgencia' => $projeto->getUrgencia()
-    ];
-}
-
-function gerarCalendario($mes, $ano, $projetos_array) {
-    $primeiroDia = date('w', strtotime("$ano-$mes-01"));
-    $diasNoMes = date('t', strtotime("$ano-$mes-01"));
-    $diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    $hoje = date('Y-m-d');
-    $html = '<tr>' . implode('', array_map(fn($d) => "<th>$d</th>", $diasDaSemana)) . '</tr>';
-    $dia = 1;
-    for ($semana = 0; $semana < 6; $semana++) {
-        $html .= '<tr>';
-        for ($i = 0; $i < 7; $i++) {
-            if ($semana === 0 && $i < $primeiroDia) {
-                $html .= '<td></td>';
-            } elseif ($dia > $diasNoMes) {
-                $html .= '<td></td>';
-            } else {
-                $dataStr = sprintf('%04d-%02d-%02d', $ano, $mes, $dia);
-                $isHoje = ($dataStr == $hoje);
-                $projetosDia = array_filter($projetos_array, fn($p) => $p['data_inicio'] == $dataStr);
-                $cellClasses = [];
-                if ($isHoje) {
-                    $cellClasses[] = 'today';
-                }
-                if (count($projetosDia) > 0) {
-                    $cellClasses[] = 'dia-com-projeto';
-                }
-                $html .= '<td class="'.implode(' ', $cellClasses).'" onclick="abrirPopupProjetosDoDia(\''.$dataStr.'\', event)">';
-                $html .= "<span class='numero-dia'>$dia</span>";
-                if (count($projetosDia) > 3) {
-                    $html .= implode('', array_map(fn($p) => "<div class='projeto-calendario'>{$p['nome']}</div>", array_slice($projetosDia, 0, 2)));
-                    $html .= "<div class='projeto-mais'>Mais....</div>";
-                } else {
-                    $html .= implode('', array_map(fn($p) => "<div class='projeto-calendario'>{$p['nome']}</div>", $projetosDia));
-                }
-                $html .= '<button class="add-btn" onclick="adicionarPojetos(event); event.stopPropagation();" title="Adicionar evento"></button>';
-                $html .= '</td>';
-                $dia++;
-            }
+        $item = new Calendario($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia);
+        if ($acao == 'salvar') {
+            $resultado = $item->inserir();
+        } elseif ($acao == 'alterar') {
+            $resultado = $item->alterar();
+        } elseif ($acao == 'excluir') {
+            $resultado = $item->excluir();
         }
-        $html .= '</tr>';
-    }
-    return $html;
-}
 
-echo gerarCalendario($mes + 1, $ano, $projetos_array);
+        if ($resultado) {
+            header("Location: ../../index.php");
+        } else {
+            echo "Erro ao salvar dados: ". $item;
+        }
+    }elseif ($_SERVER['REQUEST_METHOD'] == 'GET'){
+        $id = isset($_GET['id'])?$_GET['id']:0;
+        $resultado = Calendario::listar(1,$id);
+        if ($resultado) {
+            $item = $resultado[0];
+            $formulario = str_replace('{id}', $item->getId(), $formulario);
+            $formulario = str_replace('{nome}', $item->getNome(), $formulario);
+            $formulario = str_replace('{descricao}', $item->getDescricao(), $formulario);
+            $formulario = str_replace('{data_inicio}', $item->getDataInicio(), $formulario);
+            $formulario = str_replace('{data_fim}', $item->getDataFim(), $formulario);
+            $formulario = str_replace('{status}', $item->getStatus(), $formulario);
+            $formulario = str_replace('{urgencia}', $item->getUrgencia(), $formulario);
+        } else {
+            $formulario = str_replace('{id}', 0, $formulario);
+            $formulario = str_replace('{nome}', '', $formulario);
+            $formulario = str_replace('{descricao}', '', $formulario);
+            $formulario = str_replace('{data_inicio}', '', $formulario);
+            $formulario = str_replace('{data_fim}', '', $formulario);
+            $formulario = str_replace('{status}', '', $formulario);
+            $formulario = str_replace('{urgencia}', '', $formulario);
+        }
+        print($formulario);
+        header("Location: ../../index.php");
+    }
 ?>

@@ -234,10 +234,10 @@
         }
       }
 
-      .dia-com-projeto {
+      .dia-com-item {
         cursor: pointer;
 
-        .projeto-calendario, .projeto-mais {
+        .item-calendario, .item-mais {
           min-width: 6.5vw;
           width: 6.5vw;
           max-width: 6.5vw;
@@ -252,12 +252,12 @@
           white-space: nowrap;
           text-overflow: ellipsis;
   
-          &.projeto-calendario {
+          &.item-calendario {
             background: #e3f2fd;
             color: #1565c0;
           }
   
-          &.projeto-mais {
+          &.item-mais {
             background: #ffc107;
             color: #333;
             
@@ -382,14 +382,14 @@
   }
 }
 
-.projet-calendario-nome, .projet-calendario-descricao {
+.item-calendario-nome, .item-calendario-descricao {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   max-width: 10vw;
 }
 
-#adicionarProjeto div.popup-content span.close {
+#adicionarItem div.popup-content span.close {
   display: flex;
   justify-content: end;
 }

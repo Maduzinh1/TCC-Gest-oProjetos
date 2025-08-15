@@ -76,47 +76,38 @@
   </div>
 
   <!-- Conteúdo invisível alterado com JS -->
-  <div id="adicionarProjeto" class="popup">
+  <div id="adicionarItem" class="popup">
     <div class="popup-content">
       <div class="popup-header">
-        <span class="close" onclick="fecharPopupAddProjeto()">&times;</span>
+        <span class="close" onclick="fecharPopupAddItem()">&times;</span>
       </div>
-      <form id="eventForm" class="formulario-projeto" action="PHP/Projeto/Projeto.php" method="POST">
+      <form id="eventForm" class="formulario-item" action="PHP/Calendario/Calendario.php" method="POST">
         <fieldset class="formulario-fieldset">
-          <legend id="form-legend">Adicionar Projeto</legend>
+          <legend id="form-legend">Adicionar Item</legend>
           <input type="hidden" id="id" name="id" value="">
           <div class="formulario-campo campo-titulo">
-            <label for="nome-projeto" class="formulario-label">Nome do projeto:</label>
-            <input type="text" id="nome-projeto" class="formulario-input input-titulo" name="nome" required>
+            <label for="nome-item" class="formulario-label">Nome:</label>
+            <input type="text" id="nome-item" class="formulario-input input-titulo" name="nome" required>
           </div>
 
           <div class="formulario-campo campo-descricao">
-            <label for="descricao-projeto" class="formulario-label">Descrição do projeto:</label>
-            <textarea id="descricao-projeto" class="formulario-textarea input-descricao" name="descricao" required></textarea>
+            <label for="descricao-item" class="formulario-label">Descrição:</label>
+            <textarea id="descricao-item" class="formulario-textarea input-descricao" name="descricao" required></textarea>
           </div>
             
           <div class="formulario-campo">
-            <label for="data_inicio-projeto" class="formulario-label">Data de início:</label>
-            <input type="date" id="data_inicio-projeto" class="formulario-input" name="data_inicio" required>
+            <label for="data_inicio-item" class="formulario-label">Data de início:</label>
+            <input type="date" id="data_inicio-item" class="formulario-input" name="data_inicio" required>
           </div>
             
           <div class="formulario-campo">
-            <label for="data_fim-projeto" class="formulario-label">Data de término:</label>
-            <input type="date" id="data_fim-projeto" class="formulario-input" name="data_fim" required>
-          </div>
-
-          <div class="formulario-campo">
-            <label for="tags-projeto" class="formulario-label">Tags do projeto:</label>
-            <select id="tags-projeto" class="formulario-input input-select" name="tag" required>
-              <option value="A fazer">A fazer</option>
-              <option value="Fazendo">Fazendo</option>
-              <option value="Concluído">Concluído</option>
-            </select>
+            <label for="data_fim-item" class="formulario-label">Data de término:</label>
+            <input type="date" id="data_fim-item" class="formulario-input" name="data_fim" required>
           </div>
             
           <div class="formulario-campo">
-            <label for="status-projeto" class="formulario-label">Status do projeto:</label>
-            <select id="status-projeto" class="formulario-input input-select" name="status" required>
+            <label for="status-item" class="formulario-label">Status:</label>
+            <select id="status-item" class="formulario-input input-select" name="status" required>
               <option value="A fazer">A fazer</option>
               <option value="Fazendo">Fazendo</option>
               <option value="Concluído">Concluído</option>
@@ -124,22 +115,22 @@
           </div>
 
           <div class="formulario-campo">
-            <label for="urgencia-projeto" class="formulario-label">Urgência do projeto:</label>
-            <select id="urgencia-projeto" class="formulario-input input-select" name="urgencia" required>
+            <label for="urgencia-item" class="formulario-label">Urgência:</label>
+            <select id="urgencia-item" class="formulario-input input-select" name="urgencia" required>
               <option value="Baixa">Baixa</option>
               <option value="Média">Média</option>
               <option value="Alta">Alta</option>
             </select>
           </div>
 
-          <button id="form-btn-projeto" type="submit" class="formulario-btn" name="acao" value="salvar">Adicionar Projeto</button>
+          <button id="form-btn-item" type="submit" class="formulario-btn" name="acao" value="salvar">Adicionar item</button>
         </fieldset>
       </form>
     </div>
   </div>
   
-  <div id="popupProjetosDoDia" class="popup">
-    <div id="popupProjetosDoDiaContent" class="popup-content">
+  <div id="popupItemsDoDia" class="popup">
+    <div id="popupItemsDoDiaContent" class="popup-content">
       <!-- Conteúdo preenchido via JS -->
     </div>
   </div>
