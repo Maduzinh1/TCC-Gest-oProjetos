@@ -53,8 +53,11 @@
                     } else {
                         $html .= implode('', array_map(fn($p) => "<div class='item-calendario'>{$p['nome']}</div>", $itemDia));
                     }
-                    $html .= '<button class="add-btn" onclick="abrirPopupAddItem(event)" title="Adicionar evento"></button>';
-                    $html .= '</td>';
+                    $html .= '
+                            <button class="add-btn" onclick="abrirPopupAddItem(event)" title="Adicionar evento">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </td>';
                     $dia++;
                 }
             }

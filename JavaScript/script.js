@@ -41,13 +41,13 @@ function pausarTemporizador() {
 }
 
 function alternarTemporizador() {
-    const btn = document.getElementById('btn-iniciar-pausar');
+    const i = document.getElementById('btn-iniciar-pausar').querySelector('i');
     if (!temporizadorAtivo) {
         iniciarTemporizador();
-        btn.className = 'pausar-tempo';
+        i.className = 'fa-solid fa-pause';
     } else {
         pausarTemporizador();
-        btn.className = 'iniciar-tempo';
+        i.className = 'fa-solid fa-play';
     }
 }
 
@@ -55,7 +55,7 @@ function resetarTemporizador() {
     pausarTemporizador();
     temporizadorSegundos = 0;
     mostrarTemporizador();
-    document.getElementById('btn-iniciar-pausar').className = 'iniciar-tempo';
+    document.getElementById('btn-iniciar-pausar').querySelector('i').className = 'fa-solid fa-play';
 }
 
 function definirTemporizador() {
@@ -66,6 +66,21 @@ function definirTemporizador() {
     }
 }
 //Fim temporizador
+
+//Botões para trocar a tela de calendário pela de tags
+document.getElementById('btn-calendario').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('Bloco-calendario').style.display = 'flex';
+    document.getElementById('Bloco-tags').style.display = 'none';
+});
+
+document.getElementById('btn-tags').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('Bloco-calendario').style.display = 'none';
+    document.getElementById('Bloco-tags').style.display = 'flex';
+    carregarTagsAjax();
+});
+//Fim botões para trocar a tela de calendário pela de tags
 
 //Calendário
 function isToday(dia, mes, ano) {
@@ -107,6 +122,16 @@ function nextMes() {
 carregarCalendarioAjax(mesAtual, anoAtual);
 //Fim calendário
 
+//Tags
+function carregarTagsAjax() {
+    fetch('./PHP/Tags/GerarTags.php')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('tabela-tags').innerHTML = html;
+        });
+}
+//Fim tags
+
 function abrirPopupAddItem(event) {
     if (event) {
         event.stopPropagation();
@@ -130,13 +155,38 @@ function fecharPopupAddItem() {
     document.getElementById('adicionarItem').style.display = 'none';
 }
 
+function abrirPopupAddTag(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    // Limpa o formulário para nova tag
+    const form = document.querySelector('#adicionarTag form');
+    if (form) {
+        form.reset();
+        form.querySelector('input[name="id"]').value = '';
+        document.querySelector('#adicionarTag legend').textContent = 'Adicionar Tag';
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.textContent = 'Adicionar Tag';
+            btn.value = 'adicionar';
+        }
+    }
+    document.getElementById('adicionarTag').style.display = 'flex';
+}
+
+function fecharPopupAddTag() {
+    document.getElementById('adicionarTag').style.display = 'none';
+}
+
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
+    const popupAdicionarTag = document.getElementById('adicionarTag');
     const popupItemsDoDia = document.getElementById('popupItemsDoDia');
-    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia) {
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag) {
         popupAdicionarItem.style.display = "none";
         popupItemsDoDia.style.display = "none";
+        popupAdicionarTag.style.display = "none";
     }
 }
 

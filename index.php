@@ -29,25 +29,50 @@
         <div class="Bloco-temporizador">
           <div id="temporizador" class="temporizador">00:00:00</div>
           <div class="temporizador-btn">
-            <button class="definir-tempo" onclick="definirTemporizador()"></button>
-            <button id="btn-iniciar-pausar" class="iniciar-tempo" onclick="alternarTemporizador()"></button>
-            <button class="resetar-tempo" onclick="resetarTemporizador()"></button>
+            <button class="definir-tempo" onclick="definirTemporizador()">
+              <i class="fa-solid fa-sliders"></i>
+            </button>
+            <button id="btn-iniciar-pausar" class="iniciar-tempo" onclick="alternarTemporizador()">
+              <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="resetar-tempo" onclick="resetarTemporizador()">
+              <i class="fa-solid fa-stop"></i>
+            </button>
           </div>
         </div>
         <div class="naosei1">naosei1</div>
       </div>
 
       <div class="Bloco-2">
-        <div class="naosei2"></div>
-        <div class="Bloco-calendario">
+        <div class="naosei2">
+          <a href="#" id="btn-calendario">Calendário</a>
+          <a href="#" id="btn-tags">Tags</a>
+        </div>
+        <div id="Bloco-calendario" class="Bloco-calendario">
           <div class="titulo-calendario">
             <h2 id="mes-do-ano"></h2>
             <div class="titulo-calendario-btn">
-              <button type="button" class="prevMes" onclick="prevMes()"></button>
-              <button type="button" class="nextMes" onclick="nextMes()"></button>
+              <button type="button" class="prevMes" onclick="prevMes()">
+                <i class="fa-solid fa-angle-left"></i>
+              </button>
+              <button type="button" class="nextMes" onclick="nextMes()">
+                <i class="fa-solid fa-angle-right"></i>
+              </button>
             </div>
           </div>
           <table id="tabela-calendario" class="calendario">
+            <!-- Conteúdo preenchido via JS e PHP -->
+          </table>
+        </div>
+
+        <div id="Bloco-tags" class="Bloco-tags">
+          <div class="titulo-tags">
+            <h2>Lista de tags</h2>
+            <button type="button" class="addTag" onclick="abrirPopupAddTag(event)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+          <table id="tabela-tags" class="tags">
             <!-- Conteúdo preenchido via JS e PHP -->
           </table>
         </div>
@@ -78,8 +103,10 @@
   <!-- Conteúdo invisível alterado com JS -->
   <div id="adicionarItem" class="popup">
     <div class="popup-content">
-      <div class="popup-header">
-        <span class="close" onclick="fecharPopupAddItem()">&times;</span>
+      <div class="popup-header-form">
+        <span class="close" onclick="fecharPopupAddItem()">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
       </div>
       <form id="eventForm" class="formulario-item" onsubmit="salvarItem(event)">
         <fieldset class="formulario-fieldset">
@@ -132,6 +159,29 @@
   <div id="popupItemsDoDia" class="popup">
     <div id="popupItemsDoDiaContent" class="popup-content">
       <!-- Conteúdo preenchido via JS -->
+    </div>
+  </div>
+
+  <!-- Conteúdo invisível alterado com JS -->
+  <div id="adicionarTag" class="popup">
+    <div class="popup-content">
+      <div class="popup-header-form">
+        <span class="close" onclick="fecharPopupAddTag()">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </div>
+      <form id="eventForm" class="formulario-tag" onsubmit="salvarTag(event)">
+        <fieldset class="formulario-fieldset">
+          <legend id="form-legend">Adicionar Tag</legend>
+          <input type="hidden" id="id" name="id" value="">
+          <div class="formulario-campo campo-titulo">
+            <label for="nome-tag" class="formulario-label">Nome:</label>
+            <input type="text" id="nome-tag" class="formulario-input input-titulo" name="nome" required>
+          </div>
+
+          <button id="form-btn-tag" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar tag</button>
+        </fieldset>
+      </form>
     </div>
   </div>
 

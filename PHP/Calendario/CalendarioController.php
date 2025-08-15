@@ -99,9 +99,11 @@
             list($ano, $mes, $dia) = explode('-', $data);
 
             $html = "
-                <div class='popup-header'>
+                <div class='popup-header-dia'>
                     <span class='popup-dia'>{$dia}/{$mes}/{$ano}</span>
-                    <span class='close' onclick='fecharPopupItemsDoDia()'>&times;</span>
+                    <span class='close' onclick='fecharPopupItemsDoDia()'>
+                        <i class='fa-solid fa-xmark'></i>
+                    </span>
                 </div>
             ";
             if (empty($items)) {
