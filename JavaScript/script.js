@@ -107,6 +107,24 @@ function nextMes() {
 carregarCalendarioAjax(mesAtual, anoAtual);
 //Fim calendário
 
+function abrirPopupAddItem(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    // Limpa o formulário para novo item
+    const form = document.querySelector('#adicionarItem form');
+    if (form) {
+        form.reset();
+        form.querySelector('input[name="id"]').value = '';
+        document.querySelector('#adicionarItem legend').textContent = 'Adicionar Item';
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.textContent = 'Adicionar item';
+            btn.value = 'adicionar';
+        }
+    }
+    document.getElementById('adicionarItem').style.display = 'flex';
+}
 
 function fecharPopupAddItem() {
     document.getElementById('adicionarItem').style.display = 'none';
@@ -124,130 +142,90 @@ window.onclick = function(event) {
 
 function abrirPopupItemsDoDia(dataStr, event) {
     event.stopPropagation();
-    let itemsDia = [];
-    if (typeof items !== "undefined") {
-        itemsDia = items.filter(i => i.data_inicio === dataStr);
-    }
-    const [ano, mes, dia] = dataStr.split('-');
-    let html = `
-        <div class="popup-header">
-            <span class="popup-dia">${dia}/${mes}/${ano}</span>
-            <span class="close" onclick="fecharPopupItemsDoDia()">&times;</span>
-        </div>
-    `;
-    if (itemsDia.length === 0) {
-        html += "<p>Nenhum item neste dia.</p>";
-    } else {
-         html += `
-            <table style="width:100%; border-collapse:collapse;">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Alterar</th>
-                        <th>Excluir</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-        itemsDia.forEach(i => {
-            html += `
-                <tr>
-                    <td class="item-calendario-nome">${i.nome}</td>
-                    <td class="item-calendario-descricao">${i.descricao || ''}</td>
-                    <td style="text-align:center;">
-                        <button class="btn-editar" onclick="alterarItem(${i.id}, event)" title="Alterar">✏️</button>
-                    </td>
-                    <td style="text-align:center;">
-                        <button class="btn-excluir" onclick="excluirItem(${i.id})" title="Excluir">🗑️</button>
-                    </td>
-                </tr>
-            `;
+    fetch(`./PHP/Calendario/CalendarioController.php?acao=itens-do-dia&data=${dataStr}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('popupItemsDoDiaContent').innerHTML = html;
+            document.getElementById('popupItemsDoDia').style.display = 'flex';
         });
-        html += `
-                </tbody>
-            </table>
-        `;
-    }
-    document.getElementById('popupItemsDoDiaContent').innerHTML = html;
-    document.getElementById('popupItemsDoDia').style.display = 'flex';
 }
 
 function fecharPopupItemsDoDia() {
     document.getElementById('popupItemsDoDia').style.display = 'none';
 }
 
-function adicionarItem(event) {
-    event.stopPropagation();
-    // Limpa campos
-    document.getElementById('eventForm').reset();
-    document.getElementById('form-legend').textContent = 'Adicionar Item';
-    const btn = document.getElementById('form-btn-item');
-    btn.textContent = 'Adicionar Item';
-    btn.value = 'salvar';
-    document.getElementById('adicionarItem').style.display = 'flex';
+function salvarItem(event) {
+    event.preventDefault();
+    const form = document.querySelector('#eventForm');
+    const formData = new FormData(form);
+
+    // Pega o valor do botão de submit (adicionar ou alterar)
+    const acao = form.querySelector('button[type="submit"]').value;
+    formData.set('acao', acao);
+
+    fetch('./PHP/Calendario/CalendarioController.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.sucesso) {
+            window.location.reload();
+        } else {
+            alert(res.erro || 'Erro ao salvar item.');
+        }
+    });
 }
 
 function alterarItem(id, event) {
     event.stopPropagation();
-    const item = items.find(i => i.id == id);
-    if (!item) return;
+    fetch(`./PHP/Calendario/CalendarioController.php?acao=buscar&id=${id}`)
+        .then(response => response.json())
+        .then(item => {
+            if (item.erro) {
+                alert(item.erro);
+                return;
+            }
+            const form = document.querySelector('#adicionarItem form');
+            if (!form) {
+                return;
+            }
+            
+            form.querySelector('input[name="id"]').value = item.id || '';
+            form.querySelector('input[name="nome"]').value = item.nome || '';
+            form.querySelector('textarea[name="descricao"]').value = item.descricao || '';
+            form.querySelector('input[name="data_inicio"]').value = item.data_inicio || '';
+            form.querySelector('input[name="data_fim"]').value = item.data_fim || '';
+            form.querySelector('select[name="status"]').value = item.status || '';
+            form.querySelector('select[name="urgencia"]').value = item.urgencia || '';
 
-    const form = document.querySelector('#adicionarItem form');
-    if (!form) return;
+            // Troca legend e botão
+            document.querySelector('#adicionarItem legend').textContent = 'Alterar Item';
+            const btn = form.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.textContent = 'Salvar Alterações';
+                btn.value = 'alterar';
+            }
 
-    form.querySelector('input[name="id"]').value = item.id || '';
-    form.querySelector('input[name="nome"]').value = item.nome || '';
-    form.querySelector('textarea[name="descricao"]').value = item.descricao || '';
-    form.querySelector('input[name="data_inicio"]').value = item.data_inicio || '';
-    form.querySelector('input[name="data_fim"]').value = item.data_fim || '';
-    form.querySelector('select[name="tag"]').value = item.tag || '';
-    form.querySelector('select[name="status"]').value = item.status || '';
-    form.querySelector('select[name="urgencia"]').value = item.urgencia || '';
-
-    // Troca legend e botão
-    document.querySelector('#adicionarItem legend').textContent = 'Alterar Item';
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-        btn.textContent = 'Salvar Alterações';
-        btn.value = 'alterar';
-    }
-
-    // Exibe o popup do formulário
-    document.getElementById('adicionarItem').style.display = 'flex';
-    document.getElementById('popupItemsDoDia').style.display = 'none';
+            // Exibe o popup do formulário
+            document.getElementById('adicionarItem').style.display = 'flex';
+            document.getElementById('popupItemsDoDia').style.display = 'none';
+        });
 }
 
 function excluirItem(id) {
-    if (confirm('Tem certeza que deseja excluir este item?')) {
-        // Busca o item pelo id
-        const item = items.find(p => p.id == id);
-        if (!item) return;
-
-        // Cria um formulário temporário para enviar via POST
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'PHP/Calendario/Calendario.php';
-
-        // Adiciona todos os campos do item como inputs hidden
-        for (const campo in item) {
-            if (item.hasOwnProperty(campo)) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = campo;
-                input.value = item[campo];
-                form.appendChild(input);
-            }
+    if (!confirm('Tem certeza que deseja excluir este item?')) return;
+    fetch('./PHP/Calendario/CalendarioController.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `acao=excluir&id=${id}`
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.sucesso) {
+            window.location.reload();
+        } else {
+            alert(res.erro || 'Erro ao excluir item.');
         }
-
-        // Campo hidden para a ação
-        const inputAcao = document.createElement('input');
-        inputAcao.type = 'hidden';
-        inputAcao.name = 'acao';
-        inputAcao.value = 'excluir';
-        form.appendChild(inputAcao);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
+    });
 }

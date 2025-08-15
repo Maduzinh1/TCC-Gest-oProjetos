@@ -316,7 +316,12 @@
     overflow-y: auto;
     border-radius: 8px;
     background: #fff;
-    padding: 30px;
+    padding: 30px 20px;
+
+    .items-dia {
+      width: 100%;
+      border-spacing: 19px 0;
+    }
 
     .popup-header {
       display: flex;

@@ -81,7 +81,7 @@
       <div class="popup-header">
         <span class="close" onclick="fecharPopupAddItem()">&times;</span>
       </div>
-      <form id="eventForm" class="formulario-item" action="PHP/Calendario/Calendario.php" method="POST">
+      <form id="eventForm" class="formulario-item" onsubmit="salvarItem(event)">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Item</legend>
           <input type="hidden" id="id" name="id" value="">
@@ -123,7 +123,7 @@
             </select>
           </div>
 
-          <button id="form-btn-item" type="submit" class="formulario-btn" name="acao" value="salvar">Adicionar item</button>
+          <button id="form-btn-item" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar item</button>
         </fieldset>
       </form>
     </div>
