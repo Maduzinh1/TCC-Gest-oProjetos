@@ -108,7 +108,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="eventForm" class="formulario-item" onsubmit="salvarItem(event)">
+      <form id="itemForm" class="formulario-item" onsubmit="salvarItem(event)">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Item</legend>
           <input type="hidden" id="id" name="id" value="">
@@ -170,7 +170,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="eventForm" class="formulario-tag" onsubmit="salvarTag(event)">
+      <form id="tagForm" class="formulario-tag" onsubmit="salvarTag(event)">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Tag</legend>
           <input type="hidden" id="id" name="id" value="">

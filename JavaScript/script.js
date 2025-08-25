@@ -8,7 +8,7 @@ let temporizadorInterval = null;
 let temporizadorAtivo = false;
 
 
-//Temporizador
+// Temporizador
 function atualizarTemporizador() {
     if (temporizadorSegundos > 0) {
         temporizadorSegundos--;
@@ -65,9 +65,9 @@ function definirTemporizador() {
         mostrarTemporizador();
     }
 }
-//Fim temporizador
+// Fim temporizador
 
-//Botões para trocar a tela de calendário pela de tags
+// Botões para trocar a tela de calendário pela de tags
 document.getElementById('btn-calendario').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('Bloco-calendario').style.display = 'flex';
@@ -80,9 +80,9 @@ document.getElementById('btn-tags').addEventListener('click', function(e) {
     document.getElementById('Bloco-tags').style.display = 'flex';
     carregarTagsAjax();
 });
-//Fim botões para trocar a tela de calendário pela de tags
+// Fim botões para trocar a tela de calendário pela de tags
 
-//Calendário
+// Calendário
 function isToday(dia, mes, ano) {
     return dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear();
 }
@@ -120,9 +120,9 @@ function nextMes() {
 }
 
 carregarCalendarioAjax(mesAtual, anoAtual);
-//Fim calendário
+// Fim calendário
 
-//Tags
+// Tags
 function carregarTagsAjax() {
     fetch('./PHP/Tags/GerarTags.php')
         .then(response => response.text())
@@ -130,7 +130,7 @@ function carregarTagsAjax() {
             document.getElementById('tabela-tags').innerHTML = html;
         });
 }
-//Fim tags
+// Fim tags
 
 function abrirPopupAddItem(event) {
     if (event) {
@@ -204,9 +204,10 @@ function fecharPopupItemsDoDia() {
     document.getElementById('popupItemsDoDia').style.display = 'none';
 }
 
+// Adicionar, alterar e excluir itens
 function salvarItem(event) {
     event.preventDefault();
-    const form = document.querySelector('#eventForm');
+    const form = document.querySelector('#itemForm');
     const formData = new FormData(form);
 
     // Pega o valor do botão de submit (adicionar ou alterar)
@@ -279,3 +280,82 @@ function excluirItem(id) {
         }
     });
 }
+// Fim adicionar, alterar e excluir tags
+
+// Adicionar, alterar e excluir tags
+function salvarTag(event) {
+    event.preventDefault();
+    const form = document.querySelector('#tagForm');
+    const formData = new FormData(form);
+
+    // Pega o valor do botão de submit (adicionar ou alterar)
+    const acao = form.querySelector('button[type="submit"]').value;
+    formData.set('acao', acao);
+
+    fetch('./PHP/Tags/CalendarioController.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.sucesso) {
+            window.location.reload();
+        } else {
+            alert(res.erro || 'Erro ao salvar item.');
+        }
+    });
+}
+
+function alterarTag(id, event) {
+    event.stopPropagation();
+    fetch(`./PHP/Tags/CalendarioController.php?acao=buscar&id=${id}`)
+        .then(response => response.json())
+        .then(item => {
+            if (item.erro) {
+                alert(item.erro);
+                return;
+            }
+            const form = document.querySelector('#adicionarItem form');
+            if (!form) {
+                return;
+            }
+            
+            form.querySelector('input[name="id"]').value = item.id || '';
+            form.querySelector('input[name="nome"]').value = item.nome || '';
+            form.querySelector('textarea[name="descricao"]').value = item.descricao || '';
+            form.querySelector('input[name="data_inicio"]').value = item.data_inicio || '';
+            form.querySelector('input[name="data_fim"]').value = item.data_fim || '';
+            form.querySelector('select[name="status"]').value = item.status || '';
+            form.querySelector('select[name="urgencia"]').value = item.urgencia || '';
+
+            // Troca legend e botão
+            document.querySelector('#adicionarItem legend').textContent = 'Alterar Item';
+            const btn = form.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.textContent = 'Salvar Alterações';
+                btn.value = 'alterar';
+            }
+
+            // Exibe o popup do formulário
+            document.getElementById('adicionarItem').style.display = 'flex';
+            document.getElementById('popupItemsDoDia').style.display = 'none';
+        });
+}
+
+function excluirTag(id) {
+    if (!confirm('Tem certeza que deseja excluir este item?')) return;
+    fetch('./PHP/Tags/CalendarioController.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `acao=excluir&id=${id}`
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.sucesso) {
+            window.location.reload();
+        } else {
+            alert(res.erro || 'Erro ao excluir item.');
+        }
+    });
+}
+// Fim adicionar, alterar e excluir tags
