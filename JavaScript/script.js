@@ -292,7 +292,7 @@ function salvarTag(event) {
     const acao = form.querySelector('button[type="submit"]').value;
     formData.set('acao', acao);
 
-    fetch('./PHP/Tags/CalendarioController.php', {
+    fetch('./PHP/Tags/TagController.php', {
         method: 'POST',
         body: formData
     })
@@ -301,35 +301,31 @@ function salvarTag(event) {
         if (res.sucesso) {
             window.location.reload();
         } else {
-            alert(res.erro || 'Erro ao salvar item.');
+            alert(res.erro || 'Erro ao salvar tag.');
         }
     });
 }
 
 function alterarTag(id, event) {
     event.stopPropagation();
-    fetch(`./PHP/Tags/CalendarioController.php?acao=buscar&id=${id}`)
+    fetch(`./PHP/Tags/TagController.php?acao=buscar&id=${id}`)
         .then(response => response.json())
-        .then(item => {
-            if (item.erro) {
-                alert(item.erro);
+        .then(tag => {
+            if (tag.erro) {
+                alert(tag.erro);
                 return;
             }
-            const form = document.querySelector('#adicionarItem form');
+            const form = document.querySelector('#adicionarTag form');
             if (!form) {
                 return;
             }
             
-            form.querySelector('input[name="id"]').value = item.id || '';
-            form.querySelector('input[name="nome"]').value = item.nome || '';
-            form.querySelector('textarea[name="descricao"]').value = item.descricao || '';
-            form.querySelector('input[name="data_inicio"]').value = item.data_inicio || '';
-            form.querySelector('input[name="data_fim"]').value = item.data_fim || '';
-            form.querySelector('select[name="status"]').value = item.status || '';
-            form.querySelector('select[name="urgencia"]').value = item.urgencia || '';
+            form.querySelector('input[name="id"]').value = tag.id || '';
+            form.querySelector('input[name="nome"]').value = tag.nome || '';
+            form.querySelector('input[name="cor"]').value = tag.cor || '';
 
             // Troca legend e botão
-            document.querySelector('#adicionarItem legend').textContent = 'Alterar Item';
+            document.querySelector('#adicionarTag legend').textContent = 'Alterar Tag';
             const btn = form.querySelector('button[type="submit"]');
             if (btn) {
                 btn.textContent = 'Salvar Alterações';
@@ -337,14 +333,13 @@ function alterarTag(id, event) {
             }
 
             // Exibe o popup do formulário
-            document.getElementById('adicionarItem').style.display = 'flex';
-            document.getElementById('popupItemsDoDia').style.display = 'none';
+            document.getElementById('adicionarTag').style.display = 'flex';
         });
 }
 
 function excluirTag(id) {
-    if (!confirm('Tem certeza que deseja excluir este item?')) return;
-    fetch('./PHP/Tags/CalendarioController.php', {
+    if (!confirm('Tem certeza que deseja excluir esta tag?')) return;
+    fetch('./PHP/Tags/TagController.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `acao=excluir&id=${id}`
@@ -354,7 +349,7 @@ function excluirTag(id) {
         if (res.sucesso) {
             window.location.reload();
         } else {
-            alert(res.erro || 'Erro ao excluir item.');
+            alert(res.erro || 'Erro ao excluir tag.');
         }
     });
 }

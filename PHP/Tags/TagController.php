@@ -11,43 +11,46 @@
                 exit;
             }
 
-            $itens = Tag::listar(1, $id);
-            if (empty($itens)) {
-                echo json_encode(['erro' => 'Item não encontrado']);
+            $tags = Tag::listar(1, $id);
+            if (empty($tags)) {
+                echo json_encode(['erro' => 'Tag não encontrado']);
                 exit;
             }
 
-            $item = $itens[0];
+            $tag = $tags[0];
             echo json_encode([
-                'id' => $item->getId(),
-                'nome' => $item->getNome(),
+                'id' => $tag->getId(),
+                'nome' => $tag->getNome(),
+                'cor' => $tag->getCor()
             ]);
             break;
         
         case 'adicionar':
             $nome = $_POST['nome'] ?? '';
+            $cor = $_POST['cor'] ?? '';
 
-            $item = new Tag(0, $nome);
-            $resultado = $item->inserir();
+            $tag = new Tag(0, $nome, $cor);
+            $resultado = $tag->inserir();
 
             if ($resultado) {
                 echo json_encode(['sucesso' => true]);
             } else {
-                echo json_encode(['erro' => 'Erro ao adicionar item']);
+                echo json_encode(['erro' => 'Erro ao adicionar tag']);
             }
             break;
 
         case 'alterar':
             $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
             $nome = $_POST['nome'] ?? '';
+            $cor = $_POST['cor'] ?? '';
 
-            $item = new Tag($id, $nome);
-            $resultado = $item->alterar();
+            $tag = new Tag($id, $nome, $cor);
+            $resultado = $tag->alterar();
 
             if ($resultado) {
                 echo json_encode(['sucesso' => true]);
             } else {
-                echo json_encode(['erro' => 'Erro ao alterar item']);
+                echo json_encode(['erro' => 'Erro ao alterar tag']);
             }
             break;
 
@@ -58,19 +61,19 @@
                 exit;
             }
 
-            $itens = Tag::listar(1, $id);
-            if (empty($itens)) {
-                echo json_encode(['erro' => 'Item não encontrado']);
+            $tags = Tag::listar(1, $id);
+            if (empty($tags)) {
+                echo json_encode(['erro' => 'Tag não encontrado']);
                 exit;
             }
 
-            $item = $itens[0];
-            $resultado = $item->excluir();
+            $tag = $tags[0];
+            $resultado = $tag->excluir();
 
             if ($resultado) {
                 echo json_encode(['sucesso' => true]);
             } else {
-                echo json_encode(['erro' => 'Erro ao excluir item']);
+                echo json_encode(['erro' => 'Erro ao excluir tag']);
             }
             break;
 

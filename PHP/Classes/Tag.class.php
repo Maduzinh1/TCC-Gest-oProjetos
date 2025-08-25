@@ -3,11 +3,13 @@
     class Tag{
         private $id;
         private $nome;
+        private $cor;
 
         // construtor da classe
-        public function __construct($id, $nome){
+        public function __construct($id, $nome, $cor){
             $this->setId($id);
             $this->setNome($nome);
+            $this->setCor($cor);
         }
 
         public function getId() {
@@ -29,9 +31,17 @@
                 $this->nome = $nome;
         }
 
+        public function getCor(){
+            return $this->cor;
+        }
+
+        public function setCor($cor){
+            $this->cor = $cor;
+        }
+
         // método mágico para imprimir uma tag
         public function __toString():String{
-            $str = "Tag: ".$this->getId()." - ".$this->getNome();
+            $str = "Tag: ".$this->getId()." - ".$this->getNome()." - ".$this->getCor();
             return $str;
         }
 
@@ -39,10 +49,11 @@
         public function inserir():Bool{
             // montar o sql/ query
             $sql = "INSERT INTO Tag 
-                        (nome)
-                        VALUES(:nome)";
+                        (nome, cor)
+                        VALUES(:nome, :cor)";
 
-            $parametros = array(':nome'=>$this->getNome());
+            $parametros = array(':nome'=>$this->getNome(),
+                                ':cor'=>$this->getCor());
 
             return Database::executar($sql, $parametros) == true;
         }
@@ -59,20 +70,22 @@
                 $parametros = [':info'=>$info];
 
             $comando = Database::executar($sql, $parametros);
-            $items = [];
+            $tags = [];
             while ($registro = $comando->fetch()){
-                $item = new Tag($registro['id'], $registro['nome']);
-                array_push($items,$item);
+                $tag = new Tag($registro['id'], $registro['nome'], $registro['cor']);
+                array_push($tags,$tag);
             }
-            return $items;
+            return $tags;
         }
 
         public function alterar():Bool{       
         $sql = "UPDATE Tag
-                    SET nome = :nome
+                    SET nome = :nome, 
+                        cor = :cor
                     WHERE id = :id";
             $parametros = array(':id'=>$this->getId(),
-                            ':nome'=>$this->getNome());
+                                ':nome'=>$this->getNome(),
+                                ':cor'=>$this->getCor());
             return Database::executar($sql, $parametros) == true;
         }
 

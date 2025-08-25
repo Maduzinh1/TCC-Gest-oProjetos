@@ -264,6 +264,10 @@
         }
       }
     }
+
+    .tags {
+      border-spacing: 19px 0;
+    }
   }
 }
 
@@ -388,6 +392,23 @@
           text-align: left;
           display: block;
         }
+
+        .input-descricao {
+          height: 10vh;
+        }
+
+        .input-titulo, .input-descricao {
+          width: 100% !important;
+        }
+
+        .input-select {
+          border-radius: 16px !important;
+        }
+
+        .input-cor {
+          background: transparent !important;
+          padding: 4px !important;
+        }
       }
 
       .campo-titulo, .campo-descricao {
@@ -426,16 +447,4 @@
   justify-content: flex-end;
   align-items: center;
   width: 102%;
-}
-
-.input-descricao {
-  height: 10vh;
-}
-
-.input-titulo, .input-descricao {
-  width: 100% !important;
-}
-
-.input-select {
-  border-radius: 16px !important;
 }

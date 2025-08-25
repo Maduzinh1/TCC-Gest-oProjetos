@@ -174,9 +174,15 @@
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Tag</legend>
           <input type="hidden" id="id" name="id" value="">
+
           <div class="formulario-campo campo-titulo">
             <label for="nome-tag" class="formulario-label">Nome:</label>
             <input type="text" id="nome-tag" class="formulario-input input-titulo" name="nome" required>
+          </div>
+
+          <div class="formulario-campo ">
+            <label for="cor-tag" class="formulario-label">Cor:</label>
+            <input type="color" id="cor-tag" class="formulario-input input-cor" name="cor" required>
           </div>
 
           <button id="form-btn-tag" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar tag</button>
