@@ -24,5 +24,9 @@
             $comando->execute();
             return $comando;
         }
+        public static function getLastInsertId() {
+            $conexao = self::abrirConexao();
+            return $conexao->lastInsertId();
+        }
     }
 ?>

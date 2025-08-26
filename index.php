@@ -1,3 +1,7 @@
+<?php
+  require_once(__DIR__."/PHP/Classes/Tag.class.php");
+  $tags = Tag::listar(0, 0);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -147,6 +151,15 @@
               <option value="Baixa">Baixa</option>
               <option value="Média">Média</option>
               <option value="Alta">Alta</option>
+            </select>
+          </div>
+
+          <div class="formulario-campo">
+            <label for="tag-item" class="formulario-label">Tag:</label>
+            <select id="tag-item" class="formulario-input input-select" name="tag" required>
+              <?php foreach ($tags as $tag): ?>
+                <option value="<?= $tag->getId() ?>"><?= htmlspecialchars($tag->getNome()) ?></option>
+              <?php endforeach; ?>
             </select>
           </div>
 
