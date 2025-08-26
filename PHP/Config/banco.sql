@@ -68,6 +68,17 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Calendario_Tag` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `leaves`.`Pastas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `leaves`.`Pastas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255),
+  `descricao` VARCHAR(255),
+  `imagem` VARCHAR(255),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

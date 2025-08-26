@@ -28,72 +28,103 @@
 
   <div class="preContent">
     <div class="content">
-
-      <div class="Bloco-1">
-        <div class="Bloco-temporizador">
-          <div id="temporizador" class="temporizador">00:00:00</div>
-          <div class="temporizador-btn">
-            <button class="definir-tempo" onclick="definirTemporizador()">
-              <i class="fa-solid fa-sliders"></i>
-            </button>
-            <button id="btn-iniciar-pausar" class="iniciar-tempo" onclick="alternarTemporizador()">
-              <i class="fa-solid fa-play"></i>
-            </button>
-            <button class="resetar-tempo" onclick="resetarTemporizador()">
-              <i class="fa-solid fa-stop"></i>
-            </button>
-          </div>
-        </div>
-        <div class="naosei1">naosei1</div>
-      </div>
-
-      <div class="Bloco-2">
-        <div class="naosei2">
-          <a href="#" id="btn-calendario">Calendário</a>
-          <a href="#" id="btn-tags">Tags</a>
-        </div>
-        <div id="Bloco-calendario" class="Bloco-calendario">
-          <div class="titulo-calendario">
-            <h2 id="mes-do-ano"></h2>
-            <div class="titulo-calendario-btn">
-              <button type="button" class="prevMes" onclick="prevMes()">
-                <i class="fa-solid fa-angle-left"></i>
+      <div class="Linha-1">
+        <div class="Bloco-1">
+          <div class="Bloco-temporizador">
+            <div id="temporizador" class="temporizador">00:00:00</div>
+            <div class="temporizador-btn">
+              <button class="definir-tempo" onclick="definirTemporizador()">
+                <i class="fa-solid fa-sliders"></i>
               </button>
-              <button type="button" class="nextMes" onclick="nextMes()">
-                <i class="fa-solid fa-angle-right"></i>
+              <button id="btn-iniciar-pausar" class="iniciar-tempo" onclick="alternarTemporizador()">
+                <i class="fa-solid fa-play"></i>
+              </button>
+              <button class="resetar-tempo" onclick="resetarTemporizador()">
+                <i class="fa-solid fa-stop"></i>
               </button>
             </div>
           </div>
-          <table id="tabela-calendario" class="calendario">
-            <!-- Conteúdo preenchido via JS e PHP -->
-          </table>
+          <div class="naosei1">naosei1</div>
         </div>
 
-        <div id="Bloco-tags" class="Bloco-tags">
-          <div class="titulo-tags">
-            <h2>Lista de tags</h2>
-            <button type="button" class="addTag" onclick="abrirPopupAddTag(event)">
-              <i class="fa-solid fa-plus"></i>
-            </button>
+        <div class="Bloco-2">
+          <div class="naosei2">
+            <a href="#" id="btn-calendario">Calendário</a>
+            <a href="#" id="btn-tags">Tags</a>
           </div>
-          <table id="tabela-tags" class="tags">
-            <!-- Conteúdo preenchido via JS e PHP -->
-          </table>
+          <div id="Bloco-calendario" class="Bloco-calendario">
+            <div class="titulo-calendario">
+              <h2 id="mes-do-ano"></h2>
+              <div class="titulo-calendario-btn">
+                <button type="button" class="prevMes" onclick="prevMes()">
+                  <i class="fa-solid fa-angle-left"></i>
+                </button>
+                <button type="button" class="nextMes" onclick="nextMes()">
+                  <i class="fa-solid fa-angle-right"></i>
+                </button>
+              </div>
+            </div>
+            <table id="tabela-calendario" class="calendario">
+              <!-- Conteúdo preenchido via JS e PHP -->
+            </table>
+          </div>
+
+          <div id="Bloco-tags" class="Bloco-tags">
+            <div class="titulo-tags">
+              <h2>Lista de tags</h2>
+              <button type="button" class="addTag" onclick="abrirPopupAddTag(event)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <table id="tabela-tags" class="tags">
+              <!-- Conteúdo preenchido via JS e PHP -->
+            </table>
+          </div>
+        </div>
+        
+        <div class="Bloco-3">
+          <div class="Bloco-infousuario">
+            <div class="foto-usuario">
+              <figure>
+                <img src="img/perfil.jpg" alt="Foto do Usuário" class="foto-usuario-img">
+              </figure>
+            </div>
+            <div class="informacoes-usuario">
+              <h1>Informações do Usuário</h1>
+              <p>Nome:</p>
+              <p>Email:</p>
+              <p>Telefone:</p>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div class="Bloco-3">
-        <div class="Bloco-infousuario">
-          <div class="foto-usuario">
-            <figure>
-              <img src="img/perfil.jpg" alt="Foto do Usuário" class="foto-usuario-img">
-            </figure>
-          </div>
-          <div class="informacoes-usuario">
-            <h1>Informações do Usuário</h1>
-            <p>Nome:</p>
-            <p>Email:</p>
-            <p>Telefone:</p>
+      <div class="Linha-2">
+        <div class="Bloco-4">
+          <div class="Bloco-pastas">
+            <div class="Pastas-titulo">
+              Pastas
+              <button type="button">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <div class="Pastas-conteudo">
+              <div class="Pasta1">
+                <div class="ImageSide">
+                  <img src="img/perfil.jpg" alt="Pasta 1">
+                </div>
+                <div class="DescSide">
+                  <h3>Pasta 1</h3>
+                  <p>Descrição da Pasta 1</p>
+                </div>
+              </div>
+              <div class="conteudo2">conteudo2</div>
+              <div class="conteudo3">conteudo3</div>
+              <div class="conteudo4">conteudo4</div>
+              <div class="conteudo5">conteudo5</div>
+              <div class="conteudo6">conteudo6</div>
+              <div class="conteudo7">conteudo7</div>
+              <div class="conteudo8">conteudo8</div>
+            </div>
           </div>
         </div>
       </div>
@@ -199,6 +230,40 @@
           </div>
 
           <button id="form-btn-tag" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar tag</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <!-- Conteúdo invisível alterado com JS -->
+  <div id="adicionarPasta" class="popup">
+    <div class="popup-content">
+      <div class="popup-header-form">
+        <span class="close" onclick="fecharPopupAddPasta()">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </div>
+      <form id="pastaForm" class="formulario-pasta" onsubmit="salvarPasta(event)">
+        <fieldset class="formulario-fieldset">
+          <legend id="form-legend">Adicionar Pasta</legend>
+          <input type="hidden" id="id" name="id" value="">
+
+          <div class="formulario-campo campo-titulo">
+            <label for="nome-pasta" class="formulario-label">Nome:</label>
+            <input type="text" id="nome-pasta" class="formulario-input input-titulo" name="nome" required>
+          </div>
+
+          <div class="formulario-campo campo-descricao">
+            <label for="descricao-pasta" class="formulario-label">Descrição:</label>
+            <textarea id="descricao-pasta" class="formulario-textarea input-descricao" name="descricao" required></textarea>
+          </div>
+
+          <div class="formulario-campo">
+            <label for="imagem-pasta" class="formulario-label">Imagem (URL):</label>
+            <input type="image" id="imagem-pasta" class="formulario-input" name="imagem">
+          </div>
+
+          <button id="form-btn-pasta" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar pasta</button>
         </fieldset>
       </form>
     </div>

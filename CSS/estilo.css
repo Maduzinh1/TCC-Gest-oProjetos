@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+*::after, *::before {
+  font-size: 0.7rem;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -12,12 +16,12 @@
   justify-content: center;
 }
 
-*::after, *::before {
-  font-size: 0.7rem;
-}
-
 .header, .banner, .footer {
   background: white;
+}
+
+.footer {
+  border: 1px solid #ccc;
 }
 
 .banner {
@@ -36,261 +40,332 @@
 
 .preContent, .content {
   height: 100%;
-}
 
-.preContent {
-  padding: 19px 5px;
-}
-
-.content, .Bloco-1, .Bloco-2, .Bloco-3 {
-  display: flex;
-  gap: 19px;
-}
-
-.content {
-  justify-content: space-between;
-}
-
-.Bloco-1, .Bloco-2, .Bloco-3 {
-  flex-direction: column;
-
-  &>div {
-    text-align: center;
-    align-content: center;
-  }
-}
-
-.Bloco-1 {
-  flex: 0 0 15%;
-
-  .Bloco-temporizador {
-    min-height: 144px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.18); 
-
-    .temporizador {
-      height: 60%;
-      color: #000;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      text-align: center;
-      align-content: center;
-    }
-
-    .temporizador-btn {
-      display: flex;
-      justify-content: center;
-      gap: 19px;
-
-      .definir-tempo, .iniciar-tempo, .resetar-tempo, .pausar-tempo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 3px 6px;
-
-        .fa-play::before, .fa-pause::before, .fa-stop::before, .fa-sliders::before {
-          font-size: 0.8rem;
-        }
-      }
-    }
-  }
-
-  .naosei1 {
-    height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.18); 
-    color: #000;
-  }
-
-}
-
-.Bloco-2 {
-  flex: 1 0 67%;  
-
-  .naosei2 {
-    min-height: 144px;
-    border: 1px solid rgba(0, 0, 0, 0.18); 
-
-  }
-
-  .Bloco-calendario {
-    display: flex;
-    flex-direction: column;
-    gap: 19px;
-
-    .titulo-calendario {
+  &.preContent {
+    padding: 19px 5px;
+    
+    .content {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
       gap: 19px;
-      margin-bottom: auto;
-
-      .titulo-calendario-btn {
+      
+      .Linha-1, .Linha-2 {
         display: flex;
+        width: 100%;
         gap: 19px;
-
-        .prevMes, .nextMes {
+        
+        .Bloco-1, .Bloco-2, .Bloco-3 {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 2px 4px;
-
-          .fa-angle-left::before, .fa-angle-right::before {
-            font-size: 1.2rem;
+          flex-direction: column;
+          gap: 19px;
+        
+          &>div {
+            text-align: center;
+            align-content: center;
           }
-        }
-      }
-    }
-
-    .calendario {
-      border-collapse: collapse;
-      width: 100%;
-
-      tr {
-        height: 80px;
-      }
-
-      th, td {
-        border: 1px solid #ccc;
-        text-align: center;
-        padding: 8px;
-        min-width: 3.5vw;
-        width: 3.5vw;
-        max-width: 3.5vw;
-        min-height: 10.4vh;
-        height: 10.4vh;
-        max-height: 10.4vh;
-      }
-
-      th {
-        background: #f0f0f0;
-      }
-
-      td {
-        position: relative;
-
-        .numero-dia {
-          position: absolute;
-          top: 4px;
-          right: 8px;
-          font-size: 1rem;
-          color: #888;
-          z-index: 2;
-        }
-
-        .add-btn {
-          position: absolute;
-          bottom: 4px;
-          right: 4px;
-          width: 1.5rem;
-          height: 1.5rem;
-          border-radius: 50%;
-          border: none;
-          background: #2196f3;
-          color: #fff;
-          cursor: pointer;
-          transition: background 0.2s;
-          z-index: 1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background: #1769aa;
+          
+          &.Bloco-1 {
+            flex: 0 0 15%;
+          
+            .Bloco-temporizador {
+              min-height: 144px;
+              border-radius: 20px;
+              border: 1px solid rgba(0, 0, 0, 0.18); 
+          
+              .temporizador {
+                height: 60%;
+                color: #000;
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+                text-align: center;
+                align-content: center;
+              }
+          
+              .temporizador-btn {
+                display: flex;
+                justify-content: center;
+                gap: 19px;
+          
+                .definir-tempo, .iniciar-tempo, .resetar-tempo, .pausar-tempo {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 3px 6px;
+          
+                  .fa-play::before, .fa-pause::before, .fa-stop::before, .fa-sliders::before {
+                    font-size: 0.8rem;
+                  }
+                }
+              }
+            }
+          
+            .naosei1 {
+              height: 100%;
+              border: 1px solid rgba(0, 0, 0, 0.18); 
+              color: #000;
+            }
+          
           }
-        }
-
-        &.today { 
-          background: #ffe30036; 
-        }
-      }
-
-      .dia-com-item {
-        cursor: pointer;
-
-        .item-calendario, .item-mais {
-          min-width: 6.5vw;
-          width: 6.5vw;
-          max-width: 6.5vw;
-          border-radius: 4px;
-          margin-top: 2px;
-          padding: 1px 6px;
-          font-size: 0.8rem;
-          font-weight: 500;
-          cursor: pointer;
-          text-align: left;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-  
-          &.item-calendario {
-            background: #e3f2fd;
-            color: #1565c0;
-          }
-  
-          &.item-mais {
-            background: #ffc107;
-            color: #333;
+          
+          &.Bloco-2 {
+            flex: 1 0 67%;  
+          
+            .naosei2 {
+              min-height: 144px;
+              border: 1px solid rgba(0, 0, 0, 0.18); 
+          
+            }
+          
+            .Bloco-calendario {
+              display: flex;
+              flex-direction: column;
+              gap: 19px;
+          
+              .titulo-calendario {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 19px;
+                margin-bottom: auto;
+          
+                .titulo-calendario-btn {
+                  display: flex;
+                  gap: 19px;
+          
+                  .prevMes, .nextMes {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 2px 4px;
+          
+                    .fa-angle-left::before, .fa-angle-right::before {
+                      font-size: 1.2rem;
+                    }
+                  }
+                }
+              }
+          
+              .calendario {
+                border-collapse: collapse;
+                width: 100%;
+          
+                tr {
+                  height: 80px;
+                }
+          
+                th, td {
+                  border: 1px solid #ccc;
+                  text-align: center;
+                  padding: 8px;
+                  min-width: 3.5vw;
+                  width: 3.5vw;
+                  max-width: 3.5vw;
+                  min-height: 10.4vh;
+                  height: 10.4vh;
+                  max-height: 10.4vh;
+                }
+          
+                th {
+                  background: #f0f0f0;
+                }
+          
+                td {
+                  position: relative;
+          
+                  .numero-dia {
+                    position: absolute;
+                    top: 4px;
+                    right: 8px;
+                    font-size: 1rem;
+                    color: #888;
+                    z-index: 2;
+                  }
+          
+                  .add-btn {
+                    position: absolute;
+                    bottom: 4px;
+                    right: 4px;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                    border: none;
+                    background: #2196f3;
+                    color: #fff;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                    z-index: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+          
+                    &:hover {
+                      background: #1769aa;
+                    }
+                  }
+          
+                  &.today { 
+                    background: #ffe30036; 
+                  }
+                }
+          
+                .dia-com-item {
+                  cursor: pointer;
+          
+                  .item-calendario, .item-mais {
+                    min-width: 6.5vw;
+                    width: 6.5vw;
+                    max-width: 6.5vw;
+                    border-radius: 4px;
+                    margin-top: 2px;
+                    padding: 1px 6px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    text-align: left;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
             
-            &:hover {
-              background: #ffb300;
+                    &.item-calendario {
+                      background: #e3f2fd;
+                      color: #1565c0;
+                    }
+            
+                    &.item-mais {
+                      background: #ffc107;
+                      color: #333;
+                      
+                      &:hover {
+                        background: #ffb300;
+                      }
+                    }
+                  }
+                }      
+              }
+            }
+          
+            .Bloco-tags {
+              display: none;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+          
+              .titulo-tags {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                position: relative;
+          
+                .addTag {
+                  position: absolute;
+                  right: 0;
+          
+                  .fa-plus::before {
+                    font-size: 0.9rem;
+                  }
+                }
+              }
+          
+              .tags {
+                border-spacing: 19px 0;
+              }
+            }
+          }
+          
+          &.Bloco-3 {
+            flex: 0 0 15%;
+          
+            .Bloco-infousuario {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 19px;
+          
+              .foto-usuario {
+                width: 144px;
+                height: 144px;
+                align-content: center;
+                border-radius: 50%;
+                background-color: rgb(240, 214, 250);
+                
+                img {
+                  width: 100%;
+                  border-radius: 50%;
+                }
+              }
             }
           }
         }
-      }      
-    }
-  }
 
-  .Bloco-tags {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+        .Bloco-4 {
+          width: 100%;
+          min-height: 251.6px;
+          max-height: 470.6px;
+          
+          .Bloco-pastas {
+            height: 100%;
 
-    .titulo-tags {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      position: relative;
+            .Pastas-titulo {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding-bottom: 3px;
+              border-bottom: 1px solid #ccc;
+              font-size: 1.5rem;
+              button {
+                width: 27px;
+                height: 27px;
+              }
+            }
 
-      .addTag {
-        position: absolute;
-        right: 0;
+            .Pastas-conteudo {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 19px;
+              padding: 19px 0 0;
 
-        .fa-plus::before {
-          font-size: 0.9rem;
+              &>div {
+                height: 200px;
+                width: 18.994%;
+                background: red;
+                display: flex;
+                flex-direction: column;
+
+                .ImageSide {
+                  height: 75%;
+                  width: 100%;
+                  img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                  }
+                }
+
+                .DescSide {
+                  height: 25%;
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+
+                  h3, p {
+                    height: 50%;
+                    width: 90%;
+                    align-content: center;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  }
+                }
+              }
+            }
+          }
         }
-      }
-    }
-
-    .tags {
-      border-spacing: 19px 0;
-    }
-  }
-}
-
-.Bloco-3 {
-  flex: 0 0 15%;
-
-  .Bloco-infousuario {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 19px;
-
-    .foto-usuario {
-      width: 144px;
-      height: 144px;
-      align-content: center;
-      border-radius: 50%;
-      background-color: rgb(240, 214, 250);
-      
-      img {
-        width: 100%;
-        border-radius: 50%;
       }
     }
   }

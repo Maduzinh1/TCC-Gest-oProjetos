@@ -178,6 +178,26 @@ function fecharPopupAddTag() {
     document.getElementById('adicionarTag').style.display = 'none';
 }
 
+function abrirPopupAddPasta(event) {
+    if (event) event.stopPropagation();
+    const form = document.querySelector('#adicionarPasta form');
+    if (form) {
+        form.reset();
+        form.querySelector('input[name="id"]').value = '';
+        document.querySelector('#adicionarPasta legend').textContent = 'Adicionar Pasta';
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.textContent = 'Adicionar pasta';
+            btn.value = 'adicionar';
+        }
+    }
+    document.getElementById('adicionarPasta').style.display = 'flex';
+}
+
+function fecharPopupAddPasta() {
+    document.getElementById('adicionarPasta').style.display = 'none';
+}
+
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
@@ -280,7 +300,7 @@ function excluirItem(id) {
         }
     });
 }
-// Fim adicionar, alterar e excluir tags
+// Fim adicionar, alterar e excluir itens
 
 // Adicionar, alterar e excluir tags
 function salvarTag(event) {
@@ -354,3 +374,5 @@ function excluirTag(id) {
     });
 }
 // Fim adicionar, alterar e excluir tags
+
+// Adicionar, alterar e excluir pastas
