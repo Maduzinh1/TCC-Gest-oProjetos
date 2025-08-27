@@ -203,10 +203,12 @@ window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
     const popupAdicionarTag = document.getElementById('adicionarTag');
     const popupItemsDoDia = document.getElementById('popupItemsDoDia');
-    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag) {
+    const popupAdicionarPasta = document.getElementById('adicionarPasta');
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta) {
         popupAdicionarItem.style.display = "none";
         popupItemsDoDia.style.display = "none";
         popupAdicionarTag.style.display = "none";
+        popupAdicionarPasta.style.display = "none";
     }
 }
 

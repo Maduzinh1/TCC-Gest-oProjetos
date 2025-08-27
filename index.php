@@ -52,6 +52,7 @@
             <a href="#" id="btn-calendario">Calendário</a>
             <a href="#" id="btn-tags">Tags</a>
           </div>
+
           <div id="Bloco-calendario" class="Bloco-calendario">
             <div class="titulo-calendario">
               <h2 id="mes-do-ano"></h2>
@@ -103,7 +104,7 @@
           <div class="Bloco-pastas">
             <div class="Pastas-titulo">
               Pastas
-              <button type="button">
+              <button type="button" class="addPasta" onclick="abrirPopupAddPasta(event)">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
@@ -147,6 +148,7 @@
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Item</legend>
           <input type="hidden" id="id" name="id" value="">
+          
           <div class="formulario-campo campo-titulo">
             <label for="nome-item" class="formulario-label">Nome:</label>
             <input type="text" id="nome-item" class="formulario-input input-titulo" name="nome" required>
