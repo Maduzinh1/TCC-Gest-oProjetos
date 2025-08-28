@@ -132,6 +132,21 @@ function carregarTagsAjax() {
 }
 // Fim tags
 
+// Pastas
+document.getElementById('imagem-pasta').addEventListener('change', function() {
+    const nome = this.files[0] ? this.files[0].name : '';
+  const label = document.getElementById('imagem-pasta-label');
+  if (nome) {
+      label.textContent = nome;
+      label.classList.add('selected');
+    } else {
+        label.innerHTML = '<i class="fa-solid fa-image"></i> Escolher imagem';
+        label.classList.remove('selected');
+    }
+});
+//Fim pastas
+
+
 function abrirPopupAddItem(event) {
     if (event) {
         event.stopPropagation();

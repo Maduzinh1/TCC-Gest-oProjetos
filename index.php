@@ -245,7 +245,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="pastaForm" class="formulario-pasta" onsubmit="salvarPasta(event)">
+      <form id="pastaForm" class="formulario-pasta" onsubmit="salvarPasta(event)" enctype="multipart/form-data">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Pasta</legend>
           <input type="hidden" id="id" name="id" value="">
@@ -260,9 +260,14 @@
             <textarea id="descricao-pasta" class="formulario-textarea input-descricao" name="descricao" required></textarea>
           </div>
 
-          <div class="formulario-campo">
-            <label for="imagem-pasta" class="formulario-label">Imagem (URL):</label>
-            <input type="image" id="imagem-pasta" class="formulario-input" name="imagem">
+          <div class="formulario-campo campo-imagem">
+            <label for="imagem-pasta" class="formulario-label">Imagem:</label>
+            <div class="custom-file-wrapper">
+              <input type="file" id="imagem-pasta" class="formulario-input custom-file-input" name="imagem" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp">
+              <label for="imagem-pasta" id="imagem-pasta-label" class="custom-file-label">
+                <i class="fa-solid fa-image"></i> Escolher imagem
+              </label>
+            </div>
           </div>
 
           <button id="form-btn-pasta" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar pasta</button>
