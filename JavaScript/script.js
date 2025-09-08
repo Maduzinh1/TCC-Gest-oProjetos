@@ -93,7 +93,7 @@ function pegarNomeMes(mes) {
 }
 
 function carregarCalendarioAjax(mes, ano) {
-    fetch(`./PHP/Calendario/GerarCalendario.php?mes=${mes}&ano=${ano}`)
+    fetch(`../Calendario/GerarCalendario.php?mes=${mes}&ano=${ano}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-calendario').innerHTML = html;
@@ -124,7 +124,7 @@ carregarCalendarioAjax(mesAtual, anoAtual);
 
 // Tags
 function carregarTagsAjax() {
-    fetch('./PHP/Tags/GerarTags.php')
+    fetch('TCC-Amor/PHP/View/GerarTags.php')
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-tags').innerHTML = html;

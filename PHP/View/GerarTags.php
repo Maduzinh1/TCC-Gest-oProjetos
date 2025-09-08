@@ -1,5 +1,6 @@
 <?php
-    require_once(__DIR__."/../Classes/Tag.class.php");
+    require_once (__DIR__ . "/../Model/Tag.class.php");
+
     $tags = Tag::listar(0, 0);
     $html = "
             <tr>

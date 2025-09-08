@@ -1,5 +1,5 @@
 <?php
-    require_once (__DIR__."/../Classes/Tag.class.php");
+    require_once (__DIR__ . "/../Model/Tag.class.php");
 
     $acao = isset($_REQUEST['acao']) ? $_REQUEST['acao'] : '';
 
