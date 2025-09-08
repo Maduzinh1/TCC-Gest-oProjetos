@@ -5,7 +5,7 @@
         exit;
     }
 
-    $erro = isset($_GET['erro']) ? 'Usuário ou senha inválidos!' : '';
+    $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

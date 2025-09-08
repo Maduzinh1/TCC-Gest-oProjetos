@@ -93,7 +93,7 @@ function pegarNomeMes(mes) {
 }
 
 function carregarCalendarioAjax(mes, ano) {
-    fetch(`../Calendario/GerarCalendario.php?mes=${mes}&ano=${ano}`)
+    fetch(`./GerarCalendario.php?mes=${mes}&ano=${ano}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-calendario').innerHTML = html;
@@ -124,7 +124,7 @@ carregarCalendarioAjax(mesAtual, anoAtual);
 
 // Tags
 function carregarTagsAjax() {
-    fetch('TCC-Amor/PHP/View/GerarTags.php')
+    fetch('./GerarTags.php')
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-tags').innerHTML = html;
@@ -242,28 +242,28 @@ function fecharPopupItemsDoDia() {
 }
 
 // Adicionar, alterar e excluir itens
-function salvarItem(event) {
-    event.preventDefault();
-    const form = document.querySelector('#itemForm');
-    const formData = new FormData(form);
+// function salvarItem(event) {
+//     event.preventDefault();
+//     const form = document.querySelector('#itemForm');
+//     const formData = new FormData(form);
 
-    // Pega o valor do botão de submit (adicionar ou alterar)
-    const acao = form.querySelector('button[type="submit"]').value;
-    formData.set('acao', acao);
+//     // Pega o valor do botão de submit (adicionar ou alterar)
+//     const acao = form.querySelector('button[type="submit"]').value;
+//     formData.set('acao', acao);
 
-    fetch('./PHP/Calendario/CalendarioController.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(res => {
-        if (res.sucesso) {
-            window.location.reload();
-        } else {
-            alert(res.erro || 'Erro ao salvar item.');
-        }
-    });
-}
+//     fetch('./PHP/Calendario/CalendarioController.php', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(res => {
+//         if (res.sucesso) {
+//             window.location.reload();
+//         } else {
+//             alert(res.erro || 'Erro ao salvar item.');
+//         }
+//     });
+// }
 
 function alterarItem(id, event) {
     event.stopPropagation();
@@ -320,28 +320,28 @@ function excluirItem(id) {
 // Fim adicionar, alterar e excluir itens
 
 // Adicionar, alterar e excluir tags
-function salvarTag(event) {
-    event.preventDefault();
-    const form = document.querySelector('#tagForm');
-    const formData = new FormData(form);
+// function salvarTag(event) {
+//     event.preventDefault();
+//     const form = document.querySelector('#tagForm');
+//     const formData = new FormData(form);
 
-    // Pega o valor do botão de submit (adicionar ou alterar)
-    const acao = form.querySelector('button[type="submit"]').value;
-    formData.set('acao', acao);
+//     // Pega o valor do botão de submit (adicionar ou alterar)
+//     const acao = form.querySelector('button[type="submit"]').value;
+//     formData.set('acao', acao);
 
-    fetch('./PHP/Tags/TagController.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(res => {
-        if (res.sucesso) {
-            window.location.reload();
-        } else {
-            alert(res.erro || 'Erro ao salvar tag.');
-        }
-    });
-}
+//     fetch('./PHP/Tags/TagController.php', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(res => {
+//         if (res.sucesso) {
+//             window.location.reload();
+//         } else {
+//             alert(res.erro || 'Erro ao salvar tag.');
+//         }
+//     });
+// }
 
 function alterarTag(id, event) {
     event.stopPropagation();

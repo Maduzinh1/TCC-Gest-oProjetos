@@ -1,5 +1,6 @@
 <?php
-    require_once (__DIR__."/Database.class.php");
+    require_once (__DIR__ . "/../Config/Database.class.php");
+
     class Calendario{
         private $id;
         private $nome;
@@ -112,7 +113,14 @@
                                 ':status'=>$this->getStatus(),
                                 ':urgencia'=>$this->getUrgencia());
 
-            return Database::executar($sql, $parametros) == true;
+            $resultado = Database::executar($sql, $parametros);
+            if ($resultado) {
+                // Pega o último ID inserido e salva no objeto
+                $this->id = $resultado->lastInsertId();
+                error_log("Calendario inserido com ID: " . $this->id);
+                return true;
+            }
+            return false;
         }
 
         public static function listar($tipo=0, $info=''):Array{
@@ -127,7 +135,7 @@
             if ($tipo > 0)
                 $parametros = [':info'=>$info];
 
-            $comando = Database::executar($sql, $parametros);
+            $comando = Database::consultar($sql, $parametros);
             $items = [];
             while ($registro = $comando->fetch()){
                 $item = new Calendario($registro['id'], $registro['nome'], $registro['descricao'], $registro['data_inicio'], $registro['data_fim'], $registro['status'], $registro['urgencia']);

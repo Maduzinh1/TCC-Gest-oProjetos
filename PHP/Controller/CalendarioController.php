@@ -1,6 +1,6 @@
 <?php
-    require_once (__DIR__."/../Classes/Database.class.php");
-    require_once (__DIR__."/../Classes/Calendario.class.php");
+    require_once (__DIR__ . "/../Config/Database.class.php");
+    require_once (__DIR__ . "/../Model/Calendario.class.php");
 
     $acao = isset($_REQUEST['acao']) ? $_REQUEST['acao'] : '';
 
@@ -31,29 +31,30 @@
             break;
         
         case 'adicionar':
-            ob_clean();
-            header('Content-Type: application/json');
             $nome = $_POST['nome'] ?? '';
             $descricao = $_POST['descricao'] ?? '';
             $data_inicio = $_POST['data_inicio'] ?? '';
             $data_fim = $_POST['data_fim'] ?? '';
             $status = $_POST['status'] ?? '';
             $urgencia = $_POST['urgencia'] ?? '';
+            $tag_id = $_POST['tag_id'] ?? null;
 
-            $item = new Calendario(0, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia);
+            $item = new Calendario(null, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia);
             $resultado = $item->inserir();
 
             if ($resultado) {
                 // Pegue o ID do item inserido
-                $item_id = Database::getLastInsertId();
-                $tag_id = $_POST['tag'] ?? null;
+                $item_id = $item->getId();
                 if ($tag_id) {
+                    error_log("ID do calendário inserido: " . $item_id);
                     $sql = "INSERT INTO Calendario_Tag (idCalendario, idTag) VALUES (:idCalendario, :idTag);";
                     Database::executar($sql, [':idCalendario' => $item_id, ':idTag' => $tag_id]);
                 }
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao adicionar item']);
+                header('Location: ../View/index.php?erro=4');
+                exit;
             }
             break;
 

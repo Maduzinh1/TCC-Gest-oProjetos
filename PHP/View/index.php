@@ -116,7 +116,7 @@
             <div class="Pastas-conteudo">
               <div class="Pasta1">
                 <div class="ImageSide">
-                  <img src="img/perfil.jpg" alt="Pasta 1">
+                  <img src="./../../img/perfil.jpg" alt="Pasta 1">
                 </div>
                 <div class="DescSide">
                   <h3>Pasta 1</h3>
@@ -149,7 +149,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="itemForm" class="formulario-item" onsubmit="salvarItem(event)">
+      <form id="itemForm" class="formulario-item" action="./../Controller/CalendarioController.php" method="post">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Item</legend>
           <input type="hidden" id="id" name="id" value="">
@@ -194,10 +194,10 @@
 
           <div class="formulario-campo">
             <label for="tag-item" class="formulario-label">Tag:</label>
-            <select id="tag-item" class="formulario-input input-select" name="tag" required>
-              <?php foreach ($tags as $tag): ?>
-                <option value="<?= $tag->getId() ?>"><?= htmlspecialchars($tag->getNome()) ?></option>
-              <?php endforeach; ?>
+            <select id="tag-item" class="formulario-input input-select" name="tag_id" required>
+              <?php foreach ($tags as $tag) { ?>
+                <option value="<?php echo $tag->getId(); ?>"><?php echo $tag->getNome(); ?></option>
+              <?php } ?>
             </select>
           </div>
 
@@ -221,7 +221,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="tagForm" class="formulario-tag" onsubmit="salvarTag(event)">
+      <form id="tagForm" class="formulario-tag" action="./../Controller/TagController.php" method="post">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Tag</legend>
           <input type="hidden" id="id" name="id" value="">

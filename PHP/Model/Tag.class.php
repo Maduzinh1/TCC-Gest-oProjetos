@@ -70,7 +70,7 @@
             if ($tipo > 0)
                 $parametros = [':info'=>$info];
 
-            $comando = Database::executar($sql, $parametros);
+            $comando = Database::consultar($sql, $parametros);
             $tags = [];
             while ($registro = $comando->fetch()){
                 $tag = new Tag($registro['id'], $registro['nome'], $registro['cor']);

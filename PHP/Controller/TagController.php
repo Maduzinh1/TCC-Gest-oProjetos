@@ -33,9 +33,11 @@
             $resultado = $tag->inserir();
 
             if ($resultado) {
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao adicionar tag']);
+                header('Location: ../View/index.php?erro=5');
+                exit;
             }
             break;
 

@@ -117,7 +117,7 @@
             if ($tipo > 0)
                 $parametros = [':info'=>$info];
 
-            $comando = Database::executar($sql, $parametros);
+            $comando = Database::consultar($sql, $parametros);
             $usuarios = [];
             while ($registro = $comando->fetch()){
                 $usuario = new Usuario($registro['id'], $registro['nome'], $registro['email'], $registro['senha']);
@@ -134,7 +134,7 @@
             $parametros = array(':email' => $email,
                                 ':senha' => $senha);
 
-            $comando = Database::executar($sql, $parametros);
+            $comando = Database::consultar($sql, $parametros);
             return $comando->fetch(PDO::FETCH_ASSOC);
         }
     }

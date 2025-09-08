@@ -1,11 +1,12 @@
 <?php
-    require_once (__DIR__."/../Classes/Calendario.class.php");
+    require_once (__DIR__ . "/../Model/Calendario.class.php");
     setlocale(LC_TIME, 'portuguese'); 
     date_default_timezone_set('America/Sao_Paulo');
     $mes = isset($_GET['mes']) ? intval($_GET['mes']) : date('m');
     $ano = isset($_GET['ano']) ? intval($_GET['ano']) : date('Y');
     $busca = isset($_GET['busca'])?$_GET['busca']:0;
     $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
+    
     $items = Calendario::listar($tipo, $busca);
     $item_array = [];
     foreach ($items as $item) {
