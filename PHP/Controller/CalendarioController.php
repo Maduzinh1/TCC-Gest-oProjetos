@@ -143,10 +143,10 @@
                 foreach ($items as $i) {
                     $html .= "
                         <tr>
-                            <td class='item-calendario-nome'>".htmlspecialchars($i->getNome())."</td>
-                            <td class='item-calendario-descricao'>".htmlspecialchars($i->getDescricao())."</td>
-                            <td>".htmlspecialchars($i->getStatus())."</td>
-                            <td>".htmlspecialchars($i->getUrgencia())."</td>
+                            <td class='item-calendario-nome'>" . $i->getNome() . "</td>
+                            <td class='item-calendario-descricao'>" . $i->getDescricao() . "</td>
+                            <td>" . $i->getStatus() . "</td>
+                            <td>" . $i->getUrgencia() . "</td>
                             <td style='text-align:center;'>
                                 <a href='index.php?id=" . $i->getId() . "' class='btn-editar'> Alterar </a>
                             </td>

@@ -4,7 +4,6 @@
         header('Location: index.php');
         exit;
     }
-
     $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
 ?>
 <!DOCTYPE html>

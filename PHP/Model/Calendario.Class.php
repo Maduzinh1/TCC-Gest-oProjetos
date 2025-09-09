@@ -1,7 +1,7 @@
 <?php
     require_once (__DIR__ . "/../Config/Database.class.php");
 
-    class Calendario{
+    class Calendario {
         private $id;
         private $nome;
         private $descricao;
@@ -12,7 +12,7 @@
         private $idUsuario;
 
         // construtor da classe
-        public function __construct($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia, $idUsuario){
+        public function __construct($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia, $idUsuario) {
             $this->setId($id);
             $this->setNome($nome);
             $this->setDescricao($descricao);
@@ -27,53 +27,55 @@
             return $this->id;
         }
 
-        public function setId($id){
+        public function setId($id) {
             $this->id = $id;
         }
 
-        public function getNome(){
+        public function getNome() {
             return $this->nome;
         }
 
-        public function setNome($nome){
-            if (strlen($nome) < 3)
+        public function setNome($nome) {
+            if (strlen($nome) < 3) {
                 throw new Exception('Erro. O nome deve ter pelo menos 3 caracteres');
-            else
+            } else {
                 $this->nome = $nome;
+            }
         }
 
-        public function getDescricao(){
+        public function getDescricao() {
             return $this->descricao;
         }
 
-        public function setDescricao($descricao){
-            if (strlen($descricao) < 5)
+        public function setDescricao($descricao) {
+            if (strlen($descricao) < 5) {
                 throw new Exception('Erro. A descrição deve ter pelo menos 5 caracteres');
-            else
+            } else {
                 $this->descricao = $descricao;
+            }
         }
 
-        public function getDataInicio(){
+        public function getDataInicio() {
             return $this->data_inicio;
         }
 
-        public function setDataInicio($data_inicio){
+        public function setDataInicio($data_inicio) {
             $this->data_inicio = $data_inicio;
         }
 
-        public function getDataFim(){
+        public function getDataFim() {
             return $this->data_fim;
         }
 
-        public function setDataFim($data_fim){
+        public function setDataFim($data_fim) {
             $this->data_fim = $data_fim;
         }
 
-        public function getStatus(){
+        public function getStatus() {
             return $this->status;
         }
 
-        public function setStatus($status){
+        public function setStatus($status) {
             $validStatuses = ['A fazer', 'Fazendo', 'Concluído'];
             if (!in_array($status, $validStatuses)) {
                 throw new Exception('Erro. Status inválido. Valores válidos: ' . implode(', ', $validStatuses));
@@ -82,11 +84,11 @@
             }
         }
 
-        public function getUrgencia(){
+        public function getUrgencia() {
             return $this->urgencia;
         }
 
-        public function setUrgencia($urgencia){
+        public function setUrgencia($urgencia) {
             $validUrgencies = ['Baixa', 'Média', 'Alta'];
             if (!in_array($urgencia, $validUrgencies)) {
                 throw new Exception('Erro. Urgência inválida. Valores válidos: ' . implode(', ', $validUrgencies));
@@ -104,18 +106,16 @@
         }
 
         // método mágico para imprimir uma atividade
-        public function __toString():String{
+        public function __toString(): String {
             $str = "Item: ".$this->getId()." - ".$this->getNome()." - ".$this->getDescricao()." - ".$this->getDataInicio()." - ".$this->getDataFim()." - ".$this->getStatus()." - ".$this->getUrgencia()." - ".$this->getIdUsuario();
             return $str;
         }
 
         // insere uma atividade no banco 
-        public function inserir():Bool{
-            // montar o sql/ query
+        public function inserir(): Bool {
             $sql = "INSERT INTO Calendario 
                         (nome, descricao, data_inicio, data_fim, status, urgencia, idUsuario)
                         VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :urgencia, :idUsuario)";
-
             $parametros = array(':nome'=>$this->getNome(),
                                 ':descricao'=>$this->getDescricao(),
                                 ':data_inicio'=>$this->getDataInicio(),
@@ -123,7 +123,6 @@
                                 ':status'=>$this->getStatus(),
                                 ':urgencia'=>$this->getUrgencia(),
                                 ':idUsuario'=>$this->getIdUsuario());
-
             $resultado = Database::executar($sql, $parametros);
             if ($resultado) {
                 // Pega o último ID inserido e salva no objeto
@@ -134,29 +133,29 @@
             return false;
         }
 
-        public static function listar($tipo=0, $info=''):Array{
+        public static function listar($tipo=0, $info=''): Array {
             $sql = "SELECT * FROM Calendario";
-            switch ($tipo){
+            switch ($tipo) {
                 case 0: break;
                 case 1: $sql .= " WHERE id = :info ORDER BY id"; break; // filtro por ID
                 case 2: $sql .= " WHERE nome like :info ORDER BY nome"; $info = '%'.$info.'%'; break; // filtro por nome
                 case 3: $sql .= " WHERE data_inicio = :info ORDER BY data_inicio"; break; // filtro por data de início
             }
             $parametros = array();
-            if ($tipo > 0)
+            if ($tipo > 0) {
                 $parametros = [':info'=>$info];
-
+            }
             $comando = Database::consultar($sql, $parametros);
             $items = [];
-            while ($registro = $comando->fetch()){
+            while ($registro = $comando->fetch()) {
                 $item = new Calendario($registro['id'], $registro['nome'], $registro['descricao'], $registro['data_inicio'], $registro['data_fim'], $registro['status'], $registro['urgencia'], $registro['idUsuario']);
                 array_push($items,$item);
             }
             return $items;
         }
 
-        public function alterar():Bool{       
-        $sql = "UPDATE Calendario
+        public function alterar(): Bool {       
+            $sql = "UPDATE Calendario
                     SET nome = :nome, 
                         descricao = :descricao,
                         data_inicio = :data_inicio,
@@ -174,7 +173,7 @@
             return Database::executar($sql, $parametros) == true;
         }
 
-        public function excluir():Bool{
+        public function excluir(): Bool {
             $sql = "DELETE FROM Calendario
                         WHERE id = :id";
             $parametros = array(':id'=>$this->getId());

@@ -21,14 +21,13 @@
         }
         public static function executar($sql, $parametros) {
             $conexao = self::abrirConexao();
-            $comando = $conexao->prepare($sql);
+            $comando = self::preparar($sql);
             self::vincularParametros($comando, $parametros);
             $comando->execute();
             return $conexao;
         }
         public static function consultar($sql, $parametros = []) {
-            $conexao = self::abrirConexao();
-            $comando = $conexao->prepare($sql);
+            $comando = self::preparar($sql);
             self::vincularParametros($comando, $parametros);
             $comando->execute();
             return $comando; // Retorna o statement para fetch()

@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/325fb60df1.js" crossorigin="anonymous"></script>
-  <script> window.itemParaEditar = <?php echo isset($item) ? 'true' : 'false'; ?>; </script>
+  <script> window.itemParaEditar = <?php if (isset($item)) { echo 'true'; } else { echo 'false'; } ?>; </script>
   <script src="./../../JavaScript/script.js" defer></script>
 </head>
 <body class="body">

@@ -3,13 +3,13 @@
     session_start();
     setlocale(LC_TIME, 'portuguese'); 
     date_default_timezone_set('America/Sao_Paulo');
+
     $mes = isset($_GET['mes']) ? intval($_GET['mes']) : date('m');
     $ano = isset($_GET['ano']) ? intval($_GET['ano']) : date('Y');
     $busca = isset($_GET['busca'])?$_GET['busca']:0;
     $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
-    
     $usuario_id = $_SESSION['usuario_id'];
-
+    
     $items = Calendario::listar($tipo, $busca);
     $item_array = [];
     foreach ($items as $item) {
@@ -33,12 +33,13 @@
         $hoje = date('Y-m-d');
         $html = '<tr>' . implode('', array_map(fn($d) => "<th>$d</th>", $diasDaSemana)) . '</tr>';
         $dia = 1;
+
         for ($semana = 0; $semana < 6; $semana++) {
             $html .= '<tr>';
             for ($i = 0; $i < 7; $i++) {
                 if ($semana === 0 && $i < $primeiroDia) {
                     $html .= '<td></td>';
-                } elseif ($dia > $diasNoMes) {
+                } else if ($dia > $diasNoMes) {
                     $html .= '<td></td>';
                 } else {
                     $dataStr = sprintf('%04d-%02d-%02d', $ano, $mes, $dia);

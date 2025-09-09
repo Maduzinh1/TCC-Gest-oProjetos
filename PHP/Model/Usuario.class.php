@@ -30,8 +30,7 @@
         public function setNome($nome) {
             if (strlen($nome) < 3) {
                 throw new Exception('Erro. O nome de usuário deve ter pelo menos 3 caracteres');
-            }
-            else {
+            } else {
                 $this->nome = $nome;
             }
         }
@@ -72,15 +71,13 @@
             return "Usuário: " . $this->getId() . " - " . $this->getNome() . " - " . $this->getEmail() . " - " . $this->getSenha();
         }
 
-        public function inserir():Bool{
+        public function inserir(): Bool {
             $sql = "INSERT INTO Usuario 
                         (nome, email, senha)
                         VALUES (:nome, :email, :senha);";
-
             $parametros = array(':nome'=>$this->getNome(),
                                 ':email'=>$this->getEmail(),
                                 ':senha'=>$this->getSenha());
-
             $resultado = Database::executar($sql, $parametros);
             if ($resultado) {
                 // Pega o último ID inserido e salva no objeto
@@ -90,31 +87,27 @@
             return false;
         }
 
-        public function alterar():Bool{       
+        public function alterar(): Bool {       
             $sql = "UPDATE Usuario
                     SET nome = :nome, 
                         email = :email,
                         senha = :senha
                     WHERE id = :id;";
-
             $parametros = array(':id'=>$this->getId(),
                                 ':nome'=>$this->getNome(),
                                 ':email'=>$this->getEmail(),
                                 ':senha'=>$this->getSenha());
-
             return Database::executar($sql, $parametros) == true;
         }
 
-        public function excluir():Bool{
+        public function excluir(): Bool {
             $sql = "DELETE FROM Usuario
                         WHERE id = :id;";
-
             $parametros = array(':id'=>$this->getId());
-
             return Database::executar($sql, $parametros) == true;
         }
 
-        public static function listar($tipo=0, $info=''):Array{
+        public static function listar($tipo=0, $info=''): Array {
             $sql = "SELECT * FROM Usuario";
             switch ($tipo){
                 case 0: break;
@@ -123,12 +116,12 @@
                 case 3: $sql .= " WHERE email like :info ORDER BY email;"; $info = '%'.$info.'%'; break; // filtro por email
             }
             $parametros = array();
-            if ($tipo > 0)
+            if ($tipo > 0) {
                 $parametros = [':info'=>$info];
-
+            }
             $comando = Database::consultar($sql, $parametros);
             $usuarios = [];
-            while ($registro = $comando->fetch()){
+            while ($registro = $comando->fetch()) {
                 $usuario = new Usuario($registro['id'], $registro['nome'], $registro['email'], $registro['senha']);
                 if (isset($registro['foto_perfil'])) {
                     $usuario->setFotoPerfil($registro['foto_perfil']);
@@ -142,10 +135,8 @@
             $sql = "SELECT id, nome, email 
                     FROM Usuario 
                     WHERE email = :email AND senha = :senha LIMIT 1;";
-            
             $parametros = array(':email' => $email,
                                 ':senha' => $senha);
-
             $comando = Database::consultar($sql, $parametros);
             return $comando->fetch(PDO::FETCH_ASSOC);
         }
@@ -156,7 +147,6 @@
                     WHERE id = :id";
             $parametros = array(':foto' => $this->getFotoPerfil(),
                                 ':id' => $this->getId());
-
             return Database::executar($sql, $parametros) == true;
         }
     }
