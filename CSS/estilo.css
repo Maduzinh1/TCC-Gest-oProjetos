@@ -263,8 +263,8 @@
                     text-overflow: ellipsis;
             
                     &.item-calendario {
-                      background: #e3f2fd;
-                      color: #1565c0;
+                      color: #222;
+                      font-weight: 500;
                     }
             
                     &.item-mais {

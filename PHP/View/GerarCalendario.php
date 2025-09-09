@@ -1,5 +1,6 @@
 <?php
     require_once (__DIR__ . "/../Model/Calendario.class.php");
+    require_once (__DIR__ . "/../Model/Tag.class.php");
     session_start();
     setlocale(LC_TIME, 'portuguese'); 
     date_default_timezone_set('America/Sao_Paulo');
@@ -9,11 +10,12 @@
     $busca = isset($_GET['busca'])?$_GET['busca']:0;
     $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
     $usuario_id = $_SESSION['usuario_id'];
-    
+
     $items = Calendario::listar($tipo, $busca);
     $item_array = [];
     foreach ($items as $item) {
         if ($item->getIdUsuario() == $usuario_id) {
+            $corTag = Tag::buscarCorPorCalendario($item->getId());
             $item_array[] = [
                 'id' => $item->getId(),
                 'nome' => $item->getNome(),
@@ -21,7 +23,8 @@
                 'data_inicio' => $item->getDataInicio(),
                 'data_fim' => $item->getDataFim(),
                 'status' => $item->getStatus(),
-                'urgencia' => $item->getUrgencia()
+                'urgencia' => $item->getUrgencia(),
+                'cor' => $corTag
             ];
         }
     }
@@ -55,10 +58,18 @@
                     $html .= '<td class="'.implode(' ', $cellClasses).'" onclick="abrirPopupItemsDoDia(\''.$dataStr.'\', event)">';
                     $html .= "<span class='numero-dia'>$dia</span>";
                     if (count($itemDia) > 3) {
-                        $html .= implode('', array_map(fn($p) => "<div class='item-calendario'>{$p['nome']}</div>", array_slice($itemDia, 0, 2)));
+                        $html .= implode('', array_map(function($p) {
+                            $cor = $p['cor'] ?? '#2196f3';
+                            $corFade = (strlen($cor) === 7 ? $cor . '33' : $cor);
+                            return "<div class='item-calendario' style='background:{$corFade}'>{$p['nome']}</div>";
+                        }, array_slice($itemDia, 0, 2)));
                         $html .= "<div class='item-mais'>Mais....</div>";
                     } else {
-                        $html .= implode('', array_map(fn($p) => "<div class='item-calendario'>{$p['nome']}</div>", $itemDia));
+                        $html .= implode('', array_map(function($p) {
+                            $cor = $p['cor'] ?? '#2196f3';
+                            $corFade = (strlen($cor) === 7 ? $cor . '33' : $cor);
+                            return "<div class='item-calendario' style='background:{$corFade}'>{$p['nome']}</div>";
+                        }, $itemDia));
                     }
                     $html .= '
                             <button class="add-btn" onclick="abrirPopupAddItem(event)" title="Adicionar evento">

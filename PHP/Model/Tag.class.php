@@ -105,5 +105,17 @@
             $parametros = array(':id'=>$this->getId());
             return Database::executar($sql, $parametros) == true;
         }
+
+        public static function buscarCorPorCalendario($idCalendario) {
+            $sql = "SELECT Tag.cor 
+                    FROM Calendario_Tag
+                    JOIN Tag ON Calendario_Tag.idTag = Tag.id
+                    WHERE Calendario_Tag.idCalendario = :idCalendario
+                    LIMIT 1";
+            $parametros = [':idCalendario' => $idCalendario];
+            list($conexao, $comando) = Database::executar($sql, $parametros);
+            $registro = $comando->fetch();
+            return $registro ? $registro['cor'] : null;
+        }
     }
 ?>
