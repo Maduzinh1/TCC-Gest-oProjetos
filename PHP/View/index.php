@@ -55,15 +55,16 @@
       <?php if ($config && $config->getBanner()) { ?>
         <img id="banner-img" src="<?php echo $config->getBanner(); ?>" alt="Banner">
       <?php } else { ?>
-        <div id="banner-img" style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;background:#eee;color:#888;font-size:24px;">
+        <div id="banner-img">
           Banner
         </div>
       <?php } ?>
-      <form id="form-banner" action="../Controller/UsuarioController.php" method="post" enctype="multipart/form-data" style="position:absolute;top:10px;right:10px;">
+      <form id="form-banner" action="../Controller/UsuarioController.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="acao" value="alterar_banner">
         <input type="file" id="input-banner" name="banner" accept="image/*" style="display:none" onchange="this.form.submit()">
-        <label for="input-banner" style="cursor:pointer;">
-          <span class="btn-banner-editar" style="background:rgba(0,0,0,0.5);border-radius:50%;padding:8px;">
+
+        <label for="input-banner">
+          <span class="btn-banner-editar">
             <i class="fa-solid fa-pen"></i>
           </span>
         </label>

@@ -34,7 +34,7 @@
 
                     $config = new Config($usuario->getId(), 'claro', null);
                     $config->inserir();
-                    
+
                     header('Location: ../View/index.php');
                     exit;
                 } else {
@@ -102,10 +102,12 @@
                 $caminho = './../../img/' . $nomeArquivo;
                 move_uploaded_file($_FILES['banner']['tmp_name'], $caminho);
 
-                require_once(__DIR__ . "/../Model/Config.class.php");
-                $config = Config::listar(1, $_SESSION['usuario_id']);
-                if (!$config) {
+                $configs = Config::listar(1, $_SESSION['usuario_id']);
+                $config = null;
+                if (!$configs) {
                     $config = new Config($_SESSION['usuario_id'], 'claro', $caminho);
+                } else {
+                    $config = $configs[0];
                 }
                 $config->setBanner($caminho);
                 $config->salvarBanner();

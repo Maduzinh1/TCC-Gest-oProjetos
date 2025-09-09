@@ -36,15 +36,39 @@
       object-fit: cover;
       object-position: top;
     }
-  }
 
-  .btn-banner-editar {
-    color: #fff;
-    font-size: 20px;
-    transition: background 0.2s;
-  }
-  .btn-banner-editar:hover {
-    background: #222;
+    &>div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eee;
+      color: #888;
+      font-size: 24px;
+    }
+
+    &>form {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      label {
+        cursor:pointer;
+
+        .btn-banner-editar {
+          color: #fff;
+          font-size: 20px;
+          transition: background 0.2s;
+          background: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          padding: 8px;
+        }
+        .btn-banner-editar:hover {
+          background: #222;
+        }
+      }
+    }
   }
 }
 
@@ -613,3 +637,99 @@
   align-items: center;
   width: 102%;
 }
+
+/* Estilos para as páginas de cadastro e login */
+body.cadastro-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 19px;
+  background: #f5f7fa;
+  font-family: 'Inter', Arial, sans-serif;
+
+  .form-container {
+    background: #fff;
+    padding: 32px 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    min-width: 320px;
+    max-width: 360px;
+    width: 100%;
+  }
+
+  .form-container h2 {
+    margin-bottom: 18px;
+    text-align: center;
+    color: #1565c0;
+  }
+
+  .form-container form > div {
+    margin-bottom: 16px;
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="email"],
+  .form-container input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #f9f9f9;
+    transition: border 0.2s;
+  }
+
+  .form-container input:focus {
+    border-color: #2196f3;
+    outline: none;
+  }
+
+  .form-container button[type="submit"] {
+    width: 100%;
+    padding: 10px 0;
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .form-container button[type="submit"]:hover {
+    background: #1769aa;
+  }
+
+  .form-container p {
+    margin-top: 18px;
+    text-align: center;
+    color: #555;
+  }
+
+  .form-container a {
+    color: #2196f3;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .form-container a:hover {
+    text-decoration: underline;
+  }
+
+  .form-container p[style*="color:red"] {
+    margin-bottom: 12px;
+    color: #d32f2f !important;
+    text-align: center;
+  }
+}
+
