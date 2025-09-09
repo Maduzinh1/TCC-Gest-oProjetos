@@ -11,7 +11,8 @@
         }
         private static function preparar($sql) {
             $conexao = self::abrirConexao();
-            return $conexao->prepare($sql);
+            $comando = $conexao->prepare($sql);
+            return [$conexao, $comando];
         }
         private static function vincularParametros($comando,$parametros) {
             foreach($parametros as $chave=>$valor) {
@@ -20,17 +21,10 @@
             return $comando;
         }
         public static function executar($sql, $parametros) {
-            $conexao = self::abrirConexao();
-            $comando = self::preparar($sql);
+            list($conexao, $comando) = self::preparar($sql);
             self::vincularParametros($comando, $parametros);
             $comando->execute();
-            return $conexao;
-        }
-        public static function consultar($sql, $parametros = []) {
-            $comando = self::preparar($sql);
-            self::vincularParametros($comando, $parametros);
-            $comando->execute();
-            return $comando; // Retorna o statement para fetch()
+            return [$conexao, $comando];
         }
         public static function getLastInsertId() {
             $conexao = self::abrirConexao();

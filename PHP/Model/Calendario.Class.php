@@ -123,10 +123,10 @@
                                 ':status'=>$this->getStatus(),
                                 ':urgencia'=>$this->getUrgencia(),
                                 ':idUsuario'=>$this->getIdUsuario());
-            $resultado = Database::executar($sql, $parametros);
-            if ($resultado) {
+            list($conexao, $comando) = Database::executar($sql, $parametros);
+            if ($comando) {
                 // Pega o último ID inserido e salva no objeto
-                $this->id = $resultado->lastInsertId();
+                $this->id = $conexao->lastInsertId();
                 error_log("Calendario inserido com ID: " . $this->id);
                 return true;
             }
@@ -145,7 +145,7 @@
             if ($tipo > 0) {
                 $parametros = [':info'=>$info];
             }
-            $comando = Database::consultar($sql, $parametros);
+            list($conexao, $comando) = Database::executar($sql, $parametros);
             $items = [];
             while ($registro = $comando->fetch()) {
                 $item = new Calendario($registro['id'], $registro['nome'], $registro['descricao'], $registro['data_inicio'], $registro['data_fim'], $registro['status'], $registro['urgencia'], $registro['idUsuario']);

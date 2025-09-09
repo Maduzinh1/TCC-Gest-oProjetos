@@ -56,7 +56,7 @@
             if ($tipo > 0) {
                 $parametros = [':info'=>$info];
             }
-            $comando = Database::consultar($sql, $parametros);
+            list($conexao, $comando) = Database::executar($sql, $parametros);
             $configs = [];
             while ($registro = $comando->fetch()) {
                 $config = new Config($registro['idUsuario'], $registro['tema'], $registro['banner']);

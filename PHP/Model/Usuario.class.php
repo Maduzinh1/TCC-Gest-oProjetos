@@ -78,10 +78,10 @@
             $parametros = array(':nome'=>$this->getNome(),
                                 ':email'=>$this->getEmail(),
                                 ':senha'=>$this->getSenha());
-            $resultado = Database::executar($sql, $parametros);
-            if ($resultado) {
+            list($conexao, $comando) = Database::executar($sql, $parametros);
+            if ($comando) {
                 // Pega o último ID inserido e salva no objeto
-                $this->id = $resultado->lastInsertId();
+                $this->id = $conexao->lastInsertId();
                 return true;
             }
             return false;
@@ -119,7 +119,7 @@
             if ($tipo > 0) {
                 $parametros = [':info'=>$info];
             }
-            $comando = Database::consultar($sql, $parametros);
+            list($conexao, $comando) = Database::executar($sql, $parametros);
             $usuarios = [];
             while ($registro = $comando->fetch()) {
                 $usuario = new Usuario($registro['id'], $registro['nome'], $registro['email'], $registro['senha']);
@@ -137,7 +137,7 @@
                     WHERE email = :email AND senha = :senha LIMIT 1;";
             $parametros = array(':email' => $email,
                                 ':senha' => $senha);
-            $comando = Database::consultar($sql, $parametros);
+            list($conexao, $comando) = Database::executar($sql, $parametros);
             return $comando->fetch(PDO::FETCH_ASSOC);
         }
 
