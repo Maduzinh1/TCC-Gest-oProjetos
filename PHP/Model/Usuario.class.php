@@ -6,6 +6,7 @@
         private $nome;
         private $email;
         private $senha;
+        private $foto_perfil;
 
         public function __construct($id, $nome, $email, $senha) {
             $this->id = $id;
@@ -59,6 +60,14 @@
             }
         }
 
+        public function getFotoPerfil() {
+            return $this->foto_perfil;
+        }
+
+        public function setFotoPerfil($foto_perfil) {
+            $this->foto_perfil = $foto_perfil;
+        }
+
         public function __toString(): String {
             return "Usuário: " . $this->getId() . " - " . $this->getNome() . " - " . $this->getEmail() . " - " . $this->getSenha();
         }
@@ -75,7 +84,7 @@
             $resultado = Database::executar($sql, $parametros);
             if ($resultado) {
                 // Pega o último ID inserido e salva no objeto
-                $this->id = Database::getLastInsertId();
+                $this->id = $resultado->lastInsertId();
                 return true;
             }
             return false;
@@ -121,6 +130,9 @@
             $usuarios = [];
             while ($registro = $comando->fetch()){
                 $usuario = new Usuario($registro['id'], $registro['nome'], $registro['email'], $registro['senha']);
+                if (isset($registro['foto_perfil'])) {
+                    $usuario->setFotoPerfil($registro['foto_perfil']);
+                }
                 array_push($usuarios,$usuario);
             }
             return $usuarios;
@@ -136,6 +148,16 @@
 
             $comando = Database::consultar($sql, $parametros);
             return $comando->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function salvarFotoPerfil() {
+            $sql = "UPDATE Usuario 
+                    SET foto_perfil = :foto 
+                    WHERE id = :id";
+            $parametros = array(':foto' => $this->getFotoPerfil(),
+                                ':id' => $this->getId());
+
+            return Database::executar($sql, $parametros) == true;
         }
     }
 

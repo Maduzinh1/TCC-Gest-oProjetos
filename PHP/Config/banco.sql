@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Usuario` (
   `nome` VARCHAR(255),
   `email` VARCHAR(255),
   `senha` VARCHAR(255),
+  `foto_perfil` VARCHAR(255),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

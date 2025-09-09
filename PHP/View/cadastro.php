@@ -36,7 +36,7 @@
             <input type="password" id="senha-usuario" name="senha" required>
         </div>
 
-        <button id="btn-login" type="submit" name="acao" value="cadastrar">Cadastrar</button>
+        <button id="btn-login" type="submit" name="acao" value="adicionar">Cadastrar</button>
     </form>
     <p>Já tem conta? <a href="login.php">Faça login</a></p>
 </body>

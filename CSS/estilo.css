@@ -285,17 +285,59 @@
               flex-direction: column;
               align-items: center;
               gap: 19px;
+              border: 1px solid rgba(0, 0, 0, 0.18);
           
-              .foto-usuario {
-                width: 144px;
-                height: 144px;
-                align-content: center;
+              div.foto-usuario {
+                width: 143px;
+                height: 143px;
                 border-radius: 50%;
-                background-color: rgb(240, 214, 250);
-                
-                img {
-                  width: 100%;
-                  border-radius: 50%;
+                overflow: hidden;
+                position: relative;
+
+                form {
+
+                  label {
+                    cursor: pointer;
+                    display: block;
+
+                    img.foto-usuario-img, div.foto-usuario-placeholder {
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      border-radius: 50%;
+
+                      &.foto-usuario-placeholder {
+                        width: 143px;
+                        height: 143px;
+                        border-radius: 50%;
+                        background: #eee;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                        color: #888;
+                      }
+                    }
+
+                    div.foto-usuario-overlay {
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      background: rgba(0, 0, 0, 0.3);
+                      color: #fff;
+                      display: none;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 14px;
+                    }
+                  }
+                }
+
+                &.foto-usuario:hover{
+                  display: flex !important;
                 }
               }
             }

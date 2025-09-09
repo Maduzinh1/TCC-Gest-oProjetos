@@ -50,22 +50,24 @@
             $resultado = $tag->alterar();
 
             if ($resultado) {
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao alterar tag']);
+                header('Location: ../View/index.php?erro=10');
+                exit;
             }
             break;
 
         case 'excluir':
-            $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+            $id = $_GET['id'] ?? 0;
             if ($id <= 0) {
-                echo json_encode(['erro' => 'ID inválido']);
+                header('Location: ../View/index.php');
                 exit;
             }
 
             $tags = Tag::listar(1, $id);
             if (empty($tags)) {
-                echo json_encode(['erro' => 'Tag não encontrado']);
+                header('Location: ../View/index.php?erro=11');
                 exit;
             }
 
@@ -73,13 +75,16 @@
             $resultado = $tag->excluir();
 
             if ($resultado) {
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao excluir tag']);
+                header('Location: ../View/index.php?erro=12');
+                exit;
             }
             break;
 
         default:
-            echo json_encode(['erro' => 'Ação inválida']);
+            header('Location: ../View/index.php?erro=9');
+            exit;
     }
 ?>

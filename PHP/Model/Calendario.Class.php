@@ -9,6 +9,7 @@
         private $data_fim;
         private $status;
         private $urgencia;
+        private $tags = [];
 
         // construtor da classe
         public function __construct($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia){

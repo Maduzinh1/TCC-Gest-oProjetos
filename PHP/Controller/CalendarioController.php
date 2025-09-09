@@ -59,7 +59,7 @@
             break;
 
         case 'alterar':
-            $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+            $id = $_POST['id'] ?? 0;
             $nome = $_POST['nome'] ?? '';
             $descricao = $_POST['descricao'] ?? '';
             $data_inicio = $_POST['data_inicio'] ?? '';
@@ -71,22 +71,24 @@
             $resultado = $item->alterar();
 
             if ($resultado) {
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao alterar item']);
+                header('Location: ../View/index.php?erro=6');
+                exit;
             }
             break;
 
         case 'excluir':
-            $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+            $id = $_GET['id'] ?? 0;
             if ($id <= 0) {
-                echo json_encode(['erro' => 'ID inválido']);
+                header('Location: ../View/index.php');
                 exit;
             }
 
             $itens = Calendario::listar(1, $id);
             if (empty($itens)) {
-                echo json_encode(['erro' => 'Item não encontrado']);
+                header('Location: ../View/index.php?erro=7');
                 exit;
             }
 
@@ -94,9 +96,11 @@
             $resultado = $item->excluir();
 
             if ($resultado) {
-                echo json_encode(['sucesso' => true]);
+                header('Location: ../View/index.php');
+                exit;
             } else {
-                echo json_encode(['erro' => 'Erro ao excluir item']);
+                header('Location: ../View/index.php?erro=8');
+                exit;
             }
             break;
 
@@ -142,10 +146,10 @@
                             <td>".htmlspecialchars($i->getStatus())."</td>
                             <td>".htmlspecialchars($i->getUrgencia())."</td>
                             <td style='text-align:center;'>
-                                <button class='btn-editar' onclick='alterarItem({$i->getId()}, event)' title='Alterar'>✏️</button>
+                                <a href='index.php?id=" . $i->getId() . "' class='btn-editar'> Alterar </a>
                             </td>
                             <td style='text-align:center;'>
-                                <button class='btn-excluir' onclick='excluirItem({$i->getId()})' title='Excluir'>🗑️</button>
+                                <a href='../Controller/CalendarioController.php?acao=excluir&id=" . $i->getId() . "' class='btn-excluir' onclick='return confirm(\"Tem certeza que deseja excluir este item?\");'> Excluir </a>
                             </td>
                         </tr>
                     ";
@@ -159,6 +163,7 @@
             break;
 
         default:
-            echo json_encode(['erro' => 'Ação inválida']);
+            header('Location: ../View/index.php?erro=9');
+            exit;
     }
 ?>
