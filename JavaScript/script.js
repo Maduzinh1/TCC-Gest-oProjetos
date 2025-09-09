@@ -93,7 +93,7 @@ function pegarNomeMes(mes) {
 }
 
 function carregarCalendarioAjax(mes, ano) {
-    fetch(`./GerarCalendario.php?mes=${mes}&ano=${ano}`)
+    fetch(`./gerarCalendario.php?mes=${mes}&ano=${ano}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-calendario').innerHTML = html;
@@ -124,7 +124,7 @@ carregarCalendarioAjax(mesAtual, anoAtual);
 
 // Tags
 function carregarTagsAjax() {
-    fetch('./GerarTags.php')
+    fetch('./gerarTags.php')
         .then(response => response.text())
         .then(html => {
             document.getElementById('tabela-tags').innerHTML = html;

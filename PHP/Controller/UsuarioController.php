@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once(__DIR__ . "/../Model/Usuario.class.php");
+    require_once(__DIR__ . "/../Model/Config.class.php");
 
     $acao = $_POST['acao'] ?? $_GET['acao'] ?? '';
 
@@ -30,6 +31,10 @@
                     $_SESSION['usuario_id'] = $usuario->getId();
                     $_SESSION['usuario_nome'] = $usuario->getNome();
                     $_SESSION['usuario_email'] = $usuario->getEmail();
+
+                    $config = new Config($usuario->getId(), 'claro', null);
+                    $config->inserir();
+                    
                     header('Location: ../View/index.php');
                     exit;
                 } else {
@@ -90,6 +95,26 @@
             }
             break;
             
+        case 'alterar_banner':
+            if (isset($_FILES['banner']) && $_FILES['banner']['error'] === UPLOAD_ERR_OK) {
+                $ext = pathinfo($_FILES['banner']['name'], PATHINFO_EXTENSION);
+                $nomeArquivo = 'banner_' . $_SESSION['usuario_id'] . '.' . $ext;
+                $caminho = './../../img/' . $nomeArquivo;
+                move_uploaded_file($_FILES['banner']['tmp_name'], $caminho);
+
+                require_once(__DIR__ . "/../Model/Config.class.php");
+                $config = Config::listar(1, $_SESSION['usuario_id']);
+                if (!$config) {
+                    $config = new Config($_SESSION['usuario_id'], 'claro', $caminho);
+                }
+                $config->setBanner($caminho);
+                $config->salvarBanner();
+
+                header('Location: ../View/index.php');
+                exit;
+            }
+            break;
+
         default:
             header('Location: ../View/login.php');
             exit;

@@ -2,8 +2,9 @@
   require_once(__DIR__ . "/../Model/Tag.class.php");
   require_once(__DIR__ . "/../Model/Calendario.class.php");
   require_once(__DIR__ . "/../Model/Usuario.class.php");
+  require_once(__DIR__ . "/../Model/Config.class.php");
   session_start();
-  
+
   if (!isset($_SESSION['usuario_id'])) {
     header('Location: login.php');
     exit;
@@ -27,6 +28,8 @@
       $usuario = $usuarios[0];
     }
   }
+
+  $config = Config::listar(1, $_SESSION['usuario_id'])[0];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,7 +52,13 @@
 
   <div class="banner">
     <figure style="margin:0;">
-      <img id="banner-img" src="./../../img/ceu.jpg" alt="Banner">
+      <?php if ($config && $config->getBanner()) { ?>
+        <img id="banner-img" src="<?php echo $config->getBanner(); ?>" alt="Banner">
+      <?php } else { ?>
+        <div id="banner-img" style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;background:#eee;color:#888;font-size:24px;">
+          Banner
+        </div>
+      <?php } ?>
       <form id="form-banner" action="../Controller/UsuarioController.php" method="post" enctype="multipart/form-data" style="position:absolute;top:10px;right:10px;">
         <input type="hidden" name="acao" value="alterar_banner">
         <input type="file" id="input-banner" name="banner" accept="image/*" style="display:none" onchange="this.form.submit()">
