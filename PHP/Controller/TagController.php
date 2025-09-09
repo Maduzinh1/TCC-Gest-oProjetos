@@ -1,6 +1,8 @@
 <?php
     require_once (__DIR__ . "/../Model/Tag.class.php");
+    session_start();
 
+    $idUsuario = $_SESSION['usuario_id'];
     $acao = isset($_REQUEST['acao']) ? $_REQUEST['acao'] : '';
 
     switch ($acao) {
@@ -29,7 +31,7 @@
             $nome = $_POST['nome'] ?? '';
             $cor = $_POST['cor'] ?? '';
 
-            $tag = new Tag(0, $nome, $cor);
+            $tag = new Tag(0, $nome, $cor, $idUsuario);
             $resultado = $tag->inserir();
 
             if ($resultado) {
@@ -46,7 +48,7 @@
             $nome = $_POST['nome'] ?? '';
             $cor = $_POST['cor'] ?? '';
 
-            $tag = new Tag($id, $nome, $cor);
+            $tag = new Tag($id, $nome, $cor, $idUsuario);
             $resultado = $tag->alterar();
 
             if ($resultado) {

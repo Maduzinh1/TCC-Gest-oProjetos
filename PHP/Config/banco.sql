@@ -68,7 +68,13 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Tag` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255),
   `cor` VARCHAR(7),
-  PRIMARY KEY (`id`))
+  `idUsuario` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Tag_Usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `leaves`.`Usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------

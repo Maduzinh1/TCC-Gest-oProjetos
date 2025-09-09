@@ -5,12 +5,14 @@
         private $id;
         private $nome;
         private $cor;
+        private $idUsuario;
 
         // construtor da classe
-        public function __construct($id, $nome, $cor){
+        public function __construct($id, $nome, $cor, $idUsuario){
             $this->setId($id);
             $this->setNome($nome);
             $this->setCor($cor);
+            $this->setIdUsuario($idUsuario);
         }
 
         public function getId() {
@@ -40,9 +42,17 @@
             $this->cor = $cor;
         }
 
+        public function getIdUsuario(){
+            return $this->idUsuario;
+        }
+
+        public function setIdUsuario($idUsuario){
+            $this->idUsuario = $idUsuario;
+        }
+
         // método mágico para imprimir uma tag
         public function __toString():String{
-            $str = "Tag: ".$this->getId()." - ".$this->getNome()." - ".$this->getCor();
+            $str = "Tag: ".$this->getId()." - ".$this->getNome()." - ".$this->getCor()." - ".$this->getIdUsuario();
             return $str;
         }
 
@@ -50,11 +60,12 @@
         public function inserir():Bool{
             // montar o sql/ query
             $sql = "INSERT INTO Tag 
-                        (nome, cor)
-                        VALUES(:nome, :cor)";
+                        (nome, cor, idUsuario)
+                        VALUES(:nome, :cor, :idUsuario)";
 
             $parametros = array(':nome'=>$this->getNome(),
-                                ':cor'=>$this->getCor());
+                                ':cor'=>$this->getCor(),
+                                ':idUsuario'=>$this->getIdUsuario());
 
             return Database::executar($sql, $parametros) == true;
         }
@@ -73,7 +84,7 @@
             $comando = Database::consultar($sql, $parametros);
             $tags = [];
             while ($registro = $comando->fetch()){
-                $tag = new Tag($registro['id'], $registro['nome'], $registro['cor']);
+                $tag = new Tag($registro['id'], $registro['nome'], $registro['cor'], $registro['idUsuario']);
                 array_push($tags,$tag);
             }
             return $tags;

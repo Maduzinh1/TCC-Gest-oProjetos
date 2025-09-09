@@ -105,7 +105,7 @@
 
         // método mágico para imprimir uma atividade
         public function __toString():String{
-            $str = "Item: ".$this->getId()." - ".$this->getNome()." - ".$this->getDescricao()." - ".$this->getDataInicio()." - ".$this->getDataFim()." - ".$this->getStatus()." - ".$this->getUrgencia();
+            $str = "Item: ".$this->getId()." - ".$this->getNome()." - ".$this->getDescricao()." - ".$this->getDataInicio()." - ".$this->getDataFim()." - ".$this->getStatus()." - ".$this->getUrgencia()." - ".$this->getIdUsuario();
             return $str;
         }
 
