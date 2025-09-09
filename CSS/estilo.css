@@ -25,6 +25,7 @@
 }
 
 .banner {
+  position: relative;
 
   figure {
     height: 300px;
@@ -35,6 +36,15 @@
       object-fit: cover;
       object-position: top;
     }
+  }
+
+  .btn-banner-editar {
+    color: #fff;
+    font-size: 20px;
+    transition: background 0.2s;
+  }
+  .btn-banner-editar:hover {
+    background: #222;
   }
 }
 

@@ -48,8 +48,17 @@
   </div>
 
   <div class="banner">
-    <figure>
-      <img src="./../../img/ceu.jpg">
+    <figure style="margin:0;">
+      <img id="banner-img" src="./../../img/ceu.jpg" alt="Banner">
+      <form id="form-banner" action="../Controller/UsuarioController.php" method="post" enctype="multipart/form-data" style="position:absolute;top:10px;right:10px;">
+        <input type="hidden" name="acao" value="alterar_banner">
+        <input type="file" id="input-banner" name="banner" accept="image/*" style="display:none" onchange="this.form.submit()">
+        <label for="input-banner" style="cursor:pointer;">
+          <span class="btn-banner-editar" style="background:rgba(0,0,0,0.5);border-radius:50%;padding:8px;">
+            <i class="fa-solid fa-pen"></i>
+          </span>
+        </label>
+      </form>
     </figure>
   </div>
 

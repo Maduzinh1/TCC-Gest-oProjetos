@@ -27,6 +27,21 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Usuario` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `leaves`.`Config`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `leaves`.`Config` (
+  `idUsuario` INT NOT NULL,
+  `tema` ENUM('claro', 'escuro') DEFAULT 'claro',
+  `banner` VARCHAR(255),
+  PRIMARY KEY (`idUsuario`),
+  CONSTRAINT `fk_Config_Usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `leaves`.`Usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `leaves`.`Calendario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `leaves`.`Calendario` (
@@ -37,7 +52,13 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Calendario` (
   `data_fim` DATE,
   `status` ENUM('A fazer', 'Fazendo', 'Concluído'),
   `urgencia` ENUM('Baixa', 'Média', 'Alta'),
-  PRIMARY KEY (`id`))
+  `idUsuario` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Calendario_Usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `leaves`.`Usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -77,7 +98,13 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Pastas` (
   `nome` VARCHAR(255),
   `descricao` VARCHAR(255),
   `imagem` VARCHAR(255),
-  PRIMARY KEY (`id`))
+  `idUsuario` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Pastas_Usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `leaves`.`Usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
