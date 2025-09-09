@@ -9,10 +9,10 @@
         private $data_fim;
         private $status;
         private $urgencia;
-        private $tags = [];
+        private $idUsuario;
 
         // construtor da classe
-        public function __construct($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia){
+        public function __construct($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia, $idUsuario){
             $this->setId($id);
             $this->setNome($nome);
             $this->setDescricao($descricao);
@@ -20,6 +20,7 @@
             $this->setDataFim($data_fim);
             $this->setStatus($status);
             $this->setUrgencia($urgencia);
+            $this->setIdUsuario($idUsuario);
         }
 
         public function getId() {
@@ -94,6 +95,14 @@
             }
         }
 
+        public function getIdUsuario() {
+            return $this->idUsuario;
+        }
+
+        public function setIdUsuario($idUsuario) {
+            $this->idUsuario = $idUsuario;
+        }
+
         // método mágico para imprimir uma atividade
         public function __toString():String{
             $str = "Item: ".$this->getId()." - ".$this->getNome()." - ".$this->getDescricao()." - ".$this->getDataInicio()." - ".$this->getDataFim()." - ".$this->getStatus()." - ".$this->getUrgencia();
@@ -104,15 +113,16 @@
         public function inserir():Bool{
             // montar o sql/ query
             $sql = "INSERT INTO Calendario 
-                        (nome, descricao, data_inicio, data_fim, status, urgencia)
-                        VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :urgencia)";
+                        (nome, descricao, data_inicio, data_fim, status, urgencia, idUsuario)
+                        VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :urgencia, :idUsuario)";
 
             $parametros = array(':nome'=>$this->getNome(),
                                 ':descricao'=>$this->getDescricao(),
                                 ':data_inicio'=>$this->getDataInicio(),
                                 ':data_fim'=>$this->getDataFim(),
                                 ':status'=>$this->getStatus(),
-                                ':urgencia'=>$this->getUrgencia());
+                                ':urgencia'=>$this->getUrgencia(),
+                                ':idUsuario'=>$this->getIdUsuario());
 
             $resultado = Database::executar($sql, $parametros);
             if ($resultado) {
@@ -139,7 +149,7 @@
             $comando = Database::consultar($sql, $parametros);
             $items = [];
             while ($registro = $comando->fetch()){
-                $item = new Calendario($registro['id'], $registro['nome'], $registro['descricao'], $registro['data_inicio'], $registro['data_fim'], $registro['status'], $registro['urgencia']);
+                $item = new Calendario($registro['id'], $registro['nome'], $registro['descricao'], $registro['data_inicio'], $registro['data_fim'], $registro['status'], $registro['urgencia'], $registro['idUsuario']);
                 array_push($items,$item);
             }
             return $items;

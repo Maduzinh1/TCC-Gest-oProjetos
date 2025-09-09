@@ -1,7 +1,9 @@
 <?php
     require_once (__DIR__ . "/../Config/Database.class.php");
     require_once (__DIR__ . "/../Model/Calendario.class.php");
+    session_start();
 
+    $idUsuario = $_SESSION['usuario_id'];
     $acao = isset($_REQUEST['acao']) ? $_REQUEST['acao'] : '';
 
     switch ($acao) {
@@ -39,7 +41,7 @@
             $urgencia = $_POST['urgencia'] ?? '';
             $tag_id = $_POST['tag_id'] ?? null;
 
-            $item = new Calendario(null, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia);
+            $item = new Calendario(null, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia, $idUsuario);
             $resultado = $item->inserir();
 
             if ($resultado) {
@@ -67,7 +69,7 @@
             $status = $_POST['status'] ?? '';
             $urgencia = $_POST['urgencia'] ?? '';
 
-            $item = new Calendario($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia);
+            $item = new Calendario($id, $nome, $descricao, $data_inicio, $data_fim, $status, $urgencia, $idUsuario);
             $resultado = $item->alterar();
 
             if ($resultado) {

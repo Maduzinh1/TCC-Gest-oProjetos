@@ -1,5 +1,6 @@
 <?php
     require_once (__DIR__ . "/../Model/Calendario.class.php");
+    session_start();
     setlocale(LC_TIME, 'portuguese'); 
     date_default_timezone_set('America/Sao_Paulo');
     $mes = isset($_GET['mes']) ? intval($_GET['mes']) : date('m');
@@ -7,18 +8,22 @@
     $busca = isset($_GET['busca'])?$_GET['busca']:0;
     $tipo = isset($_GET['tipo'])?$_GET['tipo']:0;
     
+    $usuario_id = $_SESSION['usuario_id'];
+
     $items = Calendario::listar($tipo, $busca);
     $item_array = [];
     foreach ($items as $item) {
-        $item_array[] = [
-            'id' => $item->getId(),
-            'nome' => $item->getNome(),
-            'descricao' => $item->getDescricao(),
-            'data_inicio' => $item->getDataInicio(),
-            'data_fim' => $item->getDataFim(),
-            'status' => $item->getStatus(),
-            'urgencia' => $item->getUrgencia()
-        ];
+        if ($item->getIdUsuario() == $usuario_id) {
+            $item_array[] = [
+                'id' => $item->getId(),
+                'nome' => $item->getNome(),
+                'descricao' => $item->getDescricao(),
+                'data_inicio' => $item->getDataInicio(),
+                'data_fim' => $item->getDataFim(),
+                'status' => $item->getStatus(),
+                'urgencia' => $item->getUrgencia()
+            ];
+        }
     }
 
     function gerarCalendario($mes, $ano, $item_array) {
