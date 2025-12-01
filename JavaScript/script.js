@@ -133,10 +133,20 @@ function carregarTagsAjax() {
 // Fim tags
 
 // Pastas
+function carregarPastasAjax() {
+    fetch('./gerarPastas.php')
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.Pastas-conteudo').innerHTML = html;
+        });
+}
+
+carregarPastasAjax();
+
 document.getElementById('imagem-pasta').addEventListener('change', function() {
     const nome = this.files[0] ? this.files[0].name : '';
-  const label = document.getElementById('imagem-pasta-label');
-  if (nome) {
+    const label = document.getElementById('imagem-pasta-label');
+    if (nome) {
       label.textContent = nome;
       label.classList.add('selected');
     } else {
@@ -145,7 +155,6 @@ document.getElementById('imagem-pasta').addEventListener('change', function() {
     }
 });
 //Fim pastas
-
 
 function abrirPopupAddItem(event) {
     if (event) {
@@ -272,3 +281,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Relógio em tempo real
+function atualizarRelogioTempoReal() {
+    const agora = new Date();
+    const horas = agora.getHours().toString().padStart(2, '0');
+    const minutos = agora.getMinutes().toString().padStart(2, '0');
+    const segundos = agora.getSeconds().toString().padStart(2, '0');
+    const relogio = document.getElementById('relogio-tempo-real');
+    if (relogio) {
+        relogio.textContent = `${horas}:${minutos}:${segundos}`;
+    }
+}
+setInterval(atualizarRelogioTempoReal, 1000);
+atualizarRelogioTempoReal();

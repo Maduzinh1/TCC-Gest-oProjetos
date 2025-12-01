@@ -12,7 +12,6 @@
     }
     $html = "
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Cor</th>
             </tr>
@@ -20,7 +19,6 @@
     foreach ($tagsUsuario as $tag) {
         $html .= "
                 <tr>
-                    <td>{$tag->getId()}</td>
                     <td>{$tag->getNome()}</td>
                     <td><div style='height:20px;width:100%;background:{$tag->getCor()};'></div></td>
                 </tr>

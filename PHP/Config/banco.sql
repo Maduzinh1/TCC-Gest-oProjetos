@@ -113,6 +113,23 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Pastas` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `leaves`.`Anotacao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `leaves`.`Anotacao` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `titulo` VARCHAR(255) NOT NULL,
+    `conteudo` TEXT NOT NULL,
+    `link` VARCHAR(255),
+    `idPasta` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_Anotacao_Pastas`
+        FOREIGN KEY (`idPasta`)
+        REFERENCES `leaves`.`Pastas` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

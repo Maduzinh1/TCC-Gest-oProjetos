@@ -134,10 +134,36 @@
               }
             }
           
-            .naosei1 {
+            .Menu-lateral {
               height: 100%;
-              border: 1px solid rgba(0, 0, 0, 0.18); 
               color: #000;
+              overflow: hidden;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              gap: 19px;
+              /* border: 1px solid rgba(0, 0, 0, 0.18);  */
+              .Imagem {
+                height: 300px;
+                img {
+                  max-width: 100%;
+                  height: 100%;
+                  max-height: 100%;
+                  object-fit: cover;
+                  object-position: center;
+                }
+              }
+              .relogio-tempo-real {
+                height: max-content;
+                color: #000;
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+                text-align: center;
+                align-content: center;
+                padding: 19px 0;
+                border: 1px solid rgba(0, 0, 0, 0.18);
+                border-radius: 20px
+              }
             }
           
           }
@@ -319,7 +345,7 @@
               flex-direction: column;
               align-items: center;
               gap: 19px;
-              border: 1px solid rgba(0, 0, 0, 0.18);
+              /* border: 1px solid rgba(0, 0, 0, 0.18); */
           
               div.foto-usuario {
                 width: 143px;
@@ -408,7 +434,6 @@
               &>div {
                 height: 200px;
                 width: 18.994%;
-                background: red;
                 display: flex;
                 flex-direction: column;
 
@@ -428,6 +453,8 @@
                   display: flex;
                   flex-direction: column;
                   align-items: center;
+                  border: 1px solid rgba(0, 0, 0, 0.18);
+                  border-radius: 0 0 20px 20px;
 
                   h3, p {
                     height: 50%;
@@ -733,3 +760,134 @@ body.cadastro-login {
   }
 }
 
+body.pastas {
+  .header {
+    background: #fff;
+    padding: 32px 0 16px 0;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #222;
+  }
+
+  .header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+
+  .conteudo {
+    max-width: 900px;
+    margin: 32px auto 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+  }
+
+  .conteudo h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #1565c0;
+  }
+
+  .anotacoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .anotacao {
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 120px;
+  }
+
+  .anotacao h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  .anotacao p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 8px;
+    word-break: break-word;
+  }
+
+  .anotacao a {
+    color: #2196f3;
+    font-size: 0.95rem;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .anotacao a:hover {
+    text-decoration: underline;
+  }
+
+  form.pasta-anotacao-form {
+    margin-top: 24px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 18px 14px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    max-width: 480px;
+  }
+
+  form.pasta-anotacao-form label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  form.pasta-anotacao-form input[type="text"],
+  form.pasta-anotacao-form input[type="url"],
+  form.pasta-anotacao-form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #fff;
+    margin-bottom: 14px;
+    resize: vertical;
+  }
+
+  form.pasta-anotacao-form textarea {
+    min-height: 60px;
+    max-height: 180px;
+  }
+
+  form.pasta-anotacao-form button[type="submit"] {
+    background: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 0;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  form.pasta-anotacao-form button[type="submit"]:hover {
+    background: #1769aa;
+  }
+}

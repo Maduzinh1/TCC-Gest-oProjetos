@@ -47,7 +47,7 @@
 <body class="body">
 
   <div class="header">
-    <h1>header</h1>
+    <!-- <h1>header</h1> -->
   </div>
 
   <div class="banner">
@@ -90,7 +90,12 @@
               </button>
             </div>
           </div>
-          <div class="naosei1">naosei1</div>
+          <div class="Menu-lateral">
+            <div class="Imagem">
+              <img src="../../img/decorativa.jpg" alt="imagem decorativa">
+            </div>
+            <div class="relogio-tempo-real" id="relogio-tempo-real"></div>
+          </div>
         </div>
 
         <div class="Bloco-2">
@@ -169,22 +174,7 @@
               </button>
             </div>
             <div class="Pastas-conteudo">
-              <div class="Pasta1">
-                <div class="ImageSide">
-                  <img src="./../../img/perfil.jpg" alt="Pasta 1">
-                </div>
-                <div class="DescSide">
-                  <h3>Pasta 1</h3>
-                  <p>Descrição da Pasta 1</p>
-                </div>
-              </div>
-              <div class="conteudo2">conteudo2</div>
-              <div class="conteudo3">conteudo3</div>
-              <div class="conteudo4">conteudo4</div>
-              <div class="conteudo5">conteudo5</div>
-              <div class="conteudo6">conteudo6</div>
-              <div class="conteudo7">conteudo7</div>
-              <div class="conteudo8">conteudo8</div>
+              <!-- Conteúdo preenchido via JS e PHP -->
             </div>
           </div>
         </div>
@@ -193,7 +183,7 @@
   </div>
 
   <div class="footer">
-    <h1>footer</h1>
+    <!-- <h1>footer</h1> -->
   </div>
 
   <!-- Conteúdo invisível alterado com JS -->
@@ -305,7 +295,7 @@
           <i class="fa-solid fa-xmark"></i>
         </span>
       </div>
-      <form id="pastaForm" class="formulario-pasta" onsubmit="salvarPasta(event)" enctype="multipart/form-data">
+      <form id="pastaForm" class="formulario-pasta" action="./../Controller/PastaController.php" method="post" enctype="multipart/form-data">
         <fieldset class="formulario-fieldset">
           <legend id="form-legend">Adicionar Pasta</legend>
           <input type="hidden" id="id" name="id" value="">
