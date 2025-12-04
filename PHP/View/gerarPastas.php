@@ -1,11 +1,11 @@
 <?php
-    require_once (__DIR__ . "/../Model/Pastas.class.php");
+    require_once (__DIR__ . "/../Model/Pasta.class.php");
     session_start();
 
     $idUsuario = $_SESSION['usuario_id'];
 
     // Liste as pastas do usuário logado
-    $pastas = Pastas::listar(1, $idUsuario);
+    $pastas = Pasta::listar(1, $idUsuario);
     $html = "";
     foreach ($pastas as $pasta) {
         $imagem = $pasta->getImagem() ?: './../../img/pasta-default.png';

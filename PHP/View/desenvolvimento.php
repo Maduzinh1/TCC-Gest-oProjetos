@@ -40,11 +40,63 @@
 
   <div class="preContent">
     <div class="content">
-      <div class="kambam">
-        <div class="kambam-col planejamento">Planejamento</div>
-        <div class="kambam-col iniciado">Iniciado</div>
-        <div class="kambam-col desenvolvendo">Desenvolvendo</div>
-        <div class="kambam-col concluido">Concluído</div>
+      <div class="kanban">
+        <div class="kanban-col planejamento">
+          <div class="kanban-col-badge">
+            Planejamento
+          </div>
+          <div class="kanban-col-body">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <!-- Itens de planejamento vão aqui -->
+          </div>
+          <div class="kanban-col-footer">
+            <a href="#" class="kanban-add-btn"><i class="icone-plus"></i>Add a card</a>
+          </div>
+        </div>
+        <div class="kanban-col iniciado">
+          <div class="kanban-col-badge">
+            Iniciado
+          </div>
+          <div class="kanban-col-body">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <!-- Itens de planejamento vão aqui -->
+          </div>
+          <div class="kanban-col-footer">
+            <a href="#" class="kanban-add-btn"><i class="icone-plus"></i>Add a card</a>
+          </div>
+        </div>
+        <div class="kanban-col desenvolvendo">
+          <div class="kanban-col-badge">
+            Desenvolvendo
+          </div>
+          <div class="kanban-col-body">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <!-- Itens de planejamento vão aqui -->
+          </div>
+          <div class="kanban-col-footer">
+            <a href="#" class="kanban-add-btn"><i class="icone-plus"></i>Add a card</a>
+          </div>
+        </div>
+        <div class="kanban-col concluido">
+          <div class="kanban-col-badge">
+            Concluído
+          </div>
+          <div class="kanban-col-body">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <!-- Itens de planejamento vão aqui -->
+          </div>
+          <div class="kanban-col-footer">
+            <a href="#" class="kanban-add-btn"><i class="icone-plus"></i>Add a card</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

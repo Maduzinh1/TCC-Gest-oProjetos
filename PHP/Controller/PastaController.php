@@ -1,5 +1,5 @@
 <?php
-    require_once (__DIR__ . "/../Model/Pastas.class.php");
+    require_once (__DIR__ . "/../Model/Pasta.class.php");
     session_start();
 
     $idUsuario = $_SESSION['usuario_id'];
@@ -13,7 +13,7 @@
                 exit;
             }
 
-            $pastas = Pastas::listar(1, $id);
+            $pastas = Pasta::listar(1, $id);
             if (empty($pastas)) {
                 echo json_encode(['erro' => 'Pasta não encontrada']);
                 exit;
@@ -41,7 +41,7 @@
                 $imagem = $caminho;
             }
 
-            $pasta = new Pastas(0, $nome, $descricao, $imagem, $idUsuario);
+            $pasta = new Pasta(0, $nome, $descricao, $imagem, $idUsuario);
             $resultado = $pasta->inserir();
 
             if ($resultado) {
@@ -67,7 +67,7 @@
                 $imagem = $caminho;
             }
 
-            $pastas = Pastas::listar(1, $id);
+            $pastas = Pasta::listar(1, $id);
             if (empty($pastas)) {
                 header('Location: ../View/index.php?erro=10');
                 exit;
@@ -98,7 +98,7 @@
                 exit;
             }
 
-            $pastas = Pastas::listar(1, $id);
+            $pastas = Pasta::listar(1, $id);
             if (empty($pastas)) {
                 header('Location: ../View/index.php?erro=12');
                 exit;
