@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>Cadastrar Conta</title>
 </head>
-<body class="cadastro-login">
+<body class="body cadastro-login">
     <h2>Cadastrar Conta</h2>
     <?php if ($erro && $erro === '2') { ?>
         <p style="color:red;"><?php echo "Email já cadastrado!" ?></p>

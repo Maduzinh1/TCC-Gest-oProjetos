@@ -44,10 +44,11 @@
   <script> window.itemParaEditar = <?php if (isset($item)) { echo 'true'; } else { echo 'false'; } ?>; </script>
   <script src="./../../JavaScript/script.js" defer></script>
 </head>
-<body class="body">
+<body class="body estudos">
 
   <div class="header">
-    <!-- <h1>header</h1> -->
+    <a class="tab-item tab-item-0 active" href="./index.php">Estudos</a>
+    <a class="tab-item tab-item-1" href="./desenvolvimento.php">Desenvolvimento</a>
   </div>
 
   <div class="banner">

@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="./../../CSS/estilo.css">
     <title><?php echo htmlspecialchars($pasta->getNome()); ?></title>
 </head>
-<body class="pastas">
+<body class="body pastas">
     <div class="header">
         <h1><?php echo htmlspecialchars($pasta->getNome()); ?></h1>
         <p><?php echo htmlspecialchars($pasta->getDescricao()); ?></p>

@@ -20,11 +20,35 @@
   background: white;
 }
 
-.footer {
-  border: 1px solid #ccc;
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 80px;
+  padding: 20px 24px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .tab-item {
+    padding: 8px 16px;
+    background: #4004E4;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+
+    &.active, &:hover {
+      background: #7146e6;
+    }
+  }
 }
 
 .banner {
+  margin-top: 80px;
   position: relative;
 
   figure {
@@ -72,397 +96,405 @@
   }
 }
 
-.preContent, .content {
-  height: 100%;
+.footer {
+  border: 1px solid #ccc;
+}
 
-  &.preContent {
-    padding: 19px 5px;
-    
-    .content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 19px;
+body.body.estudos {
+  .preContent, .content {
+    height: 100%;
+  
+    &.preContent {
+      padding: 19px 5px;
       
-      .Linha-1, .Linha-2 {
+      .content {
         display: flex;
-        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
         gap: 19px;
         
-        .Bloco-1, .Bloco-2, .Bloco-3 {
+        .Linha-1, .Linha-2 {
           display: flex;
-          flex-direction: column;
+          width: 100%;
           gap: 19px;
-        
-          &>div {
-            text-align: center;
-            align-content: center;
-          }
           
-          &.Bloco-1 {
-            flex: 0 0 15%;
+          .Bloco-1, .Bloco-2, .Bloco-3 {
+            display: flex;
+            flex-direction: column;
+            gap: 19px;
           
-            .Bloco-temporizador {
-              min-height: 144px;
-              border-radius: 20px;
-              border: 1px solid rgba(0, 0, 0, 0.18); 
-          
-              .temporizador {
-                height: 60%;
-                color: #000;
-                font-size: 2.5rem;
-                letter-spacing: 2px;
-                text-align: center;
-                align-content: center;
-              }
-          
-              .temporizador-btn {
-                display: flex;
-                justify-content: center;
-                gap: 19px;
-          
-                .definir-tempo, .iniciar-tempo, .resetar-tempo, .pausar-tempo {
+            &>div {
+              text-align: center;
+              align-content: center;
+            }
+            
+            &.Bloco-1 {
+              flex: 0 0 15%;
+            
+              .Bloco-temporizador {
+                min-height: 144px;
+                border-radius: 20px;
+                border: 1px solid rgba(0, 0, 0, 0.18); 
+            
+                .temporizador {
+                  height: 60%;
+                  color: #000;
+                  font-size: 2.5rem;
+                  letter-spacing: 2px;
+                  text-align: center;
+                  align-content: center;
+                }
+            
+                .temporizador-btn {
                   display: flex;
                   justify-content: center;
-                  align-items: center;
-                  padding: 3px 6px;
-          
-                  .fa-play::before, .fa-pause::before, .fa-stop::before, .fa-sliders::before {
-                    font-size: 0.8rem;
+                  gap: 19px;
+            
+                  .definir-tempo, .iniciar-tempo, .resetar-tempo, .pausar-tempo {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 3px 6px;
+            
+                    .fa-play::before, .fa-pause::before, .fa-stop::before, .fa-sliders::before {
+                      font-size: 0.8rem;
+                    }
                   }
                 }
               }
-            }
-          
-            .Menu-lateral {
-              height: 100%;
-              color: #000;
-              overflow: hidden;
-              display: flex;
-              flex-direction: column;
-              justify-content: flex-start;
-              gap: 19px;
-              /* border: 1px solid rgba(0, 0, 0, 0.18);  */
-              .Imagem {
-                height: 300px;
-                img {
-                  max-width: 100%;
-                  height: 100%;
-                  max-height: 100%;
-                  object-fit: cover;
-                  object-position: center;
-                }
-              }
-              .relogio-tempo-real {
-                height: max-content;
+            
+              .Menu-lateral {
+                height: 100%;
                 color: #000;
-                font-size: 2.5rem;
-                letter-spacing: 2px;
-                text-align: center;
-                align-content: center;
-                padding: 19px 0;
-                border: 1px solid rgba(0, 0, 0, 0.18);
-                border-radius: 20px
-              }
-            }
-          
-          }
-          
-          &.Bloco-2 {
-            flex: 1 0 67%;  
-          
-            .naosei2 {
-              min-height: 144px;
-              border: 1px solid rgba(0, 0, 0, 0.18); 
-          
-            }
-          
-            .Bloco-calendario {
-              display: flex;
-              flex-direction: column;
-              gap: 19px;
-          
-              .titulo-calendario {
+                overflow: hidden;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
+                justify-content: flex-start;
                 gap: 19px;
-                margin-bottom: auto;
-          
-                .titulo-calendario-btn {
-                  display: flex;
-                  gap: 19px;
-          
-                  .prevMes, .nextMes {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 2px 4px;
-          
-                    .fa-angle-left::before, .fa-angle-right::before {
-                      font-size: 1.2rem;
-                    }
+                /* border: 1px solid rgba(0, 0, 0, 0.18);  */
+                .Imagem {
+                  height: 300px;
+                  img {
+                    width: 100%;
+                    max-width: 100%;
+                    height: 100%;
+                    max-height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 20px;
                   }
+                }
+                .relogio-tempo-real {
+                  height: max-content;
+                  color: #000;
+                  font-size: 2.5rem;
+                  letter-spacing: 2px;
+                  text-align: center;
+                  align-content: center;
+                  padding: 19px 0;
+                  border: 1px solid rgba(0, 0, 0, 0.18);
+                  border-radius: 20px
                 }
               }
-          
-              .calendario {
-                border-collapse: collapse;
-                width: 100%;
-          
-                tr {
-                  height: 80px;
-                }
-          
-                th, td {
-                  border: 1px solid #ccc;
-                  text-align: center;
-                  padding: 8px;
-                  min-width: 3.5vw;
-                  width: 3.5vw;
-                  max-width: 3.5vw;
-                  min-height: 10.4vh;
-                  height: 10.4vh;
-                  max-height: 10.4vh;
-                }
-          
-                th {
-                  background: #f0f0f0;
-                }
-          
-                td {
-                  position: relative;
-          
-                  .numero-dia {
-                    position: absolute;
-                    top: 4px;
-                    right: 8px;
-                    font-size: 1rem;
-                    color: #888;
-                    z-index: 2;
-                  }
-          
-                  .add-btn {
-                    position: absolute;
-                    bottom: 4px;
-                    right: 4px;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                    border-radius: 50%;
-                    border: none;
-                    background: #2196f3;
-                    color: #fff;
-                    cursor: pointer;
-                    transition: background 0.2s;
-                    z-index: 1;
+            
+            }
+            
+            &.Bloco-2 {
+              flex: 1 0 67%;  
+            
+              .naosei2 {
+                min-height: 144px;
+                border: 1px solid rgba(0, 0, 0, 0.18); 
+            
+              }
+            
+              .Bloco-calendario {
+                display: flex;
+                flex-direction: column;
+                gap: 19px;
+            
+                .titulo-calendario {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 19px;
+                  margin-bottom: auto;
+            
+                  .titulo-calendario-btn {
                     display: flex;
-                    justify-content: center;
-                    align-items: center;
-          
-                    &:hover {
-                      background: #1769aa;
-                    }
-                  }
-          
-                  &.today { 
-                    background: #ffe30036; 
-                  }
-                }
-          
-                .dia-com-item {
-                  cursor: pointer;
-          
-                  .item-calendario, .item-mais {
-                    min-width: 6.5vw;
-                    width: 6.5vw;
-                    max-width: 6.5vw;
-                    border-radius: 4px;
-                    margin-top: 2px;
-                    padding: 1px 6px;
-                    font-size: 0.8rem;
-                    font-weight: 500;
-                    cursor: pointer;
-                    text-align: left;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                    gap: 19px;
             
-                    &.item-calendario {
-                      color: #222;
-                      font-weight: 500;
-                    }
+                    .prevMes, .nextMes {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      padding: 2px 4px;
             
-                    &.item-mais {
-                      background: #ffc107;
-                      color: #333;
-                      
-                      &:hover {
-                        background: #ffb300;
+                      .fa-angle-left::before, .fa-angle-right::before {
+                        font-size: 1.2rem;
                       }
                     }
                   }
-                }      
-              }
-            }
-          
-            .Bloco-tags {
-              display: none;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-          
-              .titulo-tags {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                position: relative;
-          
-                .addTag {
-                  position: absolute;
-                  right: 0;
-          
-                  .fa-plus::before {
-                    font-size: 0.9rem;
+                }
+            
+                .calendario {
+                  border-collapse: collapse;
+                  width: 100%;
+            
+                  tr {
+                    height: 80px;
                   }
+            
+                  th, td {
+                    border: 1px solid #ccc;
+                    text-align: center;
+                    padding: 8px;
+                    min-width: 3.5vw;
+                    width: 3.5vw;
+                    max-width: 3.5vw;
+                    min-height: 10.4vh;
+                    height: 10.4vh;
+                    max-height: 10.4vh;
+                  }
+            
+                  th {
+                    background: #f0f0f0;
+                  }
+            
+                  td {
+                    position: relative;
+            
+                    .numero-dia {
+                      position: absolute;
+                      top: 4px;
+                      right: 8px;
+                      font-size: 1rem;
+                      color: #888;
+                      z-index: 2;
+                    }
+            
+                    .add-btn {
+                      position: absolute;
+                      bottom: 4px;
+                      right: 4px;
+                      width: 1.5rem;
+                      height: 1.5rem;
+                      border-radius: 50%;
+                      border: none;
+                      background: #2196f3;
+                      color: #fff;
+                      cursor: pointer;
+                      transition: background 0.2s;
+                      z-index: 1;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+            
+                      &:hover {
+                        background: #1769aa;
+                      }
+                    }
+            
+                    &.today { 
+                      background: #ffe30036; 
+                    }
+                  }
+            
+                  .dia-com-item {
+                    cursor: pointer;
+            
+                    .item-calendario, .item-mais {
+                      min-width: 6.5vw;
+                      width: 6.5vw;
+                      max-width: 6.5vw;
+                      border-radius: 4px;
+                      margin-top: 2px;
+                      padding: 1px 6px;
+                      font-size: 0.8rem;
+                      font-weight: 500;
+                      cursor: pointer;
+                      text-align: left;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+              
+                      &.item-calendario {
+                        color: #222;
+                        font-weight: 500;
+                      }
+              
+                      &.item-mais {
+                        background: #ffc107;
+                        color: #333;
+                        
+                        &:hover {
+                          background: #ffb300;
+                        }
+                      }
+                    }
+                  }      
                 }
               }
-          
-              .tags {
-                border-spacing: 19px 0;
+            
+              .Bloco-tags {
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            
+                .titulo-tags {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                  width: 100%;
+                  position: relative;
+            
+                  .addTag {
+                    position: absolute;
+                    right: 0;
+            
+                    .fa-plus::before {
+                      font-size: 0.9rem;
+                    }
+                  }
+                }
+            
+                .tags {
+                  border-spacing: 19px 0;
+                }
               }
             }
-          }
-          
-          &.Bloco-3 {
-            flex: 0 0 15%;
-          
-            .Bloco-infousuario {
-              height: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: 19px;
-              /* border: 1px solid rgba(0, 0, 0, 0.18); */
-          
-              div.foto-usuario {
-                width: 143px;
-                height: 143px;
-                border-radius: 50%;
-                overflow: hidden;
-                position: relative;
-
-                form {
-
-                  label {
-                    cursor: pointer;
-                    display: block;
-
-                    img.foto-usuario-img, div.foto-usuario-placeholder {
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
-                      border-radius: 50%;
-
-                      &.foto-usuario-placeholder {
-                        width: 143px;
-                        height: 143px;
+            
+            &.Bloco-3 {
+              flex: 0 0 15%;
+            
+              .Bloco-infousuario {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 19px;
+                /* border: 1px solid rgba(0, 0, 0, 0.18); */
+            
+                div.foto-usuario {
+                  width: 143px;
+                  height: 143px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  position: relative;
+  
+                  form {
+  
+                    label {
+                      cursor: pointer;
+                      display: block;
+  
+                      img.foto-usuario-img, div.foto-usuario-placeholder {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
                         border-radius: 50%;
-                        background: #eee;
-                        display: flex;
+  
+                        &.foto-usuario-placeholder {
+                          width: 143px;
+                          height: 143px;
+                          border-radius: 50%;
+                          background: #eee;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-size: 14px;
+                          color: #888;
+                        }
+                      }
+  
+                      div.foto-usuario-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        background: rgba(0, 0, 0, 0.3);
+                        color: #fff;
+                        display: none;
                         align-items: center;
                         justify-content: center;
                         font-size: 14px;
-                        color: #888;
                       }
                     }
-
-                    div.foto-usuario-overlay {
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                      border-radius: 50%;
-                      background: rgba(0, 0, 0, 0.3);
-                      color: #fff;
-                      display: none;
-                      align-items: center;
-                      justify-content: center;
-                      font-size: 14px;
-                    }
                   }
-                }
-
-                &.foto-usuario:hover{
-                  display: flex !important;
+  
+                  &.foto-usuario:hover{
+                    display: flex !important;
+                  }
                 }
               }
             }
           }
-        }
-
-        .Bloco-4 {
-          width: 100%;
-          min-height: 251.6px;
-          max-height: 470.6px;
-          
-          .Bloco-pastas {
-            height: 100%;
-
-            .Pastas-titulo {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding-bottom: 3px;
-              border-bottom: 1px solid #ccc;
-              font-size: 1.5rem;
-              button {
-                width: 27px;
-                height: 27px;
-              }
-            }
-
-            .Pastas-conteudo {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 19px;
-              padding: 19px 0 0;
-
-              &>div {
-                height: 200px;
-                width: 18.994%;
+  
+          .Bloco-4 {
+            width: 100%;
+            min-height: 251.6px;
+            max-height: 470.6px;
+            
+            .Bloco-pastas {
+              height: 100%;
+  
+              .Pastas-titulo {
                 display: flex;
-                flex-direction: column;
-
-                .ImageSide {
-                  height: 75%;
-                  width: 100%;
-                  img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                  }
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 3px;
+                border-bottom: 1px solid #ccc;
+                font-size: 1.5rem;
+                button {
+                  width: 27px;
+                  height: 27px;
                 }
-
-                .DescSide {
-                  height: 25%;
-                  width: 100%;
+              }
+  
+              .Pastas-conteudo {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 19px;
+                padding: 19px 0 0;
+  
+                &>div {
+                  height: 200px;
+                  width: 18.994%;
                   display: flex;
                   flex-direction: column;
-                  align-items: center;
-                  border: 1px solid rgba(0, 0, 0, 0.18);
-                  border-radius: 0 0 20px 20px;
-
-                  h3, p {
-                    height: 50%;
-                    width: 90%;
-                    align-content: center;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
+  
+                  .ImageSide {
+                    height: 75%;
+                    width: 100%;
+                    img {
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                    }
+                  }
+  
+                  .DescSide {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    border: 1px solid rgba(0, 0, 0, 0.18);
+                    border-radius: 0 0 20px 20px;
+  
+                    h3, p {
+                      height: 50%;
+                      width: 90%;
+                      align-content: center;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                    }
                   }
                 }
               }
@@ -668,10 +700,7 @@
 /* Estilos para as páginas de cadastro e login */
 body.cadastro-login {
   min-height: 100vh;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
   gap: 19px;
   background: #f5f7fa;
   font-family: 'Inter', Arial, sans-serif;
@@ -759,7 +788,9 @@ body.cadastro-login {
     text-align: center;
   }
 }
+/* Fim do estilo das páginas de cadastro e login */
 
+/* Estilos para a página de pastas e suas anotações */
 body.pastas {
   .header {
     background: #fff;
@@ -891,3 +922,4 @@ body.pastas {
     background: #1769aa;
   }
 }
+/* Fim do estilo da página de pastas e suas anotações */
