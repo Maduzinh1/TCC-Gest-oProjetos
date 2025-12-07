@@ -130,6 +130,34 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Anotacao` (
         ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `leaves`.`Projeto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `descricao` VARCHAR(255),
+  `idUsuario` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Projeto_Usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `leaves`.`Usuario` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `leaves`.`QuadroProjeto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255) NOT NULL,
+  `descricao` TEXT,
+  `imagem` VARCHAR(255),
+  `status` ENUM('Planejamento', 'Iniciado', 'Desenvolvendo', 'Concluído') NOT NULL DEFAULT 'Planejamento',
+  `idProjeto` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_QuadroProjeto_Projeto`
+    FOREIGN KEY (`idProjeto`)
+    REFERENCES `leaves`.`Projeto` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

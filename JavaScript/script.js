@@ -233,17 +233,39 @@ function fecharPopupAddPasta() {
     document.getElementById('adicionarPasta').style.display = 'none';
 }
 
+function abrirPopupAddProjeto(event) {
+    if (event) event.stopPropagation();
+    const form = document.querySelector('#adicionarProjeto form');
+    if (form) {
+        form.reset();
+        form.querySelector('input[name="id"]').value = '';
+        document.querySelector('#adicionarProjeto legend').textContent = 'Adicionar Projeto';
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.textContent = 'Adicionar projeto';
+            btn.value = 'adicionar';
+        }
+    }
+    document.getElementById('adicionarProjeto').style.display = 'flex';
+}
+
+function fecharPopupAddProjeto() {
+    document.getElementById('adicionarProjeto').style.display = 'none';
+}
+
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
     const popupAdicionarTag = document.getElementById('adicionarTag');
     const popupItemsDoDia = document.getElementById('popupItemsDoDia');
     const popupAdicionarPasta = document.getElementById('adicionarPasta');
-    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta) {
+    const popupAdicionarProjeto = document.getElementById('adicionarProjeto');
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta || event.target == popupAdicionarProjeto) {
         popupAdicionarItem.style.display = "none";
         popupItemsDoDia.style.display = "none";
         popupAdicionarTag.style.display = "none";
         popupAdicionarPasta.style.display = "none";
+        popupAdicionarProjeto.style.display = "none";
     }
 }
 

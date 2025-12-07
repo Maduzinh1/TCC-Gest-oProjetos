@@ -89,7 +89,7 @@
         }
 
         public function alterar(): Bool {       
-        $sql = "UPDATE Tag
+            $sql = "UPDATE Tag
                     SET nome = :nome, 
                         cor = :cor
                     WHERE id = :id";

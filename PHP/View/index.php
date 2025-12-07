@@ -48,7 +48,7 @@
 
   <div class="header">
     <a class="tab-item tab-item-0 active" href="./index.php">Estudos</a>
-    <a class="tab-item tab-item-1" href="./desenvolvimento.php">Desenvolvimento</a>
+    <a class="tab-item tab-item-1" href="./projeto.php">Desenvolvimento de Projetos</a>
   </div>
 
   <div class="banner">
