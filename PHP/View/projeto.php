@@ -38,9 +38,9 @@
   <div class="preContent">
     <div class="content">
       <h2>Meus Projetos</h2>
-      <button type="button" class="btn-novo-projeto" onclick="abrirPopupAddProjeto(event)">
-        <i class="fa-solid fa-plus"></i> Novo Projeto
-      </button>
+      <div class="novo-projeto-wrapper">
+        <button type="button" class="btn-novo-projeto" onclick="abrirPopupAddProjeto(event)"><i class="fa-solid fa-plus"></i> Novo Projeto</button>
+      </div>
       <div class="projetos-lista">
         <table id="tabela-projetos">
           <?php
@@ -48,7 +48,8 @@
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Ações</th>
+                    <th>Kanban</th>
+                    <th>Deletar</th>
                 </tr>
             ";
             foreach ($projetosUsuario as $projeto) {
@@ -57,7 +58,10 @@
                         <td>" . htmlspecialchars($projeto->getNome()) . "</td>
                         <td>" . htmlspecialchars($projeto->getDescricao()) . "</td>
                         <td>
-                            <a href='desenvolvimento.php?id={$projeto->getId()}' class='btn-ver-kanban'>Ver Kanban</a>
+                          <a href='desenvolvimento.php?id={$projeto->getId()}' class='btn-ver-kanban'>Ver Kanban</a>
+                        </td>
+                        <td>
+                          <a href='../Controller/ProjetoController.php?id={$projeto->getId()}&acao=excluir' class='btn-excluir-projeto' onclick=\"return confirm('Tem certeza que deseja excluir este projeto?')\">Excluir</a>
                         </td>
                     </tr>
                 ";

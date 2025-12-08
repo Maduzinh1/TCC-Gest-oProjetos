@@ -51,6 +51,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/325fb60df1.js" crossorigin="anonymous"></script>
   <script> window.itemParaEditar = <?php if (isset($item)) { echo 'true'; } else { echo 'false'; } ?>; </script>
+  <script> var idProjeto = <?php echo json_encode($idProjeto); ?>; </script>
   <script src="./../../JavaScript/script.js" defer></script>
 </head>
 <body class="body desenvolvimento">
@@ -76,38 +77,32 @@
           </div>
           <div class="kanban-col-body">
             <?php foreach ($kanban[$status] as $card): ?>
-              <div class="card">
+              <div class="card" draggable="true" data-id="<?php echo $card->getId(); ?>">
                 <?php if ($card->getImagem()) { ?>
                   <img src="<?php echo $card->getImagem(); ?>" alt="Imagem do Card" class="card-img">
                 <?php } ?>
                 <h4><?php echo htmlspecialchars($card->getTitulo()); ?></h4>
-                <p><?php echo htmlspecialchars($card->getDescricao()); ?></p>
-                <!-- Botão para mover card (exemplo, pode ser dropdown ou drag&drop) -->
-                <form action="../Controller/QuadroProjetoController.php" method="post" style="margin-top:8px;">
-                  <input type="hidden" name="acao" value="mover">
-                  <input type="hidden" name="idCard" value="<?php echo $card->getId(); ?>">
-                  <input type="hidden" name="idProjeto" value="<?php echo $idProjeto; ?>">
-                  <select name="novoStatus" onchange="this.form.submit()">
-                    <?php foreach ($colunas as $optStatus => $optLabel): ?>
-                      <option value="<?php echo $optStatus; ?>" <?php if ($optStatus == $status) echo 'selected'; ?>>
-                        <?php echo $optLabel; ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </form>
+                <div>
+                  <form class="form-mover-card" action="../Controller/QuadroProjetoController.php" method="post" style="margin-top:8px;">
+                    <input type="hidden" name="idCard" value="<?php echo $card->getId(); ?>">
+                    <input type="hidden" name="idProjeto" value="<?php echo $idProjeto; ?>">
+                    <input type="hidden" name="acao" value="mover">
+                    <select name="novoStatus" style="margin-right:6px;">
+                      <?php foreach ($colunas as $statusOpt => $labelOpt): ?>
+                        <?php if ($statusOpt !== $card->getStatus()): ?>
+                          <option value="<?php echo $statusOpt; ?>"><?php echo $labelOpt; ?></option>
+                        <?php endif; ?>
+                      <?php endforeach; ?>
+                    </select>
+                    <button type="submit" class="btn-mover-card">Mover</button>
+                  </form>
+                  <a href="../Controller/QuadroProjetoController.php?idCard=<?php echo $card->getId(); ?>&idProjeto=<?php echo $idProjeto; ?>&acao=excluir" class="btn-excluir-card" onclick="return confirm('Tem certeza que deseja excluir este card?')">Excluir</a>
+                </div>
               </div>
             <?php endforeach; ?>
           </div>
           <div class="kanban-col-footer">
-            <form action="../Controller/QuadroProjetoController.php" method="post" enctype="multipart/form-data" class="kanban-add-form">
-              <input type="hidden" name="acao" value="adicionar">
-              <input type="hidden" name="idProjeto" value="<?php echo $idProjeto; ?>">
-              <input type="hidden" name="status" value="<?php echo $status; ?>">
-              <input type="text" name="titulo" placeholder="Título do card" required>
-              <input type="text" name="descricao" placeholder="Descrição" required>
-              <input type="file" name="imagem" accept="image/*">
-              <button type="submit" class="kanban-add-btn"><i class="fa-solid fa-plus"></i> Add a card</button>
-            </form>
+            <button type="submit" class="kanban-add-btn" onclick="abrirPopupAddCard('<?php echo $status; ?>', <?php echo $idProjeto; ?>)"><i class="fa-solid fa-plus"></i> Add a card</button>
           </div>
         </div>
         <?php endforeach; ?>
@@ -117,6 +112,46 @@
 
   <div class="footer">
     <!-- <h1>footer</h1> -->
+  </div>
+
+  <div id="adicionarCard" class="popup">
+    <div class="popup-content">
+      <div class="popup-header-form">
+        <span class="close" onclick="fecharPopupAddCard()">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </div>
+      <form id="cardForm" class="formulario-card" action="../Controller/QuadroProjetoController.php" method="post" enctype="multipart/form-data">
+        <fieldset class="formulario-fieldset">
+          <legend id="form-legend-card">Adicionar Card</legend>
+          <input type="hidden" id="idProjeto-card" name="idProjeto" value="">
+          <input type="hidden" id="status-card" name="status" value="">
+          <input type="hidden" name="acao" value="adicionar">
+
+          <div class="formulario-campo campo-titulo">
+            <label for="titulo-card" class="formulario-label">Título:</label>
+            <input type="text" id="titulo-card" class="formulario-input input-titulo" name="titulo" required>
+          </div>
+
+          <div class="formulario-campo campo-descricao">
+            <label for="descricao-card" class="formulario-label">Descrição:</label>
+            <textarea id="descricao-card" class="formulario-textarea input-descricao" name="descricao" required></textarea>
+          </div>
+
+          <div class="formulario-campo campo-imagem">
+            <label for="imagem-card" class="formulario-label">Imagem:</label>
+            <div class="custom-file-wrapper">
+              <input type="file" id="imagem-card" class="formulario-input custom-file-input" name="imagem" accept="image/*">
+              <label for="imagem-card" id="imagem-card-label" class="custom-file-label">
+                <i class="fa-solid fa-image"></i> Escolher imagem
+              </label>
+            </div>
+          </div>
+
+          <button id="form-btn-card" type="submit" class="formulario-btn" name="acao" value="adicionar">Adicionar card</button>
+        </fieldset>
+      </form>
+    </div>
   </div>
 </body>
 </html>

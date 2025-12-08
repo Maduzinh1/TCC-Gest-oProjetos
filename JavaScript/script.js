@@ -253,6 +253,26 @@ function fecharPopupAddProjeto() {
     document.getElementById('adicionarProjeto').style.display = 'none';
 }
 
+function abrirPopupAddCard(status, idProjeto) {
+    const form = document.querySelector('#adicionarCard form');
+    if (form) {
+        form.reset();
+        document.getElementById('idProjeto-card').value = idProjeto;
+        document.getElementById('status-card').value = status;
+        document.getElementById('form-legend-card').textContent = 'Adicionar Card';
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.textContent = 'Adicionar card';
+            btn.value = 'adicionar';
+        }
+    }
+    document.getElementById('adicionarCard').style.display = 'flex';
+}
+
+function fecharPopupAddCard() {
+    document.getElementById('adicionarCard').style.display = 'none';
+}
+
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
@@ -260,12 +280,14 @@ window.onclick = function(event) {
     const popupItemsDoDia = document.getElementById('popupItemsDoDia');
     const popupAdicionarPasta = document.getElementById('adicionarPasta');
     const popupAdicionarProjeto = document.getElementById('adicionarProjeto');
-    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta || event.target == popupAdicionarProjeto) {
+    const popupAdicionarCard = document.getElementById('adicionarCard');
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta || event.target == popupAdicionarProjeto || event.target == popupAdicionarCard) {
         popupAdicionarItem.style.display = "none";
         popupItemsDoDia.style.display = "none";
         popupAdicionarTag.style.display = "none";
         popupAdicionarPasta.style.display = "none";
         popupAdicionarProjeto.style.display = "none";
+        popupAdicionarCard.style.display = "none";
     }
 }
 
@@ -289,6 +311,7 @@ window.addEventListener('DOMContentLoaded', function() {
         document.getElementById('adicionarItem').style.display = 'flex';
     }
 });
+// Fim de mostrar o popup de edição do item automaticamento se houver item para editar
 
 // Overlay da foto de perfil ao passar o mouse
 document.addEventListener('DOMContentLoaded', function() {
@@ -303,6 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// Fim do overlay de perfil ao passar o mouse
 
 // Relógio em tempo real
 function atualizarRelogioTempoReal() {
@@ -317,3 +341,39 @@ function atualizarRelogioTempoReal() {
 }
 setInterval(atualizarRelogioTempoReal, 1000);
 atualizarRelogioTempoReal();
+// Fim do relógio em tempo real
+
+// Drag & Drop dos cards
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('body.desenvolvimento .card').forEach(card => {
+    card.addEventListener('dragstart', function(e) {
+      e.dataTransfer.setData('cardId', this.dataset.id);
+    });
+  });
+
+  document.querySelectorAll('body.desenvolvimento .kanban-col').forEach(col => {
+    col.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.classList.add('drag-over');
+    });
+    col.addEventListener('dragleave', function(e) {
+      this.classList.remove('drag-over');
+    });
+    col.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      const cardId = e.dataTransfer.getData('cardId');
+      const novoStatus = this.querySelector('.kanban-col-badge').textContent.trim();
+      fetch('../Controller/QuadroProjetoController.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+          acao: 'mover',
+          idCard: cardId,
+          novoStatus: novoStatus,
+          idProjeto: idProjeto
+        })
+      }).then(() => location.reload());
+    });
+  });
+});
+// Fim do Drag & Drop
