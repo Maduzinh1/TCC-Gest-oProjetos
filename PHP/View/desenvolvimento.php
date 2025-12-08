@@ -77,13 +77,13 @@
           </div>
           <div class="kanban-col-body">
             <?php foreach ($kanban[$status] as $card): ?>
-              <div class="card" draggable="true" data-id="<?php echo $card->getId(); ?>">
+              <div class="card" draggable="true" data-id="<?php echo $card->getId(); ?>" onclick="abrirPopupCard(<?php echo $card->getId(); ?>, <?php echo $idProjeto; ?>, event)">
                 <?php if ($card->getImagem()) { ?>
                   <img src="<?php echo $card->getImagem(); ?>" alt="Imagem do Card" class="card-img">
                 <?php } ?>
                 <h4><?php echo htmlspecialchars($card->getTitulo()); ?></h4>
                 <div>
-                  <form class="form-mover-card" action="../Controller/QuadroProjetoController.php" method="post" style="margin-top:8px;">
+                  <form class="form-mover-card" action="../Controller/QuadroProjetoController.php" method="post" style="margin-top:8px;" onclick="event.stopPropagation()">
                     <input type="hidden" name="idCard" value="<?php echo $card->getId(); ?>">
                     <input type="hidden" name="idProjeto" value="<?php echo $idProjeto; ?>">
                     <input type="hidden" name="acao" value="mover">
@@ -96,7 +96,7 @@
                     </select>
                     <button type="submit" class="btn-mover-card">Mover</button>
                   </form>
-                  <a href="../Controller/QuadroProjetoController.php?idCard=<?php echo $card->getId(); ?>&idProjeto=<?php echo $idProjeto; ?>&acao=excluir" class="btn-excluir-card" onclick="return confirm('Tem certeza que deseja excluir este card?')">Excluir</a>
+                  <a href="../Controller/QuadroProjetoController.php?idCard=<?php echo $card->getId(); ?>&idProjeto=<?php echo $idProjeto; ?>&acao=excluir" class="btn-excluir-card" onclick="event.stopPropagation(); return confirm('Tem certeza que deseja excluir este card?')">Excluir</a>
                 </div>
               </div>
             <?php endforeach; ?>
@@ -114,6 +114,7 @@
     <!-- <h1>footer</h1> -->
   </div>
 
+  <!-- Conteúdo invisível alterado com JS -->
   <div id="adicionarCard" class="popup">
     <div class="popup-content">
       <div class="popup-header-form">
@@ -153,5 +154,20 @@
       </form>
     </div>
   </div>
+
+  <!-- Conteúdo invisível alterado com JS -->
+  <div id="popupCard" class="popup popup-card">
+    <div id="popupCardContent" class="popup-content">
+      <!-- Conteúdo preenchido via JS -->
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.kanban-col').forEach(function(col) {
+      if (col.querySelector('.kanban-col-body').children.length === 0) {
+        col.style.justifyContent = 'space-between';
+      }
+    });
+  </script>
 </body>
 </html>

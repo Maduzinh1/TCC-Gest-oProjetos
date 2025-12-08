@@ -273,6 +273,39 @@ function fecharPopupAddCard() {
     document.getElementById('adicionarCard').style.display = 'none';
 }
 
+function abrirPopupCard(idCard, idProjeto, event) {
+    if (event) event.stopPropagation();
+    fetch(`./../Controller/QuadroProjetoController.php?acao=ver&idCard=${idCard}&idProjeto=${idProjeto}`)
+        .then(response => response.text())
+        .then(html => {
+            const content = document.getElementById('popupCardContent');
+            if (content) {
+                content.innerHTML = html;
+            }
+            const popup = document.getElementById('popupCard');
+            if (popup) {
+                popup.style.display = 'flex';
+            }
+        })
+        .catch(() => {
+            const content = document.getElementById('popupCardContent');
+            if (content) {
+                content.innerHTML = '<div class="popup-header-dia"><h3>Erro</h3></div><div class="items-dia">Não foi possível carregar o card.</div>';
+            }
+            const popup = document.getElementById('popupCard');
+            if (popup) {
+                popup.style.display = 'flex';
+            }
+        });
+}
+
+function fecharPopupCard() {
+    const popup = document.getElementById('popupCard');
+    if (popup) {
+        popup.style.display = 'none';
+    }
+}
+
 // Fechar o pop-up se o usuário clicar fora dele
 window.onclick = function(event) {
     const popupAdicionarItem = document.getElementById('adicionarItem');
@@ -281,13 +314,15 @@ window.onclick = function(event) {
     const popupAdicionarPasta = document.getElementById('adicionarPasta');
     const popupAdicionarProjeto = document.getElementById('adicionarProjeto');
     const popupAdicionarCard = document.getElementById('adicionarCard');
-    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta || event.target == popupAdicionarProjeto || event.target == popupAdicionarCard) {
+    const popupCard = document.getElementById('popupCard');
+    if (event.target == popupAdicionarItem || event.target == popupItemsDoDia || event.target == popupAdicionarTag || event.target == popupAdicionarPasta || event.target == popupAdicionarProjeto || event.target == popupAdicionarCard || event.target == popupCard) {
         popupAdicionarItem.style.display = "none";
         popupItemsDoDia.style.display = "none";
         popupAdicionarTag.style.display = "none";
         popupAdicionarPasta.style.display = "none";
         popupAdicionarProjeto.style.display = "none";
         popupAdicionarCard.style.display = "none";
+        popupCard.style.display = "none";
     }
 }
 
@@ -343,7 +378,7 @@ setInterval(atualizarRelogioTempoReal, 1000);
 atualizarRelogioTempoReal();
 // Fim do relógio em tempo real
 
-// Drag & Drop dos cards
+// Drag & Drop dos cards não está funcionando ainda
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('body.desenvolvimento .card').forEach(card => {
     card.addEventListener('dragstart', function(e) {

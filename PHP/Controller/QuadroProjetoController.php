@@ -82,6 +82,41 @@
             }
             break;
 
+        case 'ver':
+            // Retorna HTML do conteúdo do card para o popup (AJAX)
+            $idCard = $_GET['idCard'] ?? 0;
+            $idProjeto = $_GET['idProjeto'] ?? 0;
+
+            $cards = QuadroProjeto::listar(1, $idCard);
+            $projetos = Projeto::listar(1, $idProjeto);
+            if (empty($cards) || empty($projetos) || $projetos[0]->getIdUsuario() != $idUsuario) {
+                http_response_code(403);
+                echo "<div class='popup-header'><span>Sem acesso</span></div>";
+                echo "<div class='popup-body'>Você não tem permissão para visualizar este card.</div>";
+                exit;
+            }
+
+            $card = $cards[0];
+            header('Content-Type: text/html; charset=UTF-8');
+            ?>
+            <div class="popup-header">
+              <span class="close" onclick="fecharPopupCard()">
+                <i class="fa-solid fa-xmark"></i>
+              </span>
+              <h3><?php echo htmlspecialchars($card->getTitulo()); ?></h3>
+            </div>
+            <div class="popup-body">
+              <?php if ($card->getImagem()) { ?>
+                <img src="<?php echo htmlspecialchars($card->getImagem()); ?>" alt="Imagem do Card" style="max-width:100%; border-radius:8px; margin-bottom:12px;">
+              <?php } ?>
+              <p style="text-align:left; white-space:pre-wrap;"><?php echo htmlspecialchars($card->getDescricao()); ?></p>
+              <div style="margin-top:12px; text-align:left;">
+                <span style="font-size:0.9rem; color:#666;">Status: <?php echo htmlspecialchars($card->getStatus()); ?></span>
+              </div>
+            </div>
+            <?php
+            exit;
+
         default:
             header('Location: ../View/projeto.php');
             exit;

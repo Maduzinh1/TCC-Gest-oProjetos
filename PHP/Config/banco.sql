@@ -130,6 +130,9 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Anotacao` (
         ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `leaves`.`Projeto`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `leaves`.`Projeto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
@@ -143,6 +146,9 @@ CREATE TABLE IF NOT EXISTS `leaves`.`Projeto` (
     ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `leaves`.`QuadroProjeto`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `leaves`.`QuadroProjeto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(255) NOT NULL,

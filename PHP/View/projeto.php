@@ -49,7 +49,7 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Kanban</th>
-                    <th>Deletar</th>
+                    <th>Excluir</th>
                 </tr>
             ";
             foreach ($projetosUsuario as $projeto) {
